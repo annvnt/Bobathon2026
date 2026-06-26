@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regulatory Radar | EcoComply</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="utility-bar">
+    <span>IBM Bobathon · EcoComply partner challenge</span>
+    <span id="utility-status">Portfolio: 22 companies · 53 products</span>
+  </div>
+
+  <nav class="top-nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="brand-mark" aria-hidden="true">IBM</span>
+        <span class="brand-name">Regulatory Radar</span>
+      </div>
+      <div class="nav-actions">
+        <span id="last-run" class="nav-meta">Last scan: not yet run</span>
+        <button id="run-btn" type="button" class="btn btn-primary">Run scan</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Continuous compliance monitoring</p>
+        <h1 class="display-md">Find the rules. Assess the gaps. Alert the client.</h1>
+        <p class="subhead">Live ingestion from EUR-Lex, Bundestag DIP, Open Legal Data, and ECHA — mapped to your SME portfolio with cited sources and actionable deadlines.</p>
+        <div class="hero-actions">
+          <button id="run-btn-hero" type="button" class="btn btn-primary">Run scan</button>
+          <a href="#gaps-section" class="btn btn-ghost">View gaps</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band-surface-1">
+      <div class="container stats-grid">
+        <article class="feature-card">
+          <span class="stat-num" id="gap-total">0</span>
+          <span class="stat-lbl">Total compliance gaps</span>
+        </article>
+        <article class="feature-card feature-card-alert">
+          <span class="stat-num" id="gap-critical">0</span>
+          <span class="stat-lbl">Critical / high severity</span>
+        </article>
+        <article class="feature-card">
+          <span class="stat-num" id="update-count">0</span>
+          <span class="stat-lbl">Cached regulatory updates</span>
+        </article>
+        <article class="feature-card">
+          <span class="stat-num" id="vector-count">0</span>
+          <span class="stat-lbl">Vector DB entries</span>
+        </article>
+        <article class="feature-card">
+          <span class="stat-num" id="hil-count">0</span>
+          <span class="stat-lbl">HIL review queue</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="mcp-section" class="container section">
+      <div class="section-header">
+        <h2 class="headline">MCP routing pipeline</h2>
+        <p class="body-sm ink-muted">API knowledge extract → embed (same model) → cosine similarity router → taxonomy mapping. Low-confidence matches queue for human review.</p>
+      </div>
+      <div class="api-status" id="api-status"></div>
+      <div class="pipeline-flow" aria-hidden="true">
+        <span class="flow-step">EUR-Lex / DIP / OLDP</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step flow-step-accent">MCP</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Embed</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Router</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Taxonomy + HIL</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Present</span>
+      </div>
+      <div id="routing-list" class="routing-grid"></div>
+    </section>
+
+    <section class="band-surface-1 section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="headline">Human-in-the-loop review</h2>
+          <p class="body-sm ink-muted">Regulations below 60% router confidence need analyst approval before scope is final.</p>
+        </div>
+        <ul id="hil-list" class="hil-list"></ul>
+      </div>
+    </section>
+
+    <section id="gaps-section" class="container section">
+      <div class="section-header">
+        <h2 class="headline">Compliance gaps</h2>
+        <p class="body-sm ink-muted">Sorted portfolio findings with source URLs, deadlines, and recommended actions.</p>
+      </div>
+      <div class="filter-bar">
+        <label class="filter-label" for="severity-filter">Severity</label>
+        <select id="severity-filter" class="text-input">
+          <option value="">All severities</option>
+          <option value="critical">Critical</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div class="table-wrap feature-card">
+        <table id="gaps-table" class="data-table">
+          <thead>
+            <tr>
+              <th data-sort="company" scope="col">Company</th>
+              <th data-sort="product" scope="col">Product</th>
+              <th data-sort="regulation" scope="col">Regulation</th>
+              <th data-sort="severity" scope="col">Severity</th>
+              <th data-sort="deadline" scope="col">Deadline</th>
+              <th scope="col">Gap</th>
+              <th scope="col">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="7" class="empty-row">Loading gaps…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="band-surface-1 section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="headline">Recent regulatory updates</h2>
+          <p class="body-sm ink-muted">Latest ingested rules from live sources (see Dataset/SOURCES.md).</p>
+        </div>
+        <ul id="updates-list" class="updates-grid"></ul>
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <div class="container cta-inner">
+        <h2 class="cta-title">Ready for your demo?</h2>
+        <p class="cta-body">Run a live scan to pull current EU requirements, evaluate the portfolio, and fire Twilio alerts.</p>
+        <button id="run-btn-cta" type="button" class="btn btn-secondary">Run scan now</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark inverse">IBM</span>
+        <p class="caption">Regulatory Radar · Built with IBM Bob + Twilio</p>
+      </div>
+      <div class="footer-links">
+        <span class="caption">Data: Dataset/partners.json (organizer)</span>
+        <span class="caption">Sources: EUR-Lex · ECHA · DIP · Open Legal Data</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="reg-text-modal" class="reg-modal">
+    <div class="reg-modal-inner">
+      <header class="reg-modal-header">
+        <h2 id="reg-modal-title" class="headline">Regulation text</h2>
+        <button type="button" id="reg-modal-close" class="btn btn-ghost" aria-label="Close">Close</button>
+      </header>
+      <p id="reg-modal-meta" class="body-sm ink-muted"></p>
+      <pre id="reg-modal-body" class="reg-modal-body"></pre>
+    </div>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "OpenLegalData__BJNR064210015BJNE000100000": {
+    "key": "OpenLegalData__BJNR064210015BJNE000100000",
+    "source": "OpenLegalData",
+    "reference": "BJNR064210015BJNE000100000",
+    "title": "Ziel des Gesetzes",
+    "url": "https://de.openlegaldata.io/laws/131584/",
+    "fetched_at": "2026-06-26T11:10:14.062084Z",
+    "chars": 137,
+    "truncated": false,
+    "file": null,
+    "text": "Ziel des Gesetzes ist die paritätische Vertretung von Frauen und Männern in Gremien, soweit der Bund Mitglieder für diese bestimmen kann."
+  }
+}
