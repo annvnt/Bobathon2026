@@ -34,7 +34,9 @@ class Settings(BaseSettings):
     WATSONX_MODEL_ID: str = "ibm/granite-13b-instruct-v2"
 
     # Alerts
-    ALERTS_PROVIDER: str = "mock"  # mock | twilio
+    ALERTS_PROVIDER: str = "twilio"  # twilio (real, via radar.alerts.notify) | mock
+    ALERT_AUTOSEND: bool = False      # if true, scans auto-send every new alert (use with care)
+    ALERT_TO_OVERRIDE: str = ""       # route all sends to this verified test recipient
     TWILIO_ACCOUNT_SID: str = ""
     TWILIO_AUTH_TOKEN: str = ""
     TWILIO_FROM_NUMBER: str = ""

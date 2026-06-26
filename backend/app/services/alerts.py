@@ -1,42 +1,62 @@
-"""Alert delivery — Twilio when configured, otherwise a logging mock.
+"""Alert delivery — connected to the team sender `radar.alerts.notify`.
 
-Switching is a config change (ALERTS_PROVIDER); callers are unchanged.
+`radar.alerts.notify.send_alert(gap)` sends via Twilio (SMS / WhatsApp) or writes
+an email stub, reading credentials from the repo-root `.env`. It honours
+`ALERT_TO_OVERRIDE` to route every message to one verified test recipient.
+
+Falls back to a logging mock if radar can't be imported or ALERTS_PROVIDER=mock.
 """
 from __future__ import annotations
 
 import logging
+import sys
 
-from ..config import settings
+from ..config import REPO_ROOT, settings
 
 logger = logging.getLogger("ecocomply.alerts")
 
+# Make the repo-root `radar` package importable from the backend.
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-def _send_twilio(to: str, body: str, channel: str) -> str:
-    from twilio.rest import Client  # lazy import; optional dependency
-
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    from_ = settings.TWILIO_FROM_NUMBER
-    if channel == "whatsapp":
-        to = f"whatsapp:{to}"
-        from_ = f"whatsapp:{from_}"
-    msg = client.messages.create(body=body, from_=from_, to=to)
-    return msg.sid
+try:
+    from radar.alerts import notify as _radar_notify
+except Exception as exc:  # noqa: BLE001
+    _radar_notify = None
+    logger.warning("radar.alerts.notify unavailable (%s) — alert sending will mock", exc)
 
 
-def send_alert(*, to: str, body: str, channel: str = "sms") -> dict:
+def send_alert(
+    *,
+    to: str,
+    body: str,
+    channel: str = "sms",
+    product: str = "",
+    product_id: str = "",
+) -> dict:
     """Deliver one alert. Returns {status, detail}."""
-    # Always route to your own test number if configured, so nothing reaches a
-    # real contact (portfolio data is synthetic anyway).
-    target = settings.TWILIO_TEST_TO_NUMBER or to
+    recipient = to or settings.ALERT_TO_OVERRIDE
 
-    if settings.ALERTS_PROVIDER == "twilio" and settings.TWILIO_ACCOUNT_SID:
+    if settings.ALERTS_PROVIDER == "twilio" and _radar_notify is not None:
+        gap = {
+            "product": product,
+            "product_id": product_id or "alert",
+            "alert": {"channel": channel, "to": recipient, "message": body},
+        }
         try:
-            sid = _send_twilio(target, body, channel)
-            return {"status": "delivered", "detail": sid}
+            r = _radar_notify.send_alert(gap)
         except Exception as exc:  # noqa: BLE001
-            logger.warning("Twilio send failed: %s", exc)
+            logger.warning("radar notify failed: %s", exc)
             return {"status": "failed", "detail": str(exc)}
+        status = r.get("status", "unknown")
+        mapped = {
+            "sent": "delivered",
+            "email_stub": "delivered",
+            "dry_run": "pending",
+            "skipped": "skipped",
+        }.get(status, status)
+        return {"status": mapped, "detail": r.get("sid") or r.get("path") or r.get("reason") or status}
 
-    # Mock: log it. Counts as "delivered" for demo flow.
-    logger.info("[MOCK ALERT → %s via %s]\n%s", target, channel, body)
-    return {"status": "delivered", "detail": "mock"}
+    # Mock: log only.
+    logger.info("[MOCK ALERT → %s via %s]\n%s", recipient or "(no recipient)", channel, body)
+    return {"status": "logged", "detail": "mock"}

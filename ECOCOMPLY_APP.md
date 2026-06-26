@@ -1,147 +1,236 @@
-# EcoComply — AI Regulatory Compliance Platform
+# EcoComply — Regulatory Radar Platform
 
-Full-stack implementation of the **Regulatory Radar** challenge: monitor → understand →
-match → alert. Manufacturers describe a product, the AI **labels** it against the
-regulatory taxonomy, a daily sync **fetches** updated regulations, and the system
-**assesses** every product for compliance gaps and fires alerts — each with the gap,
-the deadline, the recommended action, and a cited source.
+> Finalised documentation for the EcoComply application (FastAPI backend + Next.js
+> frontend) built for the IBM Bobathon **Regulatory Radar** challenge.
+>
+> **What it does:** an electronics SME describes a product → the AI labels it against
+> the EU regulatory taxonomy → a sync pulls the current regulations from the team **MCP**
+> → every product is assessed for compliance gaps with **line-by-line citations** of the
+> real legal text → a **real alert** can be fired (Twilio). Monitor → understand → match → alert.
+
+---
+
+## 1. Architecture
 
 ```
-backend/    FastAPI · SQLAlchemy · ChromaDB · APScheduler · LangChain (watsonx-ready)
-frontend/   Next.js 14 (App Router) · TypeScript · Tailwind · dark + light themes
+                       ┌──────────────────────────── frontend/ (Next.js 14) ───────────────────────────┐
+                       │  Dynamic-island nav · dark/light · cards                                       │
+                       │  Login(partnerID) Dashboard Products Product[id] Alerts Analytics Settings     │
+                       └──────────────────────────────┬───────────────────────────────────────────────┘
+                                                       │ REST (fetch)
+                       ┌───────────────────────────────▼─────────────── backend/ (FastAPI) ────────────┐
+                       │  routers: products · alerts · meta(analytics/scan/labels/login)                │
+                       │  services:                                                                     │
+                       │    classification ── OpenRouter LLM ─────────────┐  (labels from labels.md)    │
+                       │    gap_analysis ── RAG + parallel LLM ───────────┤                             │
+                       │    impact (cause/effect, dates)                  │                             │
+                       │    analytics (portfolio + per-product)           │                             │
+                       │    mcp_client ───────► radar.mcp.contract  (REAL MCP, repo root)               │
+                       │    alerts ───────────► radar.alerts.notify (REAL Twilio/SendGrid)              │
+                       │  stores: SQLAlchemy (SQLite/Postgres) + ChromaDB (line-level reg text)         │
+                       └───────────────────────────────┬──────────────────────────────────────────────┘
+                                                        │
+              ┌─────────────────────────────┬──────────┴───────────┬───────────────────────────┐
+              ▼                             ▼                       ▼                           ▼
+      OpenRouter (gpt-4o-mini)     radar/ MCP (EUR-Lex/GADI)   ChromaDB (.chroma)        Twilio / SendGrid
+      classification + gaps        real regulation text        RAG citations             real alert delivery
 ```
 
-## Quick start
+Three external systems are **really connected** (no mocks): the LLM (OpenRouter),
+the regulation MCP (`radar.mcp.contract`), and alert delivery (`radar.alerts.notify`).
 
-Two terminals.
+---
 
-### 1 · Backend (port 8000)
+## 2. Repository layout
 
+```
+backend/                 FastAPI app
+  app/
+    main.py              app + lifespan (init db, seed, scheduler) + LLM error handler
+    config.py            env settings (pydantic-settings); REPO_ROOT
+    database.py models.py schemas.py
+    taxonomy.py          loads Dataset/taxonomy.json
+    label_map.py         loads Dataset/labels.md (the only labels the system uses)
+    vector_store.py      ChromaDB (offline hashed-BoW embeddings)
+    scheduler.py         APScheduler daily sync
+    seed.py              seeds Users/Products from Dataset/partners.json
+    routers/             products.py · alerts.py · meta.py
+    services/
+      llm.py             OpenRouter / watsonx (no mock)
+      classification.py  Workflow A — product labeling
+      mcp_client.py      ► adapter to radar.mcp.contract  (REAL MCP)
+      ingestion.py       chunk regulation text line-by-line → ChromaDB
+      gap_analysis.py    Workflows B+C — sync, RAG, parallel LLM gap eval, alerts
+      impact.py          per-line cause/effect, product/business impact, date extraction
+      analytics.py       portfolio + per-product analytics
+      alerts.py          ► adapter to radar.alerts.notify  (REAL Twilio/SendGrid)
+frontend/                Next.js 14 (App Router, Tailwind)
+  components/            dynamic-island · header(controls) · charts(orbs) · ui
+  app/(app)/             dashboard · products · products/[id] · alerts · analytics · settings
+  lib/                   api.ts · types.ts · theme · app-context
+radar/                   TEAM MCP + alert sender (shared on main)
+  mcp/contract.py        fetch_regulation/get_regulations/check
+  alerts/notify.py       Twilio/SendGrid dispatch
+feed/                    real regulation library (EUR-Lex CELEX + German GADI text)
+Dataset/                 partners.json/.csv · taxonomy.json · labels.md · SOURCES.md
+```
+
+---
+
+## 3. Quick start
+
+Two terminals. Python 3.12, Node 18+.
+
+### Backend (port 8000)
 ```bash
 cd backend
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env          # optional — sensible offline defaults already work
+cp .env.example .env            # then add your OPENROUTER_API_KEY
 uvicorn app.main:app --reload
 ```
+On first boot it creates the DB, seeds 22 companies / 53 products, connects to the MCP,
+and starts the scheduler. API docs: http://localhost:8000/docs
 
-On first boot it creates the DB, seeds the 22-company / 53-product portfolio from
-`Dataset/partners.json`, and starts the daily scheduler. API docs at
-`http://localhost:8000/docs`.
-
-### 2 · Frontend (port 3000)
-
+### Frontend (port 3000)
 ```bash
 cd frontend
 npm install
-npm run dev      # http://localhost:3000
+npm run dev
 ```
+Sign in with a **partner ID** (`P001`…`P022`, or `1`), or "Enter admin view" for the
+whole portfolio. Press **Scan** (top-right pill) to pull regulations from the MCP and
+assess every product.
 
-Open `http://localhost:3000`, sign in (any credentials), then **Run daily scan** in the
-header to populate alerts.
+> ⚠️ Never run `npm run build` while `npm run dev` is running — it corrupts `.next`.
+> Use `npx tsc --noEmit` to type-check; restart dev after a production build.
 
-## What runs where
+---
 
-| Workflow | Where | Notes |
+## 4. Configuration
+
+`backend/.env` (per-app):
+
+| Key | Default | Notes |
 |---|---|---|
-| **A · Classify / label a product** | `services/classification.py` | Free-text → category, substances, battery/radio attributes, markets, **compliance streams**. Validated against `taxonomy.json`. |
-| **B · Daily sync** | `scheduler.py` → `services/gap_analysis.run_sync` | `check_updates()` → `fetch_regulation()` → chunk + embed into ChromaDB. |
-| **C · Gap analysis (RAG)** | `services/gap_analysis.py` | Structured scope match (catches look-alikes) → RAG retrieval → LLM/heuristic gap verdict → `Alert` + Twilio send. |
+| `DATABASE_URL` | `sqlite:///./ecocomply.db` | any Postgres URL works |
+| `LLM_PROVIDER` | `openrouter` | `openrouter` \| `watsonx` |
+| `OPENROUTER_API_KEY` | — | **required** for classification + gap analysis |
+| `OPENROUTER_MODEL` | `openai/gpt-4o-mini` | any OpenRouter model |
+| `ALERTS_PROVIDER` | `twilio` | `twilio` (real, via radar) \| `mock` |
+| `ALERT_AUTOSEND` | `false` | if true, scans auto-send every new alert (avoid) |
+| `ENABLE_SCHEDULER` | `true` | daily MCP sync at `SYNC_HOUR:SYNC_MINUTE` |
 
-## The MCP boundary — connected to the real team MCP
+`.env` at the **repo root** (read by `radar`, gitignored): `TWILIO_ACCOUNT_SID`,
+`TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`, `TWILIO_WHATSAPP_FROM`, `SENDGRID_*`, and
+`ALERT_TO_OVERRIDE` (route every alert to one verified test recipient).
 
-The pipeline depends on `check_updates()` and `fetch_regulation(label, country)`, now
-served by the **real team MCP** (`radar/mcp/` at the repo root) via an adapter,
-[mcp_client.py](backend/app/services/mcp_client.py):
+---
 
-```python
-from radar.mcp import contract
-contract.get_regulations(category=label, country="EU", include_text=True)
-contract.fetch_regulation([label], [country])   # live EUR-Lex / GADI + cache
-```
+## 5. The three real integrations
 
-`gap_analysis.py` imports `mcp_client` (real MCP) and only falls back to the bundled
-`mock_mcp.py` if `radar` can't be imported. The MCP returns **real regulation text**
-(EUR-Lex CELEX / German GADI), ingested into ChromaDB **line by line**, so gap citations
-quote the actual legal text with real source URLs. radar's only third-party deps
-(fastapi, pydantic) are already in the backend venv; the repo root is added to `sys.path`
-so `radar` imports regardless of working directory.
+### 5.1 LLM — OpenRouter (no mocks)
+`services/llm.py` calls OpenRouter's chat-completions API (`openai/gpt-4o-mini`).
+Classification predicts category/substances/attributes; gap analysis decides
+`has_gap` and writes the per-line cause/effect + product/business impact. Missing key →
+clean `503 LLM unavailable`; the rest of the app keeps working on existing data.
 
-## LLM: OpenRouter (no mocks)
+### 5.2 Regulation MCP — `radar.mcp.contract`
+`services/mcp_client.py` puts the repo root on `sys.path` and wraps the team MCP:
+`get_regulations(category, country, include_text=True)` and `fetch_regulation(labels,
+countries)`. It maps the MCP's records (EUR-Lex CELEX + German GADI, with full legal
+`text` and real `source_url`) into the pipeline's `check_updates()` /
+`fetch_regulation(label, country)`. `gap_analysis.py` imports it, falling back to the
+bundled `mock_mcp.py` only if `radar` can't import. The legal text is ingested into
+ChromaDB **line by line**, so every gap cites the actual regulation text.
 
-Classification and gap analysis run on a **real LLM via OpenRouter** — there is no mock
-LLM fallback. Set your key in `backend/.env`:
+### 5.3 Alerts — `radar.alerts.notify`
+`services/alerts.py` wraps the team's Twilio/SendGrid sender. Scans create alerts as
+`pending` (never mass-blast); a user fires one with **Send alert** (`POST
+/api/alerts/{id}/send`), routed to `ALERT_TO_OVERRIDE`. With no recipient set it safely
+returns `skipped`.
 
-```
-LLM_PROVIDER=openrouter
-OPENROUTER_API_KEY=sk-or-...        # required
-OPENROUTER_MODEL=openai/gpt-4o-mini # any OpenRouter model
-```
+---
 
-If the key is missing, LLM-backed endpoints return a clean `503 LLM unavailable` (the rest
-of the app — dashboards, analytics, product pages — keeps working on existing data). The LLM
-also produces the per-line **cause → effect** analysis and product/business impacts.
+## 6. Workflows
 
-## Pluggable providers (config only, no code changes)
+- **A · Classify (`POST /api/products/classify`)** — free text → labels (only from
+  `labels.md`), shown in an editable form before saving.
+- **B · Sync (`POST /api/scan` or daily scheduler)** — `check_updates()` →
+  `fetch_regulation()` from the MCP → chunk + embed regulation text into ChromaDB.
+- **C · Gap analysis** — for each in-scope product (market match + label triggers), RAG
+  retrieves the most relevant regulation lines, the LLM (parallelised, 12 workers)
+  decides the gap and writes cause/effect + impacts + dates → `Alert`.
 
-| Setting | Default | Options |
-|---|---|---|
-| `LLM_PROVIDER` | `openrouter` | `watsonx` (IBM Bob via LangChain) |
-| `ALERTS_PROVIDER` | `mock` (logs alerts) | `twilio` (real SMS/WhatsApp) |
-| `DATABASE_URL` | `sqlite:///./ecocomply.db` | any Postgres URL |
+---
 
-## Navigation & per-product analytics
-
-- **Dynamic island** — navigation is a floating, morphing pill (`components/dynamic-island.tsx`)
-  that shows icons collapsed and expands the active section's label; a separate floating
-  controls pill holds the company selector, scan trigger and theme toggle. No sidebar.
-- **Per-product analytics** — each product card links to `/products/[id]`: product risk /
-  compliance health / fine-exposure orbs, regulation coverage, deadlines and its gaps
-  (`GET /api/analytics/product/{id}`).
-
-## Key API endpoints
+## 7. API reference
 
 ```
-POST /api/login                 # resolve partner ID (P001 / 1) -> company user
-POST /api/products/classify     # Workflow A — draft labels from a description
-GET  /api/products              # list (optional ?user_id=)
-POST /api/products              # save a verified product
-POST /api/scan                  # run Workflows B+C now (manual daily-sync trigger)
-GET  /api/alerts                # findings incl. line-by-line citations + impacts
-POST /api/alerts/{id}/read      # mark read
-GET  /api/dashboard/metrics     # totals
-GET  /api/analytics             # orbs, distributions, company risk, timeline
-GET  /api/labels                # the labels.md map (only labels the system uses)
+POST /api/login                  partner ID (P001 / 1) → company user
+GET  /api/products               list (?user_id=)
+POST /api/products/classify      Workflow A
+POST /api/products               save product
+GET  /api/products/{id}
+DELETE /api/products/{id}
+GET  /api/alerts                 (?is_read=&user_id=&product_id=) incl. citations + impacts
+POST /api/alerts/{id}/read
+POST /api/alerts/{id}/send       fire real message (?to=&channel=sms|whatsapp|email)
+GET  /api/dashboard/metrics
+GET  /api/analytics              portfolio orbs/charts/timeline/company-risk
+GET  /api/analytics/product/{id} per-product risk/health/exposure + coverage
+POST /api/scan                   run Workflows B+C now
+GET  /api/labels                 the labels.md map
+GET  /api/taxonomy   GET /api/users   GET /api/health
 ```
 
-## Labeling: `Dataset/labels.md` (single source of truth)
+---
 
-Automated labels are emitted **only** from `Dataset/labels.md`, a parseable table derived
-from `SOURCES.md`. Each row maps a label → regulation reference, source URL, and trigger
-tokens (`eee`, `battery`, `radio`, `consumer`, `substance:…`, `category:…`). The classifier
-re-derives `compliance_streams` from these triggers regardless of what the LLM proposes, and
-gap citations use each label's source URL. Edit the table to change behaviour — no code change.
+## 8. Frontend pages
 
-## Login
+- **/login** — partner-ID sign-in (or admin view).
+- **/dashboard** — risk + compliance-health orbs, metrics, recent alerts.
+- **/products** — product cards (risk badge, attributes, label chips) → click for detail.
+- **/products/[id]** — per-product analytics: risk/health/fine orbs, regulation coverage,
+  deadlines, the product's gaps.
+- **/alerts** — every finding: requirement, gap, recommended action, product & business
+  impact, key dates, **line-by-line cited regulation text** (cause → effect), source link,
+  Send alert / Mark read.
+- **/analytics** — portfolio impact orbs, severity donut, gaps by regulation/category,
+  company risk ranking, deadline timeline, regulation-coverage table.
+- **/settings** — theme, provider status, monitored regulation families.
 
-Each partner has its own login = its **partner ID** (`P001`…`P022`, or just `1`). Signing in
-scopes every page to that company; "Enter admin view" shows the whole portfolio.
+UI: minimal aesthetic, dark + light themes, floating **dynamic-island** navigation.
 
-## Analytics & line-by-line citations
+---
 
-- **Analytics** (`/analytics`) — impact orbs (portfolio risk, compliance health, fine
-  exposure, deadline pressure), severity donut, gaps-by-regulation / by-category bars,
-  company risk ranking, deadline timeline, and a regulation-coverage table.
-- **Citations** — every regulation is stored in ChromaDB **line by line**. Each alert cites
-  the specific lines with a **cause → effect** analysis, plus **product impact**, **business
-  impact**, and **extracted key dates** (`services/impact.py`).
+## 9. Demo script (3 min)
 
-## Design notes
+1. **Sign in** as `P013` (RideVolt Mobility — has LMT batteries) — or admin view.
+2. **Products** → open a product → show per-product risk orbs + coverage.
+3. **Add product** → paste a description → AI labels it live (OpenRouter) → save.
+4. **Scan** → pulls current regulations from the MCP, re-assesses the portfolio.
+5. **Alerts** → open a Battery gap → show the **real EU Battery Regulation lines** cited
+   with cause→effect + business impact + source URL.
+6. **Send alert** → fires a real Twilio SMS to your verified test number (the wow moment).
+7. **Analytics** → portfolio risk, fine exposure, company ranking, deadline pressure.
 
-- **Offline embeddings** — ChromaDB uses a deterministic hashed bag-of-words embedder so
-  the demo needs no model download or network. Swap `_OfflineEmbeddingFunction` in
-  `vector_store.py` for sentence-transformers / watsonx embeddings for production recall.
-- **Scope-exclusion reasoning** — `_applies()` skips products that are the right category
-  but wrong market / wrong substance (the look-alike cases), and logs *why*. This is the
-  false-positive avoidance the challenge rewards.
-- **Every alert cites its source** (`source_url`) and carries a confidence score.
+---
+
+## 10. Security & data notes
+
+- Portfolio contacts are **synthetic** (`@example.com`, placeholder phones). Real sends
+  go to your own `ALERT_TO_OVERRIDE` test recipient.
+- `Twilio Bash ENV SET UP.txt` contains **live credentials committed to the repo** — these
+  should be rotated and kept only in the gitignored root `.env`.
+- Secrets are never committed: `.env` (both) and the `.venv`/`node_modules`/`.next`/
+  `.chroma`/`*.db` artifacts are gitignored.
+
+## 11. Limitations / next
+
+- The MCP doesn't supply structured deadlines; key dates are extracted from the cited
+  text by the LLM/regex (so some alerts show no deadline).
+- A full scan makes ~one LLM call per in-scope product-label pair (parallelised). To make
+  the daily sync lighter, switch `check_updates()` to the MCP's `check(label)`
+  recently-changed signal instead of the full library.
+- Candidate follow-ups: compliance chatbot, admin review queue, per-company alert routing.

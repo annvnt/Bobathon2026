@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, ExternalLink } from "lucide-react";
+import { Check, ChevronDown, ExternalLink, Loader2, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Badge, EmptyState, severityTone } from "@/components/ui";
 import { api } from "@/lib/api";
@@ -31,10 +31,24 @@ export default function AlertsPage() {
     if (focus) setOpen(focus);
   }, []);
 
+  const [sending, setSending] = useState<string | null>(null);
+
   const markRead = async (id: string) => {
     const updated = await api.markAlertRead(id);
     setAlerts((prev) => prev.map((a) => (a.id === id ? updated : a)));
     bumpRefresh();
+  };
+
+  const sendOne = async (id: string) => {
+    setSending(id);
+    try {
+      const updated = await api.sendAlert(id);
+      setAlerts((prev) => prev.map((a) => (a.id === id ? updated : a)));
+    } catch {
+      alert("Send failed — check Twilio creds / ALERT_TO_OVERRIDE in root .env.");
+    } finally {
+      setSending(null);
+    }
   };
 
   return (
@@ -188,7 +202,19 @@ export default function AlertsPage() {
                         Source <ExternalLink size={13} />
                       </a>
                     )}
-                    <div className="ml-auto">
+                    <div className="ml-auto flex items-center gap-2">
+                      <button
+                        onClick={() => sendOne(a.id)}
+                        disabled={sending === a.id}
+                        className="btn-primary"
+                      >
+                        {sending === a.id ? (
+                          <Loader2 size={15} className="animate-spin" />
+                        ) : (
+                          <Send size={15} />
+                        )}
+                        Send alert
+                      </button>
                       {!a.is_read && (
                         <button
                           onClick={() => markRead(a.id)}

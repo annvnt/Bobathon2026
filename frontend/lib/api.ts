@@ -72,4 +72,9 @@ export const api = {
   },
   markAlertRead: (id: string) =>
     req<Alert>(`/api/alerts/${id}/read`, { method: "POST" }),
+  sendAlert: (id: string, to?: string) =>
+    req<Alert>(
+      `/api/alerts/${id}/send${to ? `?to=${encodeURIComponent(to)}` : ""}`,
+      { method: "POST" },
+    ),
 };

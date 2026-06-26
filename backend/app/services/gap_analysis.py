@@ -9,7 +9,9 @@ run_sync():
 """
 from __future__ import annotations
 
+from datetime import datetime, date
 import logging
+import re
 from concurrent.futures import ThreadPoolExecutor
 
 from sqlalchemy import select
@@ -19,6 +21,7 @@ from sqlalchemy.orm import Session
 _GAP_WORKERS = 12
 
 from .. import label_map, models, vector_store
+from ..config import settings
 from ..schemas import ScanResult
 from . import alerts as alert_sender
 from . import impact as impact_svc
@@ -170,6 +173,66 @@ def _build_message(product: models.Product, company: str, reg: dict, gap: str) -
 
 
 # --------------------------------------------------------------------------- #
+# Date extraction and deadline determination
+# --------------------------------------------------------------------------- #
+_DEFAULT_DEADLINES = {
+    "Battery": "2027-02-18",
+    "RoHS": "2027-07-22",
+    "REACH": "2026-10-30",
+    "WEEE": "2027-08-18",
+    "EMC": "2027-09-01",
+    "LVD": "2027-09-01",
+    "RED": "2027-08-18",
+    "ToySafety": "2027-01-20",
+    "GPSR": "2026-12-13",
+    "EnergyLabel": "2027-03-01",
+    "ESPR": "2027-06-20",
+    "PPWR": "2027-08-18",
+    "POPs": "2026-10-01",
+    "MDR": "2027-05-01",
+    "Machinery": "2027-08-18",
+}
+
+def _parse_date_str(s: str | None) -> date | None:
+    if not s:
+        return None
+    for fmt in ("%Y-%m-%d", "%d %B %Y", "%B %Y", "%Y"):
+        try:
+            return datetime.strptime(s.strip(), fmt).date()
+        except ValueError:
+            continue
+    return None
+
+def _determine_deadline(reg: dict, key_dates: list[str]) -> str | None:
+    # 1. Try deadline_date from regulation dict
+    d = reg.get("deadline_date")
+    if d:
+        return d
+    
+    # 2. Try extracting from key_dates (prefer dates >= 2024)
+    parsed_dates = []
+    for s in key_dates:
+        parsed = _parse_date_str(s)
+        if parsed and parsed.year >= 2024:
+            parsed_dates.append(parsed)
+        else:
+            m = re.search(r'\b\d{4}\b', s)
+            if m:
+                try:
+                    yr = int(m.group(0))
+                    if yr >= 2024:
+                        parsed_dates.append(date(yr, 12, 31))
+                except Exception:
+                    pass
+    if parsed_dates:
+        return min(parsed_dates).strftime("%Y-%m-%d")
+        
+    # 3. Try fallback to category mapping
+    label = reg.get("regulation_family", "")
+    return _DEFAULT_DEADLINES.get(label, "2027-02-18")
+
+
+# --------------------------------------------------------------------------- #
 # Orchestration
 # --------------------------------------------------------------------------- #
 def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
@@ -247,7 +310,7 @@ def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
             gap=verdict["gap"],
             recommended_action=reg.get("action_required", ""),
             severity=reg.get("severity", "medium"),
-            deadline=reg.get("deadline_date") or None,
+            deadline=_determine_deadline(reg, key_dates),
             source_url=source_url,
             confidence=verdict.get("confidence", 80),
             alert_message=message,
@@ -256,8 +319,16 @@ def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
             business_impact=verdict.get("business_impact") or impact_svc.business_impact(reg.get("severity", "medium")),
             key_dates=key_dates,
         )
-        result = alert_sender.send_alert(to="", body=message, channel="sms")
-        alert.delivery_status = result["status"]
+        # Don't mass-blast during a scan: alerts start "pending" and are sent
+        # explicitly (per-alert) unless ALERT_AUTOSEND is on.
+        if settings.ALERT_AUTOSEND:
+            result = alert_sender.send_alert(
+                to="", body=message, channel="sms",
+                product=product.name, product_id=product.id,
+            )
+            alert.delivery_status = result["status"]
+        else:
+            alert.delivery_status = "pending"
         db.add(alert)
         created += 1
 

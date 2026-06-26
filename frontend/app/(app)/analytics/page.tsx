@@ -45,7 +45,7 @@ export default function AnalyticsPage() {
       </div>
     );
 
-  if (!a || a.totals.open_alerts === 0)
+  if (!a || a.totals.products === 0)
     return (
       <div className="space-y-6">
         <Header company={selectedCompany} />

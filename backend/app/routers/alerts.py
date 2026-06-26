@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from .. import models
 from ..database import get_db
 from ..schemas import AlertOut
+from ..services import alerts as alert_sender
 
 router = APIRouter(prefix="/api/alerts", tags=["alerts"])
 
@@ -53,6 +54,34 @@ def mark_read(alert_id: str, db: Session = Depends(get_db)) -> AlertOut:
     if not alert:
         raise HTTPException(404, "alert not found")
     alert.is_read = True
+    db.commit()
+    db.refresh(alert)
+    return _to_out(alert)
+
+
+@router.post("/{alert_id}/send", response_model=AlertOut)
+def send_alert(
+    alert_id: str,
+    to: str | None = None,
+    channel: str = "sms",
+    db: Session = Depends(get_db),
+) -> AlertOut:
+    """Fire this alert as a real message (Twilio SMS/WhatsApp via radar.alerts.notify).
+
+    Routes to `to` if given, else the configured ALERT_TO_OVERRIDE test recipient.
+    """
+    alert = db.get(models.Alert, alert_id)
+    if not alert:
+        raise HTTPException(404, "alert not found")
+    product = alert.product
+    result = alert_sender.send_alert(
+        to=to or "",
+        body=alert.alert_message,
+        channel=channel,
+        product=product.name if product else "",
+        product_id=product.id if product else "",
+    )
+    alert.delivery_status = result["status"]
     db.commit()
     db.refresh(alert)
     return _to_out(alert)

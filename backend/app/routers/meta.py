@@ -32,7 +32,10 @@ def dashboard_metrics(
     active_alerts = db.execute(alert_stmt).scalar() or 0
 
     # Distinct regulation families covered across the portfolio.
-    products = db.execute(select(models.Product)).scalars().all()
+    p_stmt = select(models.Product)
+    if user_id:
+        p_stmt = p_stmt.where(models.Product.user_id == user_id)
+    products = db.execute(p_stmt).scalars().all()
     families: set[str] = set()
     for p in products:
         families.update(p.compliance_streams or [])
