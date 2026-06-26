@@ -10,22 +10,31 @@ run_sync():
 from __future__ import annotations
 
 import logging
+from concurrent.futures import ThreadPoolExecutor
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+
+# Parallel LLM gap-evaluation workers per regulation (OpenRouter handles concurrency).
+_GAP_WORKERS = 12
 
 from .. import label_map, models, vector_store
 from ..schemas import ScanResult
 from . import alerts as alert_sender
 from . import impact as impact_svc
-from . import mock_mcp
 from .ingestion import ingest_regulation
 from .llm import get_llm
 
 logger = logging.getLogger("ecocomply.sync")
 
-# Pluggable MCP — replace with the real MCP client when available.
-mcp = mock_mcp
+# Connect to the real team MCP (radar.mcp.contract); fall back to the bundled
+# dataset mock only if radar is unavailable.
+try:
+    from . import mcp_client as mcp
+    logger.info("MCP: connected to radar.mcp.contract")
+except Exception as exc:  # noqa: BLE001
+    from . import mock_mcp as mcp
+    logger.warning("MCP: radar unavailable (%s) — using bundled mock", exc)
 
 
 # --------------------------------------------------------------------------- #
@@ -175,14 +184,14 @@ def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
     # filter in Python: compliance_streams is a JSON array
     targets = [p for p in products if label in (p.compliance_streams or [])]
 
-    created = 0
+    # 1) Sequentially build the candidate set (scope check, dedupe, RAG retrieval).
+    #    DB + ChromaDB stay single-threaded here.
+    candidates: list[tuple[models.Product, list[str], str]] = []
     for product in targets:
         applies, reason = _applies(product, reg)
         if not applies:
             logger.info("SKIP %s vs %s: %s", product.name, label, reason)
             continue
-
-        # dedupe: same product + same update already alerted
         dup = db.execute(
             select(models.Alert).where(
                 models.Alert.product_id == product.id,
@@ -192,16 +201,31 @@ def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
         ).scalars().first()
         if dup:
             continue
-
         lines = _retrieve_chunks(product, label, k=4)
-        verdict = _evaluate_gap(product, reg, lines, reason)
-        if not verdict.get("has_gap"):
-            continue
+        candidates.append((product, lines, reason))
 
+    # 2) Evaluate gaps in parallel (LLM calls only — no DB/Chroma in threads).
+    def _eval(item: tuple[models.Product, list[str], str]) -> tuple:
+        product, lines, reason = item
+        try:
+            verdict = _evaluate_gap(product, reg, lines, reason)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("gap eval failed for %s/%s: %s", product.name, label, exc)
+            verdict = None
+        return product, lines, verdict
+
+    results = []
+    if candidates:
+        with ThreadPoolExecutor(max_workers=_GAP_WORKERS) as pool:
+            results = list(pool.map(_eval, candidates))
+
+    # 3) Sequentially persist alerts for confirmed gaps.
+    created = 0
+    for product, lines, verdict in results:
+        if not verdict or not verdict.get("has_gap"):
+            continue
         company = product.user.company_name if product.user else ""
         message = _build_message(product, company, reg, verdict["gap"])
-
-        # Line-by-line citations + cause/effect (LLM) + product/business impact + dates.
         citations = impact_svc.build_citations(
             product, reg, lines, verdict.get("line_analysis")
         )
@@ -232,16 +256,8 @@ def assess_products_for_regulation(db: Session, reg: dict, country: str) -> int:
             business_impact=verdict.get("business_impact") or impact_svc.business_impact(reg.get("severity", "medium")),
             key_dates=key_dates,
         )
-
-        # fire the notification
-        channel = "sms"
-        to = ""
-        if product.user:
-            # contact details aren't stored on the user model; use test number
-            channel = "sms"
-        result = alert_sender.send_alert(to=to, body=message, channel=channel)
+        result = alert_sender.send_alert(to="", body=message, channel="sms")
         alert.delivery_status = result["status"]
-
         db.add(alert)
         created += 1
 

@@ -48,21 +48,24 @@ header to populate alerts.
 | **B · Daily sync** | `scheduler.py` → `services/gap_analysis.run_sync` | `check_updates()` → `fetch_regulation()` → chunk + embed into ChromaDB. |
 | **C · Gap analysis (RAG)** | `services/gap_analysis.py` | Structured scope match (catches look-alikes) → RAG retrieval → LLM/heuristic gap verdict → `Alert` + Twilio send. |
 
-## The MCP boundary (teammate's domain)
+## The MCP boundary — connected to the real team MCP
 
-The regulation-extraction MCP is isolated behind two functions — the rest of the
-pipeline depends only on these signatures. Swap `services/mock_mcp.py` for the real
-MCP client and nothing else changes:
+The pipeline depends on `check_updates()` and `fetch_regulation(label, country)`, now
+served by the **real team MCP** (`radar/mcp/` at the repo root) via an adapter,
+[mcp_client.py](backend/app/services/mcp_client.py):
 
 ```python
-check_updates() -> [{"label": "RoHS", "country": "EU", "date": "2026-05-04"}, ...]
-fetch_regulation(label, country) -> { regulation_family, summary, deadline_date,
-                                      severity, scope: {categories, substances,
-                                      markets, conditions}, source_url, ... }
+from radar.mcp import contract
+contract.get_regulations(category=label, country="EU", include_text=True)
+contract.fetch_regulation([label], [country])   # live EUR-Lex / GADI + cache
 ```
 
-The mock reads the bundled `Dataset/regulatory_updates.json` so the loop produces real,
-demoable findings offline.
+`gap_analysis.py` imports `mcp_client` (real MCP) and only falls back to the bundled
+`mock_mcp.py` if `radar` can't be imported. The MCP returns **real regulation text**
+(EUR-Lex CELEX / German GADI), ingested into ChromaDB **line by line**, so gap citations
+quote the actual legal text with real source URLs. radar's only third-party deps
+(fastapi, pydantic) are already in the backend venv; the repo root is added to `sys.path`
+so `radar` imports regardless of working directory.
 
 ## LLM: OpenRouter (no mocks)
 

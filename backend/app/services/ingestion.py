@@ -20,12 +20,14 @@ def _split_lines(text: str) -> list[str]:
     return [p.strip() for p in parts if len(p.strip()) > 8]
 
 
+_MAX_BODY_LINES = 120
+
+
 def _regulation_lines(reg: dict) -> list[str]:
     scope = reg.get("scope", {})
     blocks = [
         reg.get("title", ""),
         f"Reference: {reg.get('reference', '')}.",
-        reg.get("summary", ""),
         scope.get("conditions", ""),
         f"Action required: {reg.get('action_required', '')}." if reg.get("action_required") else "",
     ]
@@ -36,10 +38,17 @@ def _regulation_lines(reg: dict) -> list[str]:
         blocks.append(f"Compliance deadline: {reg.get('deadline_date')}.")
     if reg.get("effective_date"):
         blocks.append(f"Effective date: {reg.get('effective_date')}.")
-    lines: list[str] = []
+
+    header: list[str] = []
     for block in blocks:
-        lines.extend(_split_lines(block))
-    # de-dupe while preserving order
+        header.extend(_split_lines(block))
+
+    # Prefer the full legal body (real MCP text) for line-by-line citations;
+    # fall back to the summary for any source that has no full text.
+    body_src = reg.get("text") or reg.get("summary") or ""
+    body = _split_lines(body_src)[:_MAX_BODY_LINES]
+
+    lines = header + body
     seen, out = set(), []
     for ln in lines:
         if ln not in seen:
