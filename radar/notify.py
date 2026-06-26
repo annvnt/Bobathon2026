@@ -10,6 +10,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from radar import findings
 from radar.config import GAPS_FILE, OPTOUTS_FILE, OUTPUT, ensure_dirs, env, load_dotenv
 
 MAX_CONCURRENT = 5
@@ -105,8 +106,13 @@ def alert_all(dry_run: bool = False) -> list[dict]:
     gaps = json.loads(GAPS_FILE.read_text(encoding="utf-8"))
     results = []
     for gap in gaps[:MAX_CONCURRENT * 10]:
+        if gap.get("status") == "in_review":
+            print(f"  {gap.get('product_id')}: skipped (in_review — admin approval required)")
+            results.append({"status": "skipped", "reason": "in_review", "product_id": gap.get("product_id")})
+            continue
         try:
             r = send_alert(gap, dry_run=dry_run)
+            findings.log_alert(gap, r)
             results.append({**r, "product_id": gap.get("product_id")})
             print(f"  {gap.get('product_id')}: {r.get('status')}")
         except Exception as e:

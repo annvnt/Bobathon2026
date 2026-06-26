@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
-import re
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
+from radar import action_lists, alerts, findings, scoring
 from radar.config import CACHE_FILE, FIXTURE_FILE, GAPS_FILE, PARTNERS_FILE, ensure_dirs, load_dotenv
 
 EU_MARKETS = {"EU", "DE", "FR", "NL", "ES", "PL", "IT", "AT", "BE", "SE", "FI", "DK", "IE", "PT", "CZ", "RO", "HU", "SK", "BG", "HR", "LT", "LV", "EE", "SI", "LU", "MT", "CY", "GR"}
@@ -101,81 +102,122 @@ def _battery_passport_gap(product: dict) -> tuple[bool, str, str]:
         btype = "portable"
     deadline = BATTERY_DEADLINES.get(btype, "2027-02-18")
     gap = f"{btype.upper()} battery sold in the EU with no battery passport / data carrier."
-    req = "Batteries must carry a digital battery passport (Art. 77)."
     return True, gap, deadline
 
 
-def satisfied(product: dict, partner: dict, reg: dict, today: date | None = None) -> tuple[bool, str, str, str]:
-    """Returns (satisfied, gap_text, deadline, severity)."""
+def satisfied(
+    product: dict,
+    partner: dict,
+    reg: dict,
+    today: date | None = None,
+) -> tuple[bool, str, str, str, bool, bool]:
+    """Returns (satisfied, gap_text, deadline, severity, from_known_gap, substance_match)."""
     today = today or date.today()
     family = reg.get("regulation_family", "")
     status = partner.get("compliance_status", {})
     known = status.get("known_gaps", [])
 
     if known and _known_gap_matches(known, family, product, reg):
-        gap_text = next((g for g in known if any(k in g.lower() for k in FAMILY_GAP_KEYWORDS.get(family, [family.lower()]))), known[0])
+        gap_text = next(
+            (g for g in known if any(k in g.lower() for k in FAMILY_GAP_KEYWORDS.get(family, [family.lower()]))),
+            known[0],
+        )
         deadline = reg.get("deadline_date") or reg.get("effective_date") or "2027-02-18"
         if family == "Battery":
             _, bgap, bdead = _battery_passport_gap(product)
             if bgap:
                 gap_text = bgap
                 deadline = bdead
-        return False, gap_text, deadline, "high"
+        return False, gap_text, deadline, "high", True, False
 
     if family == "Battery" and product.get("has_battery"):
         has_gap, gap_text, deadline = _battery_passport_gap(product)
         if has_gap:
-            return False, gap_text, deadline, "high"
+            return False, gap_text, deadline, "high", False, False
 
     reg_subs = set(reg.get("scope", {}).get("substances") or [])
     prod_subs = set(product.get("substances") or [])
     overlap = reg_subs & prod_subs
     if overlap:
-        return False, f"Product contains restricted substance(s): {', '.join(sorted(overlap))}.", reg.get("deadline_date", today.isoformat()), "high"
+        return (
+            False,
+            f"Product contains restricted substance(s): {', '.join(sorted(overlap))}.",
+            reg.get("deadline_date", today.isoformat()),
+            "high",
+            False,
+            True,
+        )
 
-    return True, "", "", "none"
+    return True, "", "", "none", False, False
 
 
-def _format_alert(company: str, product_name: str, regulation: str, deadline: str, action: str, url: str) -> str:
-    short_reg = regulation[:40] + "…" if len(regulation) > 40 else regulation
-    msg = f"{company}: {product_name} needs {short_reg} by {deadline[:10]}. {action[:40]}. {url[:30]}"
-    return msg[:160]
+def _finding_id(partner_id: str, product_id: str, regulation: str) -> str:
+    h = hashlib.md5(regulation.encode()).hexdigest()[:8]
+    return f"{partner_id}-{product_id}-{h}"
 
 
-def _build_gap(partner: dict, product: dict, reg: dict, gap: str, deadline: str, severity: str) -> dict:
+def _build_gap(
+    partner: dict,
+    product: dict,
+    reg: dict,
+    gap: str,
+    deadline: str,
+    severity: str,
+    *,
+    from_known_gap: bool,
+    substance_match: bool,
+) -> dict:
     family = reg.get("regulation_family", "")
     regulation = reg.get("title") or reg.get("reference", family)
     source_url = reg.get("source_url") or "https://eur-lex.europa.eu"
-    action = reg.get("action_required") or f"Address {family} compliance for this product."
+    requirement = reg.get("summary") or reg.get("action_required") or f"Comply with {family} obligations."
     contact = partner.get("contact", {})
     channel = contact.get("preferred_channel", "email")
     to = contact.get("phone") if channel in ("sms", "whatsapp") else contact.get("email", "")
 
-    return {
+    criticality, consequences = scoring.score_criticality(severity, family)
+    urgency, urgency_message = scoring.score_urgency(deadline[:10] if deadline else "2027-02-18", family)
+    days_remaining = scoring.days_until(deadline[:10] if deadline else "2027-02-18")
+    confidence = scoring.score_confidence(
+        product, partner, reg, from_known_gap=from_known_gap, substance_match=substance_match
+    )
+    why_applies, reasoning = scoring.build_reasoning(product, partner, reg, gap)
+    status = scoring.initial_status(confidence, criticality)
+    actions_data = action_lists.get_actions(family)
+
+    finding_id = _finding_id(partner.get("partner_id", ""), product.get("product_id", ""), regulation)
+
+    record = {
+        "finding_id": finding_id,
         "company": partner.get("company", ""),
         "partner_id": partner.get("partner_id", ""),
         "product_id": product.get("product_id", ""),
         "product": product.get("name", ""),
+        "product_category": product.get("category", ""),
         "regulation": regulation,
-        "requirement": reg.get("summary", action),
+        "regulation_family": family,
+        "requirement": requirement,
         "source_url": source_url,
+        "fetched_at": reg.get("published_date") or datetime.utcnow().date().isoformat(),
         "gap": gap,
         "deadline": deadline[:10] if deadline else "",
+        "days_remaining": days_remaining,
         "severity": severity,
-        "recommended_action": action,
-        "alert": {
-            "channel": channel,
-            "to": to,
-            "message": _format_alert(
-                partner.get("company", "")[:20],
-                product.get("name", "")[:30],
-                regulation,
-                deadline,
-                action,
-                source_url,
-            ),
-        },
+        "criticality": criticality,
+        "urgency": urgency,
+        "urgency_message": urgency_message,
+        "consequences": consequences,
+        "confidence_score": confidence,
+        "reasoning": reasoning,
+        "why_applies": why_applies,
+        "status": status,
+        "recommended_action": actions_data["steps"][0]["action"] if actions_data.get("steps") else requirement,
+        "action_items": actions_data.get("steps", []),
+        "action_deadline_note": actions_data.get("deadline_note", ""),
+        "alert": {"channel": channel, "to": to},
     }
+    record["alert"] = alerts.attach_alert_payload(record)
+    return findings.merge_into_gap(record)
 
 
 def evaluate(fixture: Path | None = None) -> list[dict]:
@@ -194,10 +236,24 @@ def evaluate(fixture: Path | None = None) -> list[dict]:
             for product in partner.get("products", []):
                 if not applies(product, partner, reg):
                     continue
-                ok, gap_text, deadline, severity = satisfied(product, partner, reg)
+                ok, gap_text, deadline, severity, known, subs = satisfied(product, partner, reg)
                 if ok:
                     continue
-                gaps.append(_build_gap(partner, product, reg, gap_text, deadline, severity))
+                gaps.append(
+                    _build_gap(
+                        partner, product, reg, gap_text, deadline, severity,
+                        from_known_gap=known, substance_match=subs,
+                    )
+                )
+
+    # Default sort: criticality → urgency → deadline (product plan §9)
+    crit_order = {"critical": 0, "moderate": 1, "administrative": 2}
+    urg_order = {"immediate": 0, "short_term": 1, "medium_term": 2, "long_term": 3}
+    gaps.sort(key=lambda g: (
+        crit_order.get(g.get("criticality", ""), 9),
+        urg_order.get(g.get("urgency", ""), 9),
+        g.get("deadline", "9999"),
+    ))
 
     GAPS_FILE.parent.mkdir(parents=True, exist_ok=True)
     GAPS_FILE.write_text(json.dumps(gaps, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

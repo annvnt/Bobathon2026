@@ -6,10 +6,11 @@ import json
 from pathlib import Path
 
 from fastapi import FastAPI, Query
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
-from radar import hil, mcp, pipeline, regcache
+from radar import chat, findings, hil, mcp, pipeline, regcache
 from radar.config import CACHE_FILE, GAPS_FILE, HIL_QUEUE_FILE, STATE_FILE, VECTORDB_FILE, load_dotenv
 
 STATIC = Path(__file__).parent / "static"
@@ -49,12 +50,113 @@ def api_status():
     }
 
 
-@app.get("/api/gaps")
-def api_gaps(severity: str | None = Query(None)):
-    gaps = _read_json(GAPS_FILE, [])
+def _filter_gaps(
+    gaps: list,
+    *,
+    severity: str | None = None,
+    criticality: str | None = None,
+    urgency: str | None = None,
+    family: str | None = None,
+    status: str | None = None,
+    partner_id: str | None = None,
+    q: str | None = None,
+) -> list:
+    out = gaps
     if severity:
-        gaps = [g for g in gaps if g.get("severity") == severity]
-    return gaps
+        out = [g for g in out if g.get("severity") == severity]
+    if criticality:
+        out = [g for g in out if g.get("criticality") == criticality]
+    if urgency:
+        out = [g for g in out if g.get("urgency") == urgency]
+    if family:
+        out = [g for g in out if g.get("regulation_family") == family]
+    if status:
+        out = [g for g in out if g.get("status") == status]
+    if partner_id:
+        out = [g for g in out if g.get("partner_id") == partner_id]
+    if q:
+        ql = q.lower()
+        out = [
+            g for g in out
+            if ql in (g.get("company") or "").lower()
+            or ql in (g.get("product") or "").lower()
+            or ql in (g.get("regulation") or "").lower()
+            or ql in (g.get("gap") or "").lower()
+        ]
+    return [findings.merge_into_gap(g) for g in out]
+
+
+@app.get("/api/gaps")
+def api_gaps(
+    severity: str | None = Query(None),
+    criticality: str | None = Query(None),
+    urgency: str | None = Query(None),
+    family: str | None = Query(None),
+    status: str | None = Query(None),
+    partner_id: str | None = Query(None),
+    q: str | None = Query(None),
+):
+    gaps = _read_json(GAPS_FILE, [])
+    return _filter_gaps(
+        gaps,
+        severity=severity,
+        criticality=criticality,
+        urgency=urgency,
+        family=family,
+        status=status,
+        partner_id=partner_id,
+        q=q,
+    )
+
+
+@app.get("/api/gaps/{finding_id}")
+def api_gap_detail(finding_id: str):
+    gaps = _read_json(GAPS_FILE, [])
+    for g in gaps:
+        if g.get("finding_id") == finding_id:
+            return findings.merge_into_gap(g)
+    return JSONResponse({"status": "not_found"}, status_code=404)
+
+
+class GapStatusUpdate(BaseModel):
+    status: str
+    note: str = ""
+
+
+@app.post("/api/gaps/{finding_id}/status")
+def api_gap_status(finding_id: str, body: GapStatusUpdate):
+    try:
+        entry = findings.set_status(finding_id, body.status, note=body.note)
+        return {"finding_id": finding_id, **entry}
+    except ValueError as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+
+
+@app.get("/api/regulations/library")
+def api_regulation_library():
+    """Regulation library (A4): cached texts + ingested updates."""
+    entries = {e["key"]: e for e in regcache.list_cached()}
+    cache = _read_json(CACHE_FILE, {"updates": []})
+    for u in cache.get("updates", []):
+        key = u.get("regulation_text_key")
+        if not key:
+            continue
+        if key not in entries:
+            entries[key] = {
+                "key": key,
+                "title": u.get("title"),
+                "reference": u.get("reference"),
+                "source": u.get("source"),
+                "regulation_family": u.get("regulation_family"),
+                "url": u.get("source_url"),
+            }
+    return list(entries.values())
+
+
+@app.get("/api/alert-log")
+def api_alert_log():
+    from radar.findings import ALERT_LOG_FILE
+    return _read_json(ALERT_LOG_FILE, [])
 
 
 @app.get("/api/updates")
@@ -102,6 +204,19 @@ def api_regulation_lookup(
     """Return cached regulation text, fetching from API only on first request."""
     rec = regcache.get_or_fetch(source, reference, title or reference, force=force)
     return rec
+
+
+class ChatRequest(BaseModel):
+    query: str
+
+
+@app.post("/api/chat/lookup")
+def api_chat_lookup(body: ChatRequest):
+    """Match product / ingredient text to EUR-Lex and Open Legal Data regulations."""
+    result = chat.lookup(body.query.strip())
+    if result.get("error"):
+        return JSONResponse(result, status_code=400)
+    return result
 
 
 @app.get("/api/job/{job_id}")

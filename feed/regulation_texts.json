@@ -10,5 +10,99 @@
     "truncated": false,
     "file": null,
     "text": "Ziel des Gesetzes ist die paritätische Vertretung von Frauen und Männern in Gremien, soweit der Bund Mitglieder für diese bestimmen kann."
+  },
+  "EUR-Lex__32023R1542": {
+    "key": "EUR-Lex__32023R1542",
+    "source": "EUR-Lex",
+    "reference": "32023R1542",
+    "title": "EU Battery Regulation (EU) 2023/1542",
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1542",
+    "fetched_at": "2026-06-26T12:10:52.990170Z",
+    "chars": 100000,
+    "truncated": true,
+    "file": "EUR-Lex__32023R1542.txt"
+  },
+  "EUR-Lex__32011L0065": {
+    "key": "EUR-Lex__32011L0065",
+    "source": "EUR-Lex",
+    "reference": "32011L0065",
+    "title": "RoHS Directive 2011/65/EU",
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011L0065",
+    "fetched_at": "2026-06-26T12:10:53.759420Z",
+    "chars": 78844,
+    "truncated": false,
+    "file": "EUR-Lex__32011L0065.txt"
+  },
+  "EUR-Lex__32007R1907": {
+    "key": "EUR-Lex__32007R1907",
+    "source": "EUR-Lex",
+    "reference": "32007R1907",
+    "title": "REACH Regulation (EC) 1907/2006",
+    "url": "",
+    "fetched_at": "2026-06-26T12:10:54.145812Z",
+    "chars": 111,
+    "truncated": false,
+    "file": null,
+    "text": "REACH Regulation (EC) 1907/2006\n\nReference: 32007R1907\nSource: EUR-Lex\n(fetch error: HTTP Error 404: Not Found)"
+  },
+  "OpenLegalData__BJNR042200011BJNE000100000": {
+    "key": "OpenLegalData__BJNR042200011BJNE000100000",
+    "source": "OpenLegalData",
+    "reference": "BJNR042200011BJNE000100000",
+    "title": "BuchhdlAusbV 2011 Eingangsformel Eingangsformel",
+    "url": "https://de.openlegaldata.io/laws/71936/",
+    "fetched_at": "2026-06-26T12:10:57.136677Z",
+    "chars": 333,
+    "truncated": false,
+    "file": null,
+    "text": "Auf Grund des § 4 Absatz 1 in Verbindung mit § 5 des Berufsbildungsgesetzes, von denen § 4 Absatz 1 durch Artikel 232 Nummer 1 der Verordnung vom 31. Oktober 2006 (BGBl. I S. 2407) geändert worden ist, verordnet das Bundesministerium für Wirtschaft und Technologie im Einvernehmen mit dem Bundesministerium für Bildung und Forschung:"
+  },
+  "OpenLegalData__BJNR004530961BJNE000101308": {
+    "key": "OpenLegalData__BJNR004530961BJNE000101308",
+    "source": "OpenLegalData",
+    "reference": "BJNR004530961BJNE000101308",
+    "title": "BVG§31Abs5DV § 1 § 1",
+    "url": "https://de.openlegaldata.io/laws/138752/",
+    "fetched_at": "2026-06-26T12:10:57.565231Z",
+    "chars": 409,
+    "truncated": false,
+    "file": null,
+    "text": "Schwerstbeschädigtenzulage erhalten Beschädigte, deren Schädigungsfolgen allein auf Grund der Beurteilung nach § 30 Abs. 1 des Bundesversorgungsgesetzes mit einem Grad der Schädigungsfolgen von 100 zu beurteilen sind, wenn die anerkannten Schädigungsfolgen nach den nachstehenden Vorschriften mit wenigstens 130 Punkten zu bewerten sind oder wenn sie Anspruch auf Pflegezulage mindestens nach Stufe III haben."
+  },
+  "OpenLegalData__BJNR066300015BJNE000100000": {
+    "key": "OpenLegalData__BJNR066300015BJNE000100000",
+    "source": "OpenLegalData",
+    "reference": "BJNR066300015BJNE000100000",
+    "title": "BWFSPrV Eingangsformel Eingangsformel",
+    "url": "https://de.openlegaldata.io/laws/139008/",
+    "fetched_at": "2026-06-26T12:10:57.808858Z",
+    "chars": 172,
+    "truncated": false,
+    "file": null,
+    "text": "Auf Grund des § 10a Absatz 1 und 3 des Soldatenversorgungsgesetzes in der Fassung der Bekanntmachung vom 16. September 2009 (BGBl. I S. 3054) verordnet die Bundesregierung:"
+  },
+  "OpenLegalData__BJNR276300020BJNE000100000": {
+    "key": "OpenLegalData__BJNR276300020BJNE000100000",
+    "source": "OpenLegalData",
+    "reference": "BJNR276300020BJNE000100000",
+    "title": "DBBATZV Eingangsformel Eingangsformel",
+    "url": "https://de.openlegaldata.io/laws/140032/",
+    "fetched_at": "2026-06-26T12:10:58.149729Z",
+    "chars": 502,
+    "truncated": false,
+    "file": null,
+    "text": "Auf Grund des § 3 Absatz 3 Satz 1 Nummer 4 und des § 10 Absatz 1 des Postpersonalrechtsgesetzes, von denen § 3 Absatz 3 Satz 1 Nummer 4 zuletzt durch Artikel 315 der Verordnung vom 19. Juni 2020 (BGBl. I S. 1328) und § 10 Absatz 1 zuletzt durch Artikel 2 Nummer 3 des Gesetzes vom 27. Juni 2017 (BGBl. I S. 1944) geändert worden ist, verordnet das Bundesministerium der Finanzen nach Anhörung des Vorstands der Deutschen Bank AG im Einvernehmen mit dem Bundesministerium des Innern, für Bau und Heimat:"
+  },
+  "ECHA__ECHA_candidate_list_full-2026-02-27_Medium-chain_chlorinated_paraffins_MCCP_UVCB_substances_cons": {
+    "key": "ECHA__ECHA_candidate_list_full-2026-02-27_Medium-chain_chlorinated_paraffins_MCCP_UVCB_substances_cons",
+    "source": "ECHA",
+    "reference": "ECHA candidate list full-2026-02-27: Medium-chain chlorinated paraffins (MCCP) UVCB substances consisting of more than or equal to 80% linear chloroalkanes with carbon chain lengths within the range from C14 to C17 -",
+    "title": "ECHA candidate list full-2026-02-27 — Medium-chain chlorinated paraffins (MCCP) UVCB substances consisting of more than or equal to 80% linear chloroalkanes with carbon chain lengths within the range from C14 to C17 -",
+    "url": "https://echa.europa.eu/candidate-list-table",
+    "fetched_at": "2026-06-26T12:11:03.369637Z",
+    "chars": 458,
+    "truncated": false,
+    "file": null,
+    "text": "ECHA candidate list full-2026-02-27: Medium-chain chlorinated paraffins (MCCP) UVCB substances consisting of more than or equal to 80% linear chloroalkanes with carbon chain lengths within the range from C14 to C17 -\n\nECHA substance listing: ECHA candidate list full-2026-02-27: Medium-chain chlorinated paraffins (MCCP) UVCB substances consisting of more than or equal to 80% linear chloroalkanes with carbon chain lengths within the range from C14 to C17 -"
   }
 }

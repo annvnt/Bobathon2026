@@ -248,3 +248,8 @@ def attach_to_update(update: dict[str, Any], raw: dict[str, Any] | None = None) 
 def stats() -> dict[str, int]:
     index = _load_index()
     return {"cached_regulations": len(index), "total_chars": sum(e.get("chars", 0) for e in index.values())}
+
+
+def list_cached() -> list[dict]:
+    index = _load_index()
+    return [{**meta, "key": key} for key, meta in index.items()]

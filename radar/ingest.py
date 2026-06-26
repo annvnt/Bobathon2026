@@ -345,41 +345,20 @@ def fetch_openlegaldata(last_fetched: str) -> list[dict]:
 
 
 def fetch_echa(last_fetched: str) -> list[dict]:
-    """Read organizer-provided ECHA XLSX files (see Dataset/SOURCES.md)."""
-    try:
-        from openpyxl import load_workbook
-    except ImportError:
-        print("ECHA: openpyxl not installed - pip install openpyxl")
+    """Read ECHA chemical list XLSX files from ECHA/ (candidate, restriction, authorisation)."""
+    from radar import echa as echa_mod
+
+    entries = echa_mod.load_entries()
+    if not entries:
+        st = echa_mod.stats()
+        if not st.get("files"):
+            print("ECHA: no XLSX files in ECHA/ directory")
+        else:
+            print(f"ECHA: 0 portfolio-relevant substances (watching: {', '.join(st['portfolio_substances'])})")
         return []
 
-    if not ECHA_DIR.exists():
-        print("ECHA: ECHA/ directory not found")
-        return []
-
-    from radar import taxonomy as tax
-
-    records: list[dict] = []
-    seen: set[str] = set()
-    for xlsx in sorted(ECHA_DIR.glob("*.xlsx")):
-        try:
-            wb = load_workbook(xlsx, read_only=True, data_only=True)
-            ws = wb.active
-            list_type = xlsx.stem.replace("_", " ")
-            for row in ws.iter_rows(min_row=2, values_only=True):
-                if not row:
-                    continue
-                name = " ".join(str(c) for c in row[:3] if c)
-                if not name or name in seen:
-                    continue
-                if not tax.resolve_substances(name):
-                    continue
-                seen.add(name)
-                records.append(translate.from_echa(name, list_type))
-                if len(records) >= 25:
-                    break
-            wb.close()
-        except Exception as e:
-            print(f"ECHA: skip {xlsx.name} - {e}")
+    records = [translate.from_echa(entry) for entry in entries]
+    print(f"ECHA: loaded {len(records)} substance entries from {len(echa_mod.stats()['files'])} files")
     return records
 
 

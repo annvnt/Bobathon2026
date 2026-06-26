@@ -1,7 +1,15 @@
 let gapsData = [];
-let sortKey = "deadline";
+let sortKey = "criticality";
 let sortAsc = true;
-let severityFilter = "";
+let criticalityFilter = "";
+let urgencyFilter = "";
+let familyFilter = "";
+let statusFilter = "";
+let searchQuery = "";
+let currentGap = null;
+
+const CRIT_ORDER = { critical: 0, moderate: 1, administrative: 2 };
+const URG_ORDER = { immediate: 0, short_term: 1, medium_term: 2, long_term: 3 };
 
 async function fetchJson(url) {
   const r = await fetch(url);
@@ -16,9 +24,23 @@ function esc(s) {
   return d.innerHTML;
 }
 
-function severityBadge(s) {
-  const c = ["critical", "high", "medium", "low"].includes(s) ? s : "low";
-  return `<span class="badge ${c}">${esc(s || "low")}</span>`;
+function critBadge(c) {
+  const map = { critical: "critical", moderate: "medium", administrative: "low" };
+  const cls = map[c] || "low";
+  const label = { critical: "Critical", moderate: "Moderate", administrative: "Admin" }[c] || c;
+  return `<span class="badge ${cls}">${esc(label)}</span>`;
+}
+
+function urgBadge(u) {
+  const map = { immediate: "critical", short_term: "high", medium_term: "medium", long_term: "low" };
+  const cls = map[u] || "low";
+  const label = {
+    immediate: "Act now",
+    short_term: "Weeks",
+    medium_term: "Plan",
+    long_term: "Schedule",
+  }[u] || u;
+  return `<span class="badge ${cls}">${esc(label)}</span>`;
 }
 
 function showToast(msg) {
@@ -30,39 +52,127 @@ function showToast(msg) {
 }
 
 function filteredGaps() {
-  if (!severityFilter) return gapsData;
-  return gapsData.filter((g) => g.severity === severityFilter);
+  return gapsData.filter((g) => {
+    if (criticalityFilter && g.criticality !== criticalityFilter) return false;
+    if (urgencyFilter && g.urgency !== urgencyFilter) return false;
+    if (familyFilter && g.regulation_family !== familyFilter) return false;
+    if (statusFilter && g.status !== statusFilter) return false;
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      const hay = `${g.company} ${g.product} ${g.regulation} ${g.gap}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
 }
 
 function renderGaps() {
   const sorted = [...filteredGaps()].sort((a, b) => {
+    if (sortKey === "criticality") {
+      const av = CRIT_ORDER[a.criticality] ?? 9;
+      const bv = CRIT_ORDER[b.criticality] ?? 9;
+      if (av !== bv) return sortAsc ? av - bv : bv - av;
+      const uav = URG_ORDER[a.urgency] ?? 9;
+      const ubv = URG_ORDER[b.urgency] ?? 9;
+      if (uav !== ubv) return uav - ubv;
+      return String(a.deadline).localeCompare(String(b.deadline));
+    }
+    if (sortKey === "urgency") {
+      const av = URG_ORDER[a.urgency] ?? 9;
+      const bv = URG_ORDER[b.urgency] ?? 9;
+      return sortAsc ? av - bv : bv - av;
+    }
     const av = a[sortKey] || "";
     const bv = b[sortKey] || "";
     return sortAsc ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
   });
-  const tbody = document.querySelector("#gaps-table tbody");
+
+  const grid = document.getElementById("gaps-grid");
   if (!sorted.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-row">No gaps found. Run a scan or adjust the severity filter.</td></tr>`;
+    grid.innerHTML = `
+      <div class="empty-state">
+        <strong>No gaps match your filters</strong>
+        Try clearing filters or run a scan to refresh your portfolio picture.
+      </div>`;
     return;
   }
-  tbody.innerHTML = sorted.map((g) => `
-    <tr>
-      <td>${esc(g.company)}</td>
-      <td>${esc(g.product)}</td>
-      <td>${esc((g.regulation || "").slice(0, 72))}</td>
-      <td>${severityBadge(g.severity)}</td>
-      <td>${esc(g.deadline || "-")}</td>
-      <td>${esc((g.gap || "").slice(0, 100))}</td>
-      <td><a class="link" href="${esc(g.source_url)}" target="_blank" rel="noopener">View source</a></td>
-    </tr>
-  `).join("");
+
+  grid.innerHTML = sorted.map((g, idx) => {
+    const urgent = g.urgency === "immediate" || (g.days_remaining != null && g.days_remaining < 90);
+    const critCls = `crit-${g.criticality || "moderate"}`;
+    return `
+    <article class="gap-card ${critCls}" data-idx="${idx}" tabindex="0" role="button">
+      <div class="gap-card-top">
+        <div class="gap-card-badges">${critBadge(g.criticality)} ${urgBadge(g.urgency)}</div>
+      </div>
+      <p class="gap-card-company">${esc(g.company)}</p>
+      <h3 class="gap-card-product">${esc(g.product)}</h3>
+      <p class="gap-card-reg">${esc(g.regulation_family)} · ${esc((g.regulation || "").slice(0, 64))}</p>
+      <p class="gap-card-summary">${esc(g.gap)}</p>
+      <div class="gap-card-footer">
+        <span class="deadline-pill ${urgent ? "urgent" : ""}">📅 ${esc(g.deadline || "—")} · ${g.days_remaining ?? "?"} days</span>
+        <span>${g.confidence_score ?? "—"}% match</span>
+      </div>
+    </article>`;
+  }).join("");
+
+  grid.querySelectorAll(".gap-card").forEach((card) => {
+    const open = () => showGapDetail(sorted[Number(card.dataset.idx)]);
+    card.addEventListener("click", open);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+    });
+  });
+}
+
+function gapSection(title, body) {
+  return `<section class="gap-section"><h3 class="gap-section-title">${esc(title)}</h3><p>${esc(body)}</p></section>`;
+}
+
+function showGapDetail(gap) {
+  currentGap = gap;
+  const modal = document.getElementById("gap-detail-modal");
+  document.getElementById("gap-modal-badges").innerHTML =
+    `${critBadge(gap.criticality)} ${urgBadge(gap.urgency)} <span class="badge medium">${esc(gap.status || "detected")}</span>`;
+  document.getElementById("gap-modal-title").textContent = gap.product || "Gap detail";
+  document.getElementById("gap-modal-meta").textContent =
+    `${gap.company} · ${gap.regulation_family} · ${gap.deadline} (${gap.days_remaining} days) · ${gap.confidence_score}% confidence`;
+
+  const actions = (gap.action_items || []).map((a) =>
+    `<li><label><input type="checkbox"> <strong>${a.step}.</strong> ${esc(a.action)} <em>(${esc(a.owner)})</em></label></li>`
+  ).join("");
+
+  document.getElementById("gap-modal-sections").innerHTML = [
+    gapSection("What you need to do", gap.requirement),
+    gapSection("What's missing", gap.gap),
+    gapSection("Why this applies to your product", gap.why_applies),
+    gapSection("If you ignore this", gap.consequences),
+    `<section class="gap-section"><h3 class="gap-section-title">Your action plan</h3><ol class="action-checklist">${actions}</ol><p class="tile-meta">${esc(gap.action_deadline_note || "")}</p></section>`,
+    gapSection("How we matched this", gap.reasoning),
+    `<p class="tile-meta"><a class="link" href="${esc(gap.source_url)}" target="_blank" rel="noopener">View official source</a> · updated ${esc(gap.fetched_at || "")}</p>`,
+  ].join("");
+
+  modal.showModal();
+}
+
+async function updateGapStatus(status) {
+  if (!currentGap?.finding_id) return;
+  await fetch(`/api/gaps/${encodeURIComponent(currentGap.finding_id)}/status`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+  currentGap.status = status;
+  showToast(status === "resolved" ? "Marked as resolved — nice work!" : "Status saved");
+  document.getElementById("gap-detail-modal").close();
+  await loadGaps();
 }
 
 function renderRouting(updates) {
   const el = document.getElementById("routing-list");
   const routed = updates.filter((u) => u.router_matches && u.router_matches.length);
   if (!routed.length) {
-    el.innerHTML = `<div class="routing-card"><p class="reg-title">No routed regulations yet</p><span class="cluster-tag">Run scan to execute MCP pipeline</span></div>`;
+    el.innerHTML = `<div class="routing-card"><p class="reg-title">No matches yet</p><span class="cluster-tag">Run a scan to map regulations to your product taxonomy.</span></div>`;
     return;
   }
   el.innerHTML = routed.slice(0, 6).map((u) => `
@@ -82,13 +192,13 @@ async function renderHil() {
   const items = await fetchJson("/api/hil");
   const el = document.getElementById("hil-list");
   if (!items.length) {
-    el.innerHTML = `<li class="hil-item"><span class="hil-title">Queue empty — all router matches above confidence threshold</span></li>`;
+    el.innerHTML = `<li class="hil-item"><span class="hil-title">All clear — nothing waiting for analyst review right now.</span></li>`;
     return;
   }
   el.innerHTML = items.map((item) => `
     <li class="hil-item" data-id="${esc(item.id)}">
       <span class="hil-title">${esc(item.title)} <span class="hil-conf">${item.router_confidence}% confidence</span></span>
-      <button type="button" class="btn btn-ghost btn-approve" data-id="${esc(item.id)}">Approve top match</button>
+      <button type="button" class="btn btn-soft btn-approve" data-id="${esc(item.id)}">Approve</button>
     </li>
   `).join("");
   el.querySelectorAll(".btn-approve").forEach((btn) => {
@@ -110,12 +220,24 @@ function renderApiStatus(creds) {
     else if (info.configured) cls += " live";
     else cls += " missing";
     const label = info.mode === "local_files"
-      ? `${name}: local`
+      ? `${name} · local files`
       : info.configured
-        ? `${name}: API key set`
-        : `${name}: no key`;
+        ? `${name} · connected`
+        : `${name} · not configured`;
     return `<span class="${cls}">${esc(label)}</span>`;
   }).join("");
+}
+
+async function loadGaps() {
+  const params = new URLSearchParams();
+  if (criticalityFilter) params.set("criticality", criticalityFilter);
+  if (urgencyFilter) params.set("urgency", urgencyFilter);
+  if (familyFilter) params.set("family", familyFilter);
+  if (statusFilter) params.set("status", statusFilter);
+  if (searchQuery) params.set("q", searchQuery);
+  const qs = params.toString();
+  gapsData = await fetchJson(`/api/gaps${qs ? `?${qs}` : ""}`);
+  renderGaps();
 }
 
 async function showRegulationText(update) {
@@ -132,33 +254,26 @@ async function showRegulationText(update) {
   if (update.regulation_text_key) {
     rec = await fetchJson(`/api/regulations/${encodeURIComponent(update.regulation_text_key)}`);
     if (rec.status === "not_found") {
-      const q = new URLSearchParams({
-        source: update.source,
-        reference: update.reference || "",
-        title: update.title || "",
-      });
+      const q = new URLSearchParams({ source: update.source, reference: update.reference || "", title: update.title || "" });
       rec = await fetchJson(`/api/regulations?${q}`);
     }
   } else {
-    const q = new URLSearchParams({
-      source: update.source,
-      reference: update.reference || "",
-      title: update.title || "",
-    });
+    const q = new URLSearchParams({ source: update.source, reference: update.reference || "", title: update.title || "" });
     rec = await fetchJson(`/api/regulations?${q}`);
   }
 
   const cached = rec.from_cache ? " · served from cache" : " · fetched from API";
   metaEl.textContent = `${rec.source || update.source} · ${rec.reference || update.reference} · ${rec.chars || 0} chars${cached}`;
-  bodyEl.textContent = rec.text || rec.regulation_text_preview || "No text available.";
+  bodyEl.textContent = rec.text || update.regulation_text_preview || "No text available.";
 }
+
+window.showRegulationText = showRegulationText;
 
 function bindRegTextButtons(updates) {
   document.querySelectorAll(".btn-view-text").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      const idx = Number(btn.dataset.idx);
       try {
-        await showRegulationText(updates[idx]);
+        await showRegulationText(updates[Number(btn.dataset.idx)]);
       } catch (e) {
         showToast("Could not load regulation text: " + e.message);
       }
@@ -170,20 +285,18 @@ async function refresh() {
   const status = await fetchJson("/api/status");
   renderApiStatus(status.api_credentials);
   const lastRun = status.last_run
-    ? new Date(status.last_run).toLocaleString()
-    : "not yet run";
-  document.getElementById("last-run").textContent = `Last scan: ${lastRun}`;
+    ? new Date(status.last_run).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
+    : "never";
+  document.getElementById("last-run").textContent = lastRun === "never" ? "No scan yet" : `Last scan · ${lastRun}`;
 
   document.getElementById("gap-total").textContent = status.gap_count;
   document.getElementById("update-count").textContent = status.update_count;
   document.getElementById("vector-count").textContent = status.vector_entries ?? 0;
   document.getElementById("hil-count").textContent = status.hil_pending ?? 0;
 
-  gapsData = await fetchJson("/api/gaps");
-  const crit = gapsData.filter((g) => g.severity === "critical" || g.severity === "high").length;
+  await loadGaps();
+  const crit = gapsData.filter((g) => g.criticality === "critical").length;
   document.getElementById("gap-critical").textContent = crit;
-
-  renderGaps();
 
   const updates = await fetchJson("/api/updates?limit=12");
   renderRouting(updates);
@@ -194,12 +307,12 @@ async function refresh() {
     ? updates.map((u, idx) => `
       <li class="resource-tile">
         <p class="tile-title">${esc(u.title || u.reference)}</p>
-        <span class="tile-meta">${esc(u.source)} &middot; ${esc(u.published_date)}${u.regulation_text_cached ? '<span class="cache-tag">cached</span>' : ""}</span>
+        <span class="tile-meta">${esc(u.source)} · ${esc(u.published_date)}${u.regulation_text_cached ? '<span class="cache-tag">cached</span>' : ""}</span>
         <span class="tile-family">${esc(u.regulation_family)}${u.cluster_id ? " · " + esc(u.cluster_id) : ""}</span>
-        <button type="button" class="btn btn-ghost btn-view-text" data-idx="${idx}">View regulation text</button>
+        <button type="button" class="btn btn-soft btn-sm btn-view-text" data-idx="${idx}">Read full text</button>
       </li>
     `).join("")
-    : `<li class="resource-tile"><p class="tile-title">No updates yet</p><span class="tile-meta">Click Run scan to ingest from live sources.</span></li>`;
+    : `<li class="resource-tile"><p class="tile-title">No regulations yet</p><span class="tile-meta">Run a scan to pull live rules from EUR-Lex, ECHA, and more.</span></li>`;
   bindRegTextButtons(updates);
 }
 
@@ -208,56 +321,97 @@ async function pollJob(jobId) {
     await new Promise((r) => setTimeout(r, 2000));
     const job = await fetchJson(`/api/job/${jobId}`);
     if (job.status === "completed") {
-      showToast(`Scan complete: ${job.gaps_found} gaps, MCP ${job.mcp?.processed || 0} routed`);
+      showToast(`Done! Found ${job.gaps_found} gaps across your portfolio.`);
       return job;
     }
-    if (job.status === "failed") {
-      throw new Error(job.error || "Scan failed");
-    }
+    if (job.status === "failed") throw new Error(job.error || "Scan failed");
   }
   throw new Error("Scan timed out");
 }
 
 async function runScan(btn) {
-  const buttons = [btn, ...document.querySelectorAll("#run-btn, #run-btn-hero, #run-btn-cta")];
+  const buttons = [
+    btn,
+    ...document.querySelectorAll("#run-btn, #run-btn-hero, #run-btn-mobile"),
+  ].filter(Boolean);
+  const labels = new Map();
   buttons.forEach((b) => {
+    labels.set(b, b.textContent);
     b.disabled = true;
-    if (b === btn) b.textContent = "Scanning...";
+    if (b === btn) b.textContent = "Scanning…";
   });
   try {
     const { job_id } = await fetch("/api/run", { method: "POST" }).then((r) => r.json());
     await pollJob(job_id);
     await refresh();
   } catch (e) {
-    showToast("Scan failed: " + e.message);
+    showToast("Scan didn't finish: " + e.message);
   } finally {
-    document.getElementById("run-btn").textContent = "Run scan";
-    document.getElementById("run-btn-hero").textContent = "Run scan";
-    document.getElementById("run-btn-cta").textContent = "Run scan now";
-    buttons.forEach((b) => { b.disabled = false; });
+    buttons.forEach((b) => {
+      b.disabled = false;
+      b.textContent = labels.get(b);
+    });
   }
 }
 
-["run-btn", "run-btn-hero", "run-btn-cta"].forEach((id) => {
-  document.getElementById(id).addEventListener("click", (e) => runScan(e.target));
+["run-btn", "run-btn-hero", "run-btn-mobile"].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("click", (e) => runScan(e.target));
 });
 
-document.getElementById("severity-filter").addEventListener("change", (e) => {
-  severityFilter = e.target.value;
+["criticality-filter", "urgency-filter", "family-filter", "status-filter"].forEach((id) => {
+  document.getElementById(id).addEventListener("change", (e) => {
+    if (id === "criticality-filter") criticalityFilter = e.target.value;
+    if (id === "urgency-filter") urgencyFilter = e.target.value;
+    if (id === "family-filter") familyFilter = e.target.value;
+    if (id === "status-filter") statusFilter = e.target.value;
+    loadGaps();
+  });
+});
+
+document.getElementById("gap-search").addEventListener("input", (e) => {
+  searchQuery = e.target.value.trim();
+  clearTimeout(document.getElementById("gap-search")._deb);
+  document.getElementById("gap-search")._deb = setTimeout(loadGaps, 300);
+});
+
+document.getElementById("gap-sort")?.addEventListener("change", (e) => {
+  sortKey = e.target.value;
+  sortAsc = true;
   renderGaps();
 });
 
-document.querySelectorAll("#gaps-table th[data-sort]").forEach((th) => {
-  th.addEventListener("click", () => {
-    const key = th.dataset.sort;
-    if (sortKey === key) sortAsc = !sortAsc;
-    else { sortKey = key; sortAsc = true; }
-    renderGaps();
+function initNavHighlight() {
+  const links = document.querySelectorAll(".nav-link");
+  const sections = ["overview", "gaps-section", "review-section", "updates-section", "chat-section"];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        const navMap = {
+          "gaps-section": "gaps",
+          "review-section": "review",
+          "updates-section": "updates",
+          "chat-section": "chat",
+        };
+        const nav = navMap[id] || "overview";
+        links.forEach((l) => l.classList.toggle("active", l.dataset.nav === nav));
+      });
+    },
+    { rootMargin: "-30% 0px -55% 0px", threshold: 0 },
+  );
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
   });
-});
+}
 
 document.getElementById("reg-modal-close").addEventListener("click", () => {
   document.getElementById("reg-text-modal").close();
 });
-
+document.getElementById("gap-modal-close").addEventListener("click", () => {
+  document.getElementById("gap-detail-modal").close();
+});
 refresh();
+initNavHighlight();

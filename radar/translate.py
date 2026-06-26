@@ -99,24 +99,47 @@ def from_openlegaldata(item: dict[str, Any]) -> dict[str, Any]:
     )
 
 
-def from_echa(name: str, list_type: str, restriction_date: str | None = None) -> dict[str, Any]:
-    text = f"{name} {list_type} REACH SVHC restriction"
-    family = "REACH" if "svhc" in list_type.lower() else "RoHS"
-    substances = taxonomy.resolve_substances(name)
-    if not substances:
-        substances = taxonomy.resolve_substances(text)
+def from_echa(name_or_entry: str | dict[str, Any], list_type: str | None = None, restriction_date: str | None = None) -> dict[str, Any]:
+    if isinstance(name_or_entry, dict):
+        entry = name_or_entry
+        name = entry["name"]
+        list_type = entry.get("list_kind", list_type or "candidate_list").replace("_", " ")
+        restriction_date = entry.get("effective_date") or restriction_date
+        substances = entry.get("substances") or list(taxonomy.resolve_substances(name))
+        url = entry.get("url") or "https://echa.europa.eu/candidate-list-table"
+        reference = entry.get("reference") or f"ECHA {list_type}: {name}"
+        summary = (
+            f"{entry.get('summary_extra', '')} Substance listed: {name}."
+            + (f" Entry {entry['entry_number']}." if entry.get("entry_number") else "")
+        ).strip()
+        family = "REACH"
+        if "restriction" in str(entry.get("list_kind", "")):
+            family = "REACH"
+        text = f"{name} {entry.get('cas_number', '')} {entry.get('ec_number', '')} {list_type}"
+    else:
+        name = name_or_entry
+        list_type = list_type or "candidate_list"
+        text = f"{name} {list_type} REACH SVHC restriction"
+        family = "REACH" if "svhc" in list_type.lower() or "candidate" in list_type.lower() else "RoHS"
+        substances = list(taxonomy.resolve_substances(name))
+        if not substances:
+            substances = list(taxonomy.resolve_substances(text))
+        url = "https://echa.europa.eu/candidate-list-table"
+        reference = f"ECHA {list_type}: {name}"
+        summary = f"Substance {name} listed on ECHA {list_type}."
+
     eff = restriction_date or _today()
     return _base_record(
         source="ECHA",
         family=family,
-        reference=f"ECHA {list_type}: {name}",
-        title=f"ECHA {list_type} — {name}",
-        summary=f"Substance {name} listed on ECHA {list_type}.",
+        reference=reference,
+        title=f"ECHA {list_type.replace('_', ' ')} — {name[:100]}",
+        summary=summary,
         effective=eff,
-        url="https://echa.europa.eu/candidate-list-table",
+        url=url,
         text=text,
         change_type="new",
-        substances=list(substances),
+        substances=substances,
     )
 
 
