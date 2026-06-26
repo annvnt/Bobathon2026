@@ -1,0 +1,1288 @@
+{
+  "_comment": "EXAMPLES of regulatory updates - they show the shape of a rule (family, summary, deadline, scope) so you recognise one when you pull CURRENT requirements from live sources (see SOURCES.md). Illustrative only - not the task and not a dataset to match against.",
+  "updates": [
+    {
+      "update_id": "REG-26-001",
+      "published_date": "2026-05-04",
+      "source": "EUR-Lex",
+      "regulation_family": "RoHS",
+      "reference": "Directive 2011/65/EU, Annex II review",
+      "title": "RoHS heavy-metal limits review (Pb, Hg, Cd, Cr VI)",
+      "summary": "The Commission has reopened the Annex II review for the four restricted heavy metals. Several lighting and legacy-electronics exemptions for lead and mercury are set to lapse, meaning equipment containing these metals above 0.1% (0.01% for cadmium) must be reformulated or pulled from the EU market.",
+      "change_type": "amendment",
+      "effective_date": "2027-07-22",
+      "deadline_date": "2027-07-22",
+      "severity": "high",
+      "action_required": "Confirm homogeneous-material content of Pb/Hg/Cd/Cr VI; re-test affected SKUs.",
+      "scope": {
+        "categories": "all",
+        "substances": [
+          "lead",
+          "mercury",
+          "cadmium",
+          "hexavalent_chromium"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to EEE placed on the EU market containing the listed heavy metals above threshold."
+      }
+    },
+    {
+      "update_id": "REG-26-002",
+      "published_date": "2026-05-11",
+      "source": "ECHA",
+      "regulation_family": "RoHS",
+      "reference": "Annex II amendment (MCCP)",
+      "title": "RoHS to restrict medium-chain chlorinated paraffins (MCCP)",
+      "summary": "MCCPs used as plasticisers/flame retardants in cabling and insulation are proposed for addition to the RoHS restricted list.",
+      "change_type": "new",
+      "effective_date": "2028-01-01",
+      "deadline_date": "2028-01-01",
+      "severity": "medium",
+      "action_required": "Screen cable insulation and plasticised parts for MCCP.",
+      "scope": {
+        "categories": "all",
+        "substances": [
+          "MCCP"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to EEE containing MCCP above the restriction threshold."
+      }
+    },
+    {
+      "update_id": "REG-26-003",
+      "published_date": "2026-05-18",
+      "source": "EUR-Lex",
+      "regulation_family": "RoHS",
+      "reference": "Annex IV exemption renewal",
+      "title": "RoHS lead exemption renewed for certain medical sensors",
+      "summary": "Exemption permitting lead in solder of specific in-vivo and body-worn medical sensors is renewed for a further term. Affected manufacturers should re-document the exemption in their technical file.",
+      "change_type": "amendment",
+      "effective_date": "2026-09-01",
+      "deadline_date": "2026-09-01",
+      "severity": "low",
+      "action_required": "Update technical documentation to cite the renewed exemption.",
+      "scope": {
+        "categories": [
+          "medical_wearable"
+        ],
+        "substances": [
+          "lead"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to medical EEE relying on the lead-in-solder exemption."
+      }
+    },
+    {
+      "update_id": "REG-26-004",
+      "published_date": "2026-04-30",
+      "source": "ECHA",
+      "regulation_family": "REACH",
+      "reference": "SVHC Candidate List update",
+      "title": "REACH SVHC list adds bisphenol A; reaffirms DEHP",
+      "summary": "Bisphenol A (BPA) is added to the Candidate List of Substances of Very High Concern and DEHP is reaffirmed. Articles containing either above 0.1% w/w trigger SCIP notification and supply-chain communication duties.",
+      "change_type": "new",
+      "effective_date": "2026-04-30",
+      "deadline_date": "2026-10-30",
+      "severity": "medium",
+      "action_required": "Run SVHC screening; file SCIP notifications for affected articles.",
+      "scope": {
+        "categories": "all",
+        "substances": [
+          "BPA",
+          "DEHP"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to any article containing BPA or DEHP > 0.1% w/w on the EU market."
+      }
+    },
+    {
+      "update_id": "REG-26-005",
+      "published_date": "2026-05-02",
+      "source": "ECHA",
+      "regulation_family": "REACH",
+      "reference": "SVHC Candidate List update",
+      "title": "REACH SVHC list adds 1,4-dioxane",
+      "summary": "1,4-Dioxane is added to the SVHC Candidate List. Producers of articles containing it above 0.1% w/w must notify and inform recipients.",
+      "change_type": "new",
+      "effective_date": "2026-05-02",
+      "deadline_date": "2026-11-02",
+      "severity": "low",
+      "action_required": "Confirm absence/presence of 1,4-dioxane in articles.",
+      "scope": {
+        "categories": "all",
+        "substances": [
+          "dioxane"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to articles containing 1,4-dioxane > 0.1% w/w (none expected in this portfolio)."
+      }
+    },
+    {
+      "update_id": "REG-26-006",
+      "published_date": "2026-03-15",
+      "source": "EUR-Lex",
+      "regulation_family": "REACH",
+      "reference": "Annex XVII restriction (PFHxA)",
+      "title": "REACH restriction on PFHxA in textiles and coatings",
+      "summary": "A restriction on PFHxA and related substances targets water-repellent coatings on wearable straps and outdoor electronics housings.",
+      "change_type": "new",
+      "effective_date": "2027-03-15",
+      "deadline_date": "2027-03-15",
+      "severity": "medium",
+      "action_required": "Identify PFAS/PFHxA coatings on straps and housings; source alternatives.",
+      "scope": {
+        "categories": [
+          "wearable",
+          "drone"
+        ],
+        "substances": [
+          "PFAS_PFHxA"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to wearables and drones with PFHxA-based coatings."
+      }
+    },
+    {
+      "update_id": "REG-26-007",
+      "published_date": "2026-04-10",
+      "source": "ECHA",
+      "regulation_family": "REACH",
+      "reference": "SVHC Candidate List update",
+      "title": "REACH SVHC list adds TBBPA (flame retardant)",
+      "summary": "Tetrabromobisphenol A, common on printed circuit boards, is added to the SVHC Candidate List.",
+      "change_type": "new",
+      "effective_date": "2026-04-10",
+      "deadline_date": "2026-10-10",
+      "severity": "medium",
+      "action_required": "Screen PCBs for TBBPA; prepare SCIP notifications.",
+      "scope": {
+        "categories": [
+          "networking",
+          "iot_module"
+        ],
+        "substances": [
+          "TBBPA"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to networking/IoT equipment with TBBPA-containing boards."
+      }
+    },
+    {
+      "update_id": "REG-26-008",
+      "published_date": "2026-02-20",
+      "source": "EUR-Lex",
+      "regulation_family": "WEEE",
+      "reference": "Directive 2012/19/EU marking update",
+      "title": "WEEE crossed-out wheelie-bin marking & producer registration update",
+      "summary": "Updated marking and producer-registration obligations apply to all electrical and electronic equipment placed on the EU market.",
+      "change_type": "amendment",
+      "effective_date": "2026-08-15",
+      "deadline_date": "2026-08-15",
+      "severity": "medium",
+      "action_required": "Verify WEEE marking and national producer registrations.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to all EEE on the EU market."
+      }
+    },
+    {
+      "update_id": "REG-26-009",
+      "published_date": "2026-03-01",
+      "source": "National EPR registry (DE)",
+      "regulation_family": "WEEE",
+      "reference": "stiftung ear / ElektroG registration",
+      "title": "Germany EEE producer registration deadline (ElektroG)",
+      "summary": "Producers selling electrical and electronic equipment into the German market must complete or renew their stiftung ear registration before the deadline. Selling without it is prohibited in Germany.",
+      "change_type": "new",
+      "effective_date": "2026-07-31",
+      "deadline_date": "2026-07-31",
+      "severity": "high",
+      "action_required": "Confirm German EAR registration for all EEE sold in DE.",
+      "scope": {
+        "categories": [
+          "led_lighting",
+          "power_supply",
+          "battery_pack",
+          "audio",
+          "smart_home",
+          "wearable",
+          "medical_wearable",
+          "toy_electronic",
+          "cable",
+          "display",
+          "iot_module",
+          "pv_inverter",
+          "emobility_battery",
+          "networking",
+          "appliance",
+          "printer_3d",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "DE"
+        ],
+        "conditions": "Applies to EEE sold in Germany (DE) only."
+      }
+    },
+    {
+      "update_id": "REG-26-010",
+      "published_date": "2026-04-18",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 77 (battery passport)",
+      "title": "Battery passport required for LMT and industrial (>2 kWh) batteries",
+      "summary": "From the application date, a digital battery passport is mandatory for light-means-of-transport (LMT) batteries and industrial batteries above 2 kWh, as well as EV batteries. Portable consumer batteries are out of scope of the passport requirement.",
+      "change_type": "new",
+      "effective_date": "2027-02-18",
+      "deadline_date": "2027-02-18",
+      "severity": "high",
+      "action_required": "Stand up a battery passport (QR + data carrier) for in-scope batteries.",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to LMT batteries and industrial batteries; NOT to portable consumer batteries."
+      }
+    },
+    {
+      "update_id": "REG-26-011",
+      "published_date": "2026-04-18",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 7 (carbon footprint)",
+      "title": "Carbon footprint declaration for industrial and EV batteries",
+      "summary": "Industrial (>2 kWh) and EV batteries must carry a carbon footprint declaration and performance class. LMT batteries follow at a later date.",
+      "change_type": "new",
+      "effective_date": "2027-08-18",
+      "deadline_date": "2027-08-18",
+      "severity": "medium",
+      "action_required": "Compile life-cycle carbon footprint for industrial battery SKUs.",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to industrial and EV batteries (LMT later)."
+      }
+    },
+    {
+      "update_id": "REG-26-012",
+      "published_date": "2026-05-22",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 11 (removability)",
+      "title": "Portable batteries must be user-removable and replaceable",
+      "summary": "Devices powered by portable or button-cell batteries must be designed so that end users can readily remove and replace the battery.",
+      "change_type": "new",
+      "effective_date": "2027-02-18",
+      "deadline_date": "2027-02-18",
+      "severity": "high",
+      "action_required": "Redesign enclosures for user-replaceable cells; update manuals.",
+      "scope": {
+        "categories": [
+          "audio",
+          "wearable",
+          "smart_home",
+          "drone",
+          "battery_pack"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to consumer devices with portable or button-cell batteries."
+      }
+    },
+    {
+      "update_id": "REG-26-013",
+      "published_date": "2026-05-22",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 8 (recycled content)",
+      "title": "Minimum recycled content for industrial batteries",
+      "summary": "Industrial and EV batteries must document minimum recycled cobalt, lithium and nickel content.",
+      "change_type": "new",
+      "effective_date": "2028-08-18",
+      "deadline_date": "2028-08-18",
+      "severity": "low",
+      "action_required": "Collect recycled-content data from cell suppliers.",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to industrial and EV batteries."
+      }
+    },
+    {
+      "update_id": "REG-26-014",
+      "published_date": "2026-01-12",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "Directive 2014/53/EU, Art. 3(4) (common charger)",
+      "title": "USB-C common charger mandate for portable electronics",
+      "summary": "Portable consumer electronics that recharge via a wired cable must use a USB-C receptacle. Devices still shipping with micro-USB or proprietary connectors must transition. The obligation applies at the point of placing on the EU market.",
+      "change_type": "amendment",
+      "effective_date": "2024-12-28",
+      "deadline_date": "2024-12-28",
+      "severity": "high",
+      "action_required": "Switch wired-charge ports to USB-C across in-scope SKUs.",
+      "scope": {
+        "categories": [
+          "audio",
+          "wearable",
+          "smart_home",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to portable electronics with a wired charging port (USB-C/micro-USB/proprietary)."
+      }
+    },
+    {
+      "update_id": "REG-26-015",
+      "published_date": "2026-02-01",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "Directive 2014/53/EU, Art. 3(3)(d)(e)(f) (cybersecurity)",
+      "title": "RED cybersecurity requirements for internet-connected radio equipment",
+      "summary": "Radio equipment that connects to the internet must meet network-protection, personal-data and fraud-prevention requirements. Conformity via harmonised standard EN 18031.",
+      "change_type": "new",
+      "effective_date": "2025-08-01",
+      "deadline_date": "2025-08-01",
+      "severity": "high",
+      "action_required": "Assess against EN 18031; update risk assessment and firmware.",
+      "scope": {
+        "categories": [
+          "smart_home",
+          "networking",
+          "audio",
+          "wearable",
+          "iot_module",
+          "drone",
+          "medical_wearable"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to radio equipment that is internet-connected."
+      }
+    },
+    {
+      "update_id": "REG-26-016",
+      "published_date": "2026-03-22",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "Harmonised standard list update",
+      "title": "Updated harmonised standards for short-range devices",
+      "summary": "New harmonised standards are cited for short-range radio devices; presumption of conformity under the previous versions ends after a transition period.",
+      "change_type": "amendment",
+      "effective_date": "2027-03-22",
+      "deadline_date": "2027-03-22",
+      "severity": "low",
+      "action_required": "Re-assess radio test reports against the new standard versions.",
+      "scope": {
+        "categories": [
+          "smart_home",
+          "networking",
+          "audio",
+          "wearable",
+          "iot_module",
+          "drone",
+          "medical_wearable"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to radio equipment."
+      }
+    },
+    {
+      "update_id": "REG-26-017",
+      "published_date": "2026-02-08",
+      "source": "EUR-Lex",
+      "regulation_family": "PPWR",
+      "reference": "Regulation (EU) 2025/40",
+      "title": "PPWR: recycled content and reduction targets for plastic packaging",
+      "summary": "Plastic packaging must meet minimum recycled-content thresholds and packaging minimisation rules. Plastic film wraps are a specific focus.",
+      "change_type": "new",
+      "effective_date": "2027-08-12",
+      "deadline_date": "2027-08-12",
+      "severity": "medium",
+      "action_required": "Audit packaging; switch to compliant recycled or reduced formats.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to products placed on the EU market using plastic-film packaging."
+      }
+    },
+    {
+      "update_id": "REG-26-018",
+      "published_date": "2026-02-08",
+      "source": "EUR-Lex",
+      "regulation_family": "PPWR",
+      "reference": "Regulation (EU) 2025/40, labelling",
+      "title": "PPWR: harmonised packaging material labelling",
+      "summary": "All packaging must carry harmonised material-composition and sorting labels.",
+      "change_type": "new",
+      "effective_date": "2028-08-12",
+      "deadline_date": "2028-08-12",
+      "severity": "low",
+      "action_required": "Add harmonised sorting labels to all packaging.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to all packaging on the EU market."
+      }
+    },
+    {
+      "update_id": "REG-26-019",
+      "published_date": "2026-01-20",
+      "source": "EUR-Lex",
+      "regulation_family": "GPSR",
+      "reference": "Regulation (EU) 2023/988",
+      "title": "GPSR: traceability and economic-operator obligations for consumer products",
+      "summary": "Consumer products need an EU-based responsible economic operator, traceability information and safety documentation. Medical devices and purely industrial equipment follow their own regimes.",
+      "change_type": "amendment",
+      "effective_date": "2024-12-13",
+      "deadline_date": "2024-12-13",
+      "severity": "medium",
+      "action_required": "Confirm responsible person, traceability labelling and risk file.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to consumer products (excludes medical and industrial-only equipment)."
+      }
+    },
+    {
+      "update_id": "REG-26-020",
+      "published_date": "2026-03-05",
+      "source": "EUR-Lex",
+      "regulation_family": "GPSR",
+      "reference": "Regulation (EU) 2023/988, button cells",
+      "title": "GPSR: child-safety requirements for products with button/coin cells",
+      "summary": "Products containing button or coin cell batteries must secure the battery compartment against child access and carry specific warnings.",
+      "change_type": "new",
+      "effective_date": "2026-12-13",
+      "deadline_date": "2026-12-13",
+      "severity": "high",
+      "action_required": "Add secured compartments and warnings on button-cell products.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to any consumer product with a button/coin cell."
+      }
+    },
+    {
+      "update_id": "REG-26-021",
+      "published_date": "2026-04-02",
+      "source": "EUR-Lex",
+      "regulation_family": "ESPR",
+      "reference": "Regulation (EU) 2024/1781 (DPP)",
+      "title": "ESPR Digital Product Passport pilot for chargers, displays, batteries and networking",
+      "summary": "A Digital Product Passport pilot covers external power supplies, displays, standalone batteries and networking equipment, requiring a machine-readable data carrier with material and repair information.",
+      "change_type": "new",
+      "effective_date": "2027-07-01",
+      "deadline_date": "2027-07-01",
+      "severity": "medium",
+      "action_required": "Prepare DPP data model and QR data carrier for in-scope categories.",
+      "scope": {
+        "categories": [
+          "power_supply",
+          "display",
+          "battery_pack",
+          "networking"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to power supplies, displays, battery packs and networking equipment."
+      }
+    },
+    {
+      "update_id": "REG-26-022",
+      "published_date": "2026-03-28",
+      "source": "EUR-Lex",
+      "regulation_family": "ESPR",
+      "reference": "Ecodesign for external power supplies",
+      "title": "Updated ecodesign efficiency for external power supplies",
+      "summary": "External power supplies must meet revised no-load and active-mode efficiency limits.",
+      "change_type": "amendment",
+      "effective_date": "2027-04-01",
+      "deadline_date": "2027-04-01",
+      "severity": "medium",
+      "action_required": "Re-test charger efficiency against new ecodesign limits.",
+      "scope": {
+        "categories": [
+          "power_supply"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to external power supplies."
+      }
+    },
+    {
+      "update_id": "REG-26-023",
+      "published_date": "2026-04-14",
+      "source": "EUR-Lex",
+      "regulation_family": "EnergyLabel",
+      "reference": "Regulation (EU) 2017/1369, displays",
+      "title": "Energy label rescaling for electronic displays",
+      "summary": "Electronic displays move to a rescaled A-G energy label; existing labels and database entries must be updated.",
+      "change_type": "amendment",
+      "effective_date": "2027-03-01",
+      "deadline_date": "2027-03-01",
+      "severity": "medium",
+      "action_required": "Regenerate energy labels and update EPREL entries for displays.",
+      "scope": {
+        "categories": [
+          "display"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to electronic displays/monitors."
+      }
+    },
+    {
+      "update_id": "REG-26-024",
+      "published_date": "2026-05-09",
+      "source": "EUR-Lex",
+      "regulation_family": "ToySafety",
+      "reference": "Toy Safety revision",
+      "title": "Stricter chemical limits for toys (phthalates, bisphenols)",
+      "summary": "The revised toy-safety rules tighten limits on phthalates and bisphenols in toys intended for children. Products designed for users 14+ are not 'toys' for this purpose.",
+      "change_type": "amendment",
+      "effective_date": "2027-09-01",
+      "deadline_date": "2027-09-01",
+      "severity": "high",
+      "action_required": "Re-test toy materials against the tighter chemical limits.",
+      "scope": {
+        "categories": [
+          "toy_electronic"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to electronic toys intended for children (not 14+ STEM/maker products)."
+      }
+    },
+    {
+      "update_id": "REG-26-025",
+      "published_date": "2026-05-09",
+      "source": "EUR-Lex",
+      "regulation_family": "ToySafety",
+      "reference": "Toy Safety - acoustics",
+      "title": "Sound-level limits for electronic toys",
+      "summary": "Maximum sound-pressure limits are introduced for sound-emitting electronic toys.",
+      "change_type": "amendment",
+      "effective_date": "2027-09-01",
+      "deadline_date": "2027-09-01",
+      "severity": "medium",
+      "action_required": "Measure SPL of sound-emitting toys.",
+      "scope": {
+        "categories": [
+          "toy_electronic"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to electronic toys intended for children."
+      }
+    },
+    {
+      "update_id": "REG-26-026",
+      "published_date": "2026-04-25",
+      "source": "EUR-Lex",
+      "regulation_family": "MDR",
+      "reference": "Regulation (EU) 2017/745 guidance (MDCG)",
+      "title": "MDR guidance: wellness vs. medical wearables",
+      "summary": "New guidance clarifies when a body-worn device has a medical purpose and therefore falls under MDR (CE under MDR, clinical evidence). General fitness/activity trackers without a medical claim remain consumer products under GPSR.",
+      "change_type": "new",
+      "effective_date": "2026-10-01",
+      "deadline_date": "2026-10-01",
+      "severity": "high",
+      "action_required": "Classify body-worn devices; route medical-purpose devices to MDR.",
+      "scope": {
+        "categories": [
+          "medical_wearable",
+          "wearable"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to body-worn devices with a medical intended purpose."
+      }
+    },
+    {
+      "update_id": "REG-26-027",
+      "published_date": "2026-02-14",
+      "source": "EUR-Lex",
+      "regulation_family": "POPs",
+      "reference": "Regulation (EU) 2019/1021, decaBDE",
+      "title": "POPs: lower limit for decaBDE flame retardant",
+      "summary": "The unintentional-trace concentration limit for decaBDE is lowered, affecting plastic housings and boards that still use it.",
+      "change_type": "amendment",
+      "effective_date": "2027-06-01",
+      "deadline_date": "2027-06-01",
+      "severity": "medium",
+      "action_required": "Screen housings/boards for decaBDE; switch flame-retardant systems.",
+      "scope": {
+        "categories": [
+          "iot_module",
+          "appliance",
+          "networking"
+        ],
+        "substances": [
+          "decaBDE"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to equipment containing decaBDE."
+      }
+    },
+    {
+      "update_id": "REG-26-028",
+      "published_date": "2026-01-30",
+      "source": "EUR-Lex",
+      "regulation_family": "CBAM",
+      "reference": "Regulation (EU) 2023/956",
+      "title": "CBAM definitive regime reporting for importers of metals/cement",
+      "summary": "Importers of aluminium, iron, steel, cement, fertilisers, hydrogen and electricity must purchase CBAM certificates and report embedded emissions.",
+      "change_type": "new",
+      "effective_date": "2026-01-01",
+      "deadline_date": "2026-01-31",
+      "severity": "low",
+      "action_required": "Relevant only to importers of covered raw commodities.",
+      "scope": {
+        "categories": [
+          "raw aluminium / steel / cement / fertilisers (not finished EEE)"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Covers importers of listed raw commodities, not finished electronics."
+      }
+    },
+    {
+      "update_id": "REG-26-029",
+      "published_date": "2026-02-17",
+      "source": "EUR-Lex",
+      "regulation_family": "FGas",
+      "reference": "Regulation (EU) 2024/573",
+      "title": "F-gas: HFC quota step-down for refrigeration and HVAC",
+      "summary": "The HFC phase-down quota is reduced; relevant to refrigeration, air-conditioning and heat-pump equipment using fluorinated gases.",
+      "change_type": "amendment",
+      "effective_date": "2027-01-01",
+      "deadline_date": "2027-01-01",
+      "severity": "low",
+      "action_required": "Relevant only to equipment containing fluorinated greenhouse gases.",
+      "scope": {
+        "categories": [
+          "refrigeration / HVAC equipment with F-gases (not in portfolio)"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Covers equipment charged with fluorinated greenhouse gases."
+      }
+    },
+    {
+      "update_id": "REG-26-030",
+      "published_date": "2026-03-09",
+      "source": "ECHA",
+      "regulation_family": "CLP",
+      "reference": "Regulation (EC) 1272/2008",
+      "title": "CLP: new hazard classes for chemical mixtures",
+      "summary": "New hazard classes (ED, PBT/vPvB) are introduced for the classification and labelling of substances and mixtures placed on the market as chemicals.",
+      "change_type": "new",
+      "effective_date": "2026-05-01",
+      "deadline_date": "2026-05-01",
+      "severity": "low",
+      "action_required": "Relevant to suppliers placing chemicals/mixtures on the market.",
+      "scope": {
+        "categories": [
+          "chemical substances / mixtures (not finished articles)"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to chemicals/mixtures, not to finished electronic articles."
+      }
+    },
+    {
+      "update_id": "REG-26-031",
+      "published_date": "2026-03-19",
+      "source": "EUR-Lex",
+      "regulation_family": "FoodContact",
+      "reference": "Regulation (EU) 2024/3190",
+      "title": "Food-contact materials: BPA ban in food packaging and utensils",
+      "summary": "Bisphenol A is banned in materials and articles intended to come into contact with food (e.g. can coatings, reusable bottles, kitchenware).",
+      "change_type": "new",
+      "effective_date": "2026-12-20",
+      "deadline_date": "2026-12-20",
+      "severity": "medium",
+      "action_required": "Relevant only to food-contact materials and articles.",
+      "scope": {
+        "categories": [
+          "food-contact materials & articles"
+        ],
+        "substances": [
+          "BPA"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Restriction applies to materials and articles intended for food contact; it does not regulate BPA used in electronics enclosures."
+      }
+    },
+    {
+      "update_id": "REG-26-032",
+      "published_date": "2026-04-05",
+      "source": "EUR-Lex",
+      "regulation_family": "EUDR",
+      "reference": "Regulation (EU) 2023/1115",
+      "title": "EUDR: due diligence for wood, rubber, soy and derived products",
+      "summary": "Operators placing covered commodities (cattle, cocoa, coffee, palm oil, rubber, soy, wood) on the EU market must prove deforestation-free sourcing.",
+      "change_type": "new",
+      "effective_date": "2026-12-30",
+      "deadline_date": "2026-12-30",
+      "severity": "low",
+      "action_required": "Relevant only to operators of the listed commodities.",
+      "scope": {
+        "categories": [
+          "wood / rubber / soy & derived commodities (not electronics)"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Covers listed agricultural/forestry commodities."
+      }
+    },
+    {
+      "update_id": "REG-26-033",
+      "published_date": "2026-04-21",
+      "source": "EUR-Lex",
+      "regulation_family": "Machinery",
+      "reference": "Regulation (EU) 2023/1230",
+      "title": "New Machinery Regulation safety requirements",
+      "summary": "The new Machinery Regulation introduces requirements for products with moving parts and embedded software/AI, including consumer 3D printers and drones.",
+      "change_type": "new",
+      "effective_date": "2027-01-20",
+      "deadline_date": "2027-01-20",
+      "severity": "medium",
+      "action_required": "Re-assess machinery risk and documentation for in-scope products.",
+      "scope": {
+        "categories": [
+          "printer_3d",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to machinery such as 3D printers and drones on the EU market."
+      }
+    },
+    {
+      "update_id": "REG-26-034",
+      "published_date": "2026-05-30",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Corrigendum to Art. 77",
+      "title": "Corrigendum: clarification of battery passport scope",
+      "summary": "A corrigendum clarifies the battery passport scope first announced in REG-26-010; no change to which batteries are covered.",
+      "change_type": "correction",
+      "effective_date": "2027-02-18",
+      "deadline_date": "2027-02-18",
+      "severity": "low",
+      "action_required": "No new action beyond REG-26-010; de-duplicate against it.",
+      "corrects": "REG-26-010",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Same scope as REG-26-010 (LMT and industrial batteries)."
+      }
+    },
+    {
+      "update_id": "REG-26-035",
+      "published_date": "2026-02-26",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "Corrigendum to common charger entry",
+      "title": "Corrigendum: common charger applicability date",
+      "summary": "A corrigendum corrects a typo in the common-charger applicability date originally published in REG-26-014. Scope unchanged.",
+      "change_type": "correction",
+      "effective_date": "2024-12-28",
+      "deadline_date": "2024-12-28",
+      "severity": "low",
+      "action_required": "No new action beyond REG-26-014; de-duplicate against it.",
+      "corrects": "REG-26-014",
+      "scope": {
+        "categories": [
+          "audio",
+          "wearable",
+          "smart_home",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Same scope as REG-26-014."
+      }
+    },
+    {
+      "update_id": "REG-26-036",
+      "published_date": "2026-02-24",
+      "source": "EUR-Lex",
+      "regulation_family": "WEEE",
+      "reference": "Corrigendum to marking update",
+      "title": "Corrigendum: WEEE marking update",
+      "summary": "Editorial corrigendum to the WEEE marking update REG-26-008. No substantive change.",
+      "change_type": "correction",
+      "effective_date": "2026-08-15",
+      "deadline_date": "2026-08-15",
+      "severity": "low",
+      "action_required": "No new action beyond REG-26-008; de-duplicate against it.",
+      "corrects": "REG-26-008",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Same scope as REG-26-008 (all EEE on the EU market)."
+      }
+    },
+    {
+      "update_id": "REG-26-037",
+      "published_date": "2026-03-12",
+      "source": "EUR-Lex",
+      "regulation_family": "RoHS",
+      "reference": "Annex III exemption (PV)",
+      "title": "RoHS cadmium exemption review for photovoltaic equipment",
+      "summary": "The exemption allowing cadmium in certain photovoltaic devices is under review; PV inverter makers should track the outcome.",
+      "change_type": "amendment",
+      "effective_date": "2027-12-31",
+      "deadline_date": "2027-12-31",
+      "severity": "low",
+      "action_required": "Confirm cadmium content of PV equipment; monitor exemption status.",
+      "scope": {
+        "categories": [
+          "pv_inverter"
+        ],
+        "substances": [
+          "cadmium"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to photovoltaic equipment containing cadmium."
+      }
+    },
+    {
+      "update_id": "REG-26-038",
+      "published_date": "2026-03-26",
+      "source": "ECHA",
+      "regulation_family": "REACH",
+      "reference": "Annex XVII restriction (lead in PVC)",
+      "title": "REACH restriction on lead stabilisers in PVC articles",
+      "summary": "Lead compounds used as stabilisers in PVC (including cable sheathing) are restricted above trace levels.",
+      "change_type": "new",
+      "effective_date": "2027-05-01",
+      "deadline_date": "2027-05-01",
+      "severity": "medium",
+      "action_required": "Switch PVC cable compounds to lead-free stabilisers.",
+      "scope": {
+        "categories": [
+          "cable"
+        ],
+        "substances": [
+          "lead"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to cables/articles with lead-stabilised PVC."
+      }
+    },
+    {
+      "update_id": "REG-26-039",
+      "published_date": "2026-04-08",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 13 (labelling)",
+      "title": "Battery labelling: capacity, CE and QR for portable batteries",
+      "summary": "Batteries and battery-powered products must carry capacity, separate-collection and CE marking plus a QR code linking to battery information.",
+      "change_type": "new",
+      "effective_date": "2027-08-18",
+      "deadline_date": "2027-08-18",
+      "severity": "medium",
+      "action_required": "Add compliant battery labelling and QR codes.",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "audio",
+          "wearable",
+          "drone",
+          "smart_home",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to products containing any battery."
+      }
+    },
+    {
+      "update_id": "REG-26-040",
+      "published_date": "2026-03-02",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "Common charger - micro-USB phase-out",
+      "title": "Reminder: micro-USB phase-out under the common charger rule",
+      "summary": "Editorial reminder reiterating that micro-USB charging ports are no longer permitted on in-scope portable electronics. Duplicate of the common-charger obligation.",
+      "change_type": "correction",
+      "effective_date": "2024-12-28",
+      "deadline_date": "2024-12-28",
+      "severity": "low",
+      "action_required": "No new action; de-duplicate against REG-26-014.",
+      "corrects": "REG-26-014",
+      "scope": {
+        "categories": [
+          "audio",
+          "wearable",
+          "smart_home",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Same scope as REG-26-014."
+      }
+    },
+    {
+      "update_id": "REG-26-041",
+      "published_date": "2026-04-16",
+      "source": "EUR-Lex",
+      "regulation_family": "GPSR",
+      "reference": "Regulation (EU) 2023/988, online sales",
+      "title": "GPSR: online-marketplace and distance-sales obligations",
+      "summary": "Additional information and recall-handling duties apply to consumer products sold online into the EU.",
+      "change_type": "amendment",
+      "effective_date": "2026-12-13",
+      "deadline_date": "2026-12-13",
+      "severity": "medium",
+      "action_required": "Update online product listings with required safety information.",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to consumer products (excludes medical and industrial-only)."
+      }
+    },
+    {
+      "update_id": "REG-26-042",
+      "published_date": "2026-05-06",
+      "source": "EUR-Lex",
+      "regulation_family": "ESPR",
+      "reference": "Ecodesign working plan",
+      "title": "ESPR ecodesign measures for smartphones and tablets",
+      "summary": "Ecodesign and reliability requirements apply to smartphones and slate tablets (battery endurance, spare-part availability, software updates).",
+      "change_type": "new",
+      "effective_date": "2027-06-20",
+      "deadline_date": "2027-06-20",
+      "severity": "low",
+      "action_required": "Relevant only to smartphone/tablet manufacturers.",
+      "scope": {
+        "categories": [
+          "smartphone",
+          "tablet"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to smartphones and tablets (not in this portfolio)."
+      }
+    },
+    {
+      "update_id": "REG-26-043",
+      "published_date": "2026-03-30",
+      "source": "National EPR registry (FR)",
+      "regulation_family": "WEEE",
+      "reference": "France AGEC repairability index",
+      "title": "France: repairability/durability index for displays, appliances and networking gear",
+      "summary": "Products sold in France in the covered categories must display a repairability (moving to durability) index score at the point of sale.",
+      "change_type": "new",
+      "effective_date": "2026-09-15",
+      "deadline_date": "2026-09-15",
+      "severity": "medium",
+      "action_required": "Calculate and display the French repairability/durability index.",
+      "scope": {
+        "categories": [
+          "display",
+          "appliance",
+          "networking"
+        ],
+        "substances": [],
+        "markets": [
+          "FR"
+        ],
+        "conditions": "Applies to displays, household appliances and networking equipment sold in France (FR)."
+      }
+    },
+    {
+      "update_id": "REG-26-044",
+      "published_date": "2026-04-28",
+      "source": "EUR-Lex",
+      "regulation_family": "Battery",
+      "reference": "Regulation (EU) 2023/1542, Art. 48 (due diligence)",
+      "title": "Battery supply-chain due diligence for industrial/EV producers",
+      "summary": "Producers of industrial and EV batteries must operate a raw-materials supply-chain due-diligence policy (cobalt, lithium, nickel, natural graphite).",
+      "change_type": "new",
+      "effective_date": "2027-08-18",
+      "deadline_date": "2027-08-18",
+      "severity": "low",
+      "action_required": "Establish a battery raw-materials due-diligence policy.",
+      "scope": {
+        "categories": [
+          "battery_pack",
+          "emobility_battery"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to industrial and EV battery producers."
+      }
+    },
+    {
+      "update_id": "REG-26-045",
+      "published_date": "2026-05-15",
+      "source": "EUR-Lex",
+      "regulation_family": "RED",
+      "reference": "EN 18031 citation",
+      "title": "Harmonised standard EN 18031 cited for RED cybersecurity",
+      "summary": "EN 18031-1/-2/-3 are cited in the Official Journal, giving presumption of conformity for the RED cybersecurity requirements on internet-connected radio equipment.",
+      "change_type": "amendment",
+      "effective_date": "2025-08-01",
+      "deadline_date": "2025-08-01",
+      "severity": "medium",
+      "action_required": "Use EN 18031 to demonstrate RED cybersecurity conformity.",
+      "corrects": "REG-26-015",
+      "scope": {
+        "categories": [
+          "smart_home",
+          "networking",
+          "audio",
+          "wearable",
+          "iot_module",
+          "drone",
+          "medical_wearable"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Supports REG-26-015; same scope (internet-connected radio equipment)."
+      }
+    },
+    {
+      "update_id": "REG-26-046",
+      "published_date": "2026-02-11",
+      "source": "EUR-Lex",
+      "regulation_family": "RoHS",
+      "reference": "Annex II, Pack 4 phthalates",
+      "title": "RoHS Pack 4 phthalate limits reminder (DEHP, DBP, BBP)",
+      "summary": "Reminder that DEHP, DBP and BBP are restricted in EEE above 0.1%; enforcement focus on soft plastics and cabling.",
+      "change_type": "amendment",
+      "effective_date": "2026-07-22",
+      "deadline_date": "2026-07-22",
+      "severity": "medium",
+      "action_required": "Confirm phthalate content of soft plastics and cables.",
+      "scope": {
+        "categories": "all",
+        "substances": [
+          "DEHP",
+          "DBP",
+          "BBP"
+        ],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to EEE containing DEHP/DBP/BBP above threshold."
+      }
+    },
+    {
+      "update_id": "REG-26-047",
+      "published_date": "2026-02-09",
+      "source": "EUR-Lex",
+      "regulation_family": "PPWR",
+      "reference": "Single-use plastic formats",
+      "title": "PPWR: restriction on certain single-use plastic packaging formats",
+      "summary": "Editorial follow-up to the PPWR recycled-content rule restricting specific single-use plastic film formats. Overlaps REG-26-017.",
+      "change_type": "correction",
+      "effective_date": "2027-08-12",
+      "deadline_date": "2027-08-12",
+      "severity": "low",
+      "action_required": "No new action beyond REG-26-017; de-duplicate.",
+      "corrects": "REG-26-017",
+      "scope": {
+        "categories": "all",
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Same scope as REG-26-017 (plastic-film packaging)."
+      }
+    },
+    {
+      "update_id": "REG-26-048",
+      "published_date": "2026-04-12",
+      "source": "EUR-Lex",
+      "regulation_family": "EnergyLabel",
+      "reference": "Regulation (EU) 2019/2015, light sources",
+      "title": "Energy label database update for light sources",
+      "summary": "Light sources must have current EPREL registrations and rescaled labels; lighting placed on the market needs updated documentation.",
+      "change_type": "amendment",
+      "effective_date": "2027-02-01",
+      "deadline_date": "2027-02-01",
+      "severity": "low",
+      "action_required": "Update EPREL entries and labels for LED lighting.",
+      "scope": {
+        "categories": [
+          "led_lighting"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to LED lighting / light sources."
+      }
+    },
+    {
+      "update_id": "REG-26-049",
+      "published_date": "2026-05-20",
+      "source": "EUR-Lex",
+      "regulation_family": "GPSR",
+      "reference": "Regulation (EU) 2023/988, connected products",
+      "title": "GPSR: recall and update obligations for products with embedded software",
+      "summary": "Connected consumer products with embedded software must support security updates and a clear recall pathway.",
+      "change_type": "new",
+      "effective_date": "2027-01-01",
+      "deadline_date": "2027-01-01",
+      "severity": "medium",
+      "action_required": "Document software-update and recall procedures for connected products.",
+      "scope": {
+        "categories": [
+          "smart_home",
+          "networking",
+          "audio",
+          "wearable",
+          "drone"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to internet-connected consumer products (excludes medical/industrial-only)."
+      }
+    },
+    {
+      "update_id": "REG-26-050",
+      "published_date": "2026-03-07",
+      "source": "ECHA",
+      "regulation_family": "CLP",
+      "reference": "Labelling of imported chemicals",
+      "title": "CLP: revised labelling for imported chemical products",
+      "summary": "Revised label-format rules for substances and mixtures imported and sold as chemical products.",
+      "change_type": "amendment",
+      "effective_date": "2026-09-01",
+      "deadline_date": "2026-09-01",
+      "severity": "low",
+      "action_required": "Relevant to importers placing chemical products on the market.",
+      "scope": {
+        "categories": [
+          "imported chemical substances / mixtures (not finished articles)"
+        ],
+        "substances": [],
+        "markets": [
+          "EU"
+        ],
+        "conditions": "Applies to chemical products, not finished electronics."
+      }
+    }
+  ]
+}

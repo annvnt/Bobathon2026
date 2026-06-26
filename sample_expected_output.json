@@ -1,0 +1,19 @@
+{
+  "_comment": "Example output shape for ONE finding. Your agent should emit a record like this for every gap it detects when it assesses a company against a current regulatory requirement. Cite the source you used. Swap in your own Twilio test number for the alert.",
+  "company": "RideVolt Mobility GmbH",
+  "partner_id": "P013",
+  "product_id": "P013-A",
+  "product": "e-Scooter Battery Pack 280Wh",
+  "regulation": "EU Battery Regulation (EU) 2023/1542 - battery passport (Art. 77)",
+  "requirement": "Light-means-of-transport (LMT) batteries must carry a digital battery passport.",
+  "source_url": "https://eur-lex.europa.eu/eli/reg/2023/1542/oj",
+  "gap": "LMT e-scooter battery is sold in the EU with no battery passport / data carrier.",
+  "deadline": "2027-02-18",
+  "severity": "high",
+  "recommended_action": "Create the battery passport (QR + data carrier) and link it before the deadline.",
+  "alert": {
+    "channel": "sms",
+    "to": "<your Twilio test number>",
+    "message": "RideVolt: your e-Scooter Battery Pack 280Wh needs an EU battery passport by 18 Feb 2027 (Reg 2023/1542). Set up the QR/data carrier. Source: eur-lex.europa.eu"
+  }
+}

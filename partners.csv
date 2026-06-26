@@ -1,0 +1,54 @@
+partner_id,company,hq_country,sells_in,contact_email,contact_phone,preferred_channel,product_id,product_name,category,intended_use,substances,has_battery,battery_type,battery_capacity_wh,has_radio,connector,packaging,markets,compliance_streams
+P001,LumaNord Lighting GmbH,DE,EU,alerts@lumanord.example.com,+49 7131 000101,email,P001-A,NordBeam LED Panel 600,led_lighting,consumer,lead,False,none,0,False,none,cardboard,EU,RoHS|WEEE|EMC|LVD|EnergyLabel
+P001,LumaNord Lighting GmbH,DE,EU,alerts@lumanord.example.com,+49 7131 000101,email,P001-B,FlexGlow RGB Strip 5m,led_lighting,consumer,lead|DEHP,False,none,0,False,barrel,plastic_film|cardboard,EU,RoHS|REACH|WEEE|EMC|LVD
+P001,LumaNord Lighting GmbH,DE,EU,alerts@lumanord.example.com,+49 7131 000101,email,P001-C,SmartGlow Wi-Fi Bulb,led_lighting,consumer,,False,none,0,True,none,cardboard,EU,RED|RoHS|WEEE|EnergyLabel
+P002,VoltEdge Power BV,NL,EU,alerts@voltedge.example.com,+31 20 0000202,email,P002-A,GaN USB-C Charger 65W,power_supply,consumer,,False,none,0,False,usb_c,cardboard,EU,RoHS|LVD|EMC|ESPR|EnergyLabel
+P002,VoltEdge Power BV,NL,EU,alerts@voltedge.example.com,+31 20 0000202,email,P002-B,DeskDock USB-C Multiport,power_supply,consumer,,False,none,0,False,usb_c,cardboard,EU,RoHS|LVD|EMC|ESPR
+P003,CellCore Energy Sp. z o.o.,PL,EU,alerts@cellcore.example.com,+48 22 0000303,sms,P003-A,PowerBank 20k Portable,battery_pack,consumer,,True,portable,74,False,usb_c,cardboard,EU,Battery|RoHS|WEEE
+P003,CellCore Energy Sp. z o.o.,PL,EU,alerts@cellcore.example.com,+48 22 0000303,sms,P003-B,IndusCell 2.5kWh Module,battery_pack,industrial,,True,industrial,2500,False,none,cardboard,EU,Battery|RoHS|WEEE
+P003,CellCore Energy Sp. z o.o.,PL,EU,alerts@cellcore.example.com,+48 22 0000303,sms,P003-C,CoinCell CR2032 10-pack,battery_pack,consumer,,True,button_cell,0.5,False,none,plastic_film|cardboard,EU,Battery|GPSR
+P004,SonicWave Audio SARL,FR,EU,alerts@sonicwave.example.com,+33 1 00000404,whatsapp,P004-A,WaveGo Bluetooth Speaker,audio,consumer,BPA,True,portable,12,True,usb_c,cardboard,EU,RED|Battery|REACH|RoHS|WEEE
+P004,SonicWave Audio SARL,FR,EU,alerts@sonicwave.example.com,+33 1 00000404,whatsapp,P004-B,StudioPods Headphones,audio,consumer,,True,portable,1.5,True,usb_c,cardboard,EU,RED|Battery|RoHS|WEEE
+P004,SonicWave Audio SARL,FR,EU,alerts@sonicwave.example.com,+33 1 00000404,whatsapp,P004-C,WaveHome Soundbar,audio,consumer,,False,none,0,True,none,cardboard,EU,RED|RoHS|WEEE|EMC
+P005,HomePulse Smart GmbH,DE,EU,alerts@homepulse.example.com,+49 30 000505,email,P005-A,MotionSense Sensor,smart_home,consumer,,True,button_cell,0.6,True,none,cardboard,EU,RED|RoHS|WEEE
+P005,HomePulse Smart GmbH,DE,EU,alerts@homepulse.example.com,+49 30 000505,email,P005-B,HomeHub Controller,smart_home,consumer,,False,none,0,True,micro_usb,cardboard,EU,RED|RoHS|WEEE|LVD
+P005,HomePulse Smart GmbH,DE,EU,alerts@homepulse.example.com,+49 30 000505,email,P005-C,PlugSense Smart Plug,smart_home,consumer,,False,none,0,True,none,cardboard,EU,RED|RoHS|WEEE|LVD
+P006,FitTrack Wearables AB,SE,EU,alerts@fittrack.example.com,+46 8 00000606,sms,P006-A,PulseBand Activity Tracker,wearable,consumer,PFAS_PFHxA,True,portable,1.1,True,usb_c,cardboard,EU,RED|Battery|REACH|RoHS
+P006,FitTrack Wearables AB,SE,EU,alerts@fittrack.example.com,+46 8 00000606,sms,P006-B,SportWatch GPS,wearable,consumer,,True,portable,2.2,True,usb_c,cardboard,EU,RED|Battery|RoHS
+P007,MediBand Health AG,CH,EU|CH,alerts@mediband.example.com,+41 44 0000707,email,P007-A,CardioPatch Monitor,medical_wearable,medical,lead,True,portable,2.0,True,usb_c,cardboard,EU|CH,MDR|RED|RoHS
+P007,MediBand Health AG,CH,EU|CH,alerts@mediband.example.com,+41 44 0000707,email,P007-B,GlucoSense CGM Patch,medical_wearable,medical,,True,button_cell,0.4,True,none,cardboard,EU|CH,MDR|RED|RoHS
+P008,PlayBright Toys S.r.l.,IT,EU,alerts@playbright.example.com,+39 02 0000808,email,P008-A,RoboPup Interactive Toy,toy_electronic,toy,DEHP,False,none,0,False,none,plastic_film|cardboard,EU,ToySafety|REACH|RoHS|GPSR
+P008,PlayBright Toys S.r.l.,IT,EU,alerts@playbright.example.com,+39 02 0000808,email,P008-B,SingAlong Karaoke Mic,toy_electronic,toy,DEHP,True,button_cell,0.3,False,none,cardboard,EU,ToySafety|GPSR|RoHS
+P008,PlayBright Toys S.r.l.,IT,EU,alerts@playbright.example.com,+39 02 0000808,email,P008-C,JuniorSTEM Robotics Kit,toy_electronic,consumer,,True,portable,9,False,usb_c,cardboard,EU,GPSR|Battery|RoHS
+P009,CableMax Connect S.L.,ES,ES|FR|IT,alerts@cablemax.example.com,+34 91 0000909,email,P009-A,UltraLink USB-C Cable 2m,cable,consumer,DEHP|MCCP|lead,False,none,0,False,none,plastic_film,ES|FR|IT,RoHS|REACH
+P009,CableMax Connect S.L.,ES,ES|FR|IT,alerts@cablemax.example.com,+34 91 0000909,email,P009-B,HDMI 2.1 Cable 3m,cable,consumer,,False,none,0,False,none,cardboard,ES|FR|IT,RoHS|REACH
+P010,DisplayOne Visuals GmbH,DE,EU,alerts@displayone.example.com,+49 89 001010,email,P010-A,UltraView 27 Monitor,display,consumer,,False,none,0,False,none,cardboard,EU,WEEE|EnergyLabel|ESPR|EMC|LVD
+P010,DisplayOne Visuals GmbH,DE,EU,alerts@displayone.example.com,+49 89 001010,email,P010-B,Legacy CCFL Panel (spare),display,industrial,mercury,False,none,0,False,none,cardboard,EU,RoHS|WEEE
+P010,DisplayOne Visuals GmbH,DE,EU,alerts@displayone.example.com,+49 89 001010,email,P010-C,TouchPanel 15 Industrial,display,industrial,,False,none,0,False,none,cardboard,EU,WEEE|EMC|LVD|RoHS
+P011,GridSense IoT BV,NL,EU|UK,alerts@gridsense.example.com,+31 10 001111,email,P011-A,EdgeNode Industrial Module,iot_module,industrial,TBBPA|decaBDE,False,none,0,True,none,cardboard,EU|UK,RED|REACH|POPs|RoHS|EMC
+P011,GridSense IoT BV,NL,EU|UK,alerts@gridsense.example.com,+31 10 001111,email,P011-B,EdgeGateway 5G,iot_module,industrial,TBBPA,False,none,0,True,none,cardboard,EU|UK,RED|REACH|RoHS|EMC
+P012,SolarMicro Tech S.L.,ES,EU,alerts@solarmicro.example.com,+34 93 001212,email,P012-A,SunLink Micro-Inverter,pv_inverter,consumer,cadmium,False,none,0,False,none,cardboard,EU,RoHS|WEEE|LVD|EMC
+P012,SolarMicro Tech S.L.,ES,EU,alerts@solarmicro.example.com,+34 93 001212,email,P012-B,HybridInverter Pro (Cd-free),pv_inverter,consumer,,False,none,0,False,none,cardboard,EU,RoHS|WEEE|LVD|EMC
+P013,RideVolt Mobility GmbH,DE,EU,alerts@ridevolt.example.com,+49 711 001313,sms,P013-A,e-Scooter Battery Pack 280Wh,emobility_battery,consumer,,True,lmt,280,False,none,cardboard,EU,Battery|RoHS|WEEE
+P013,RideVolt Mobility GmbH,DE,EU,alerts@ridevolt.example.com,+49 711 001313,sms,P013-B,eBike Battery 504Wh,emobility_battery,consumer,,True,lmt,504,False,none,cardboard,EU,Battery|RoHS|WEEE
+P014,NetLink Systems Sp. z o.o.,PL,EU,alerts@netlink.example.com,+48 12 001414,email,P014-A,AirLink Wi-Fi 6 Router,networking,consumer,TBBPA,False,none,0,True,barrel,cardboard,EU,RED|REACH|ESPR|RoHS|EMC|LVD
+P014,NetLink Systems Sp. z o.o.,PL,EU,alerts@netlink.example.com,+48 12 001414,email,P014-B,MeshPoint Mini,networking,consumer,TBBPA,False,none,0,True,usb_c,cardboard,EU,RED|REACH|RoHS|EMC
+P014,NetLink Systems Sp. z o.o.,PL,EU,alerts@netlink.example.com,+48 12 001414,email,P014-C,AirLink Router UK Edition,networking,consumer,TBBPA,False,none,0,True,barrel,cardboard,UK,RED|RoHS
+P015,BrewEasy Appliances S.r.l.,IT,IT|DE|AT,alerts@breweasy.example.com,+39 06 001515,email,P015-A,QuickBoil Kettle 1.7L,appliance,consumer,,False,none,0,False,none,plastic_film|cardboard,IT|DE|AT,LVD|EMC|WEEE|PPWR
+P015,BrewEasy Appliances S.r.l.,IT,IT|DE|AT,alerts@breweasy.example.com,+39 06 001515,email,P015-B,ToastMaster 2-Slice,appliance,consumer,,False,none,0,False,none,cardboard,IT|DE|AT,LVD|EMC|WEEE
+P016,ChromaPrint 3D GmbH,DE,EU|US,alerts@chromaprint.example.com,+49 351 001616,email,P016-A,ChromaPrint X1 (EU),printer_3d,consumer,,False,none,0,False,none,cardboard,EU|US,Machinery|LVD|EMC|RoHS
+P016,ChromaPrint 3D GmbH,DE,EU|US,alerts@chromaprint.example.com,+49 351 001616,email,P016-B,ChromaPrint X1 US Edition,printer_3d,consumer,lead,False,none,0,False,none,cardboard,US,RoHS
+P016,ChromaPrint 3D GmbH,DE,EU|US,alerts@chromaprint.example.com,+49 351 001616,email,P016-C,ResinPrint Mini (EU),printer_3d,consumer,,False,none,0,False,none,cardboard,EU|US,Machinery|LVD|EMC|RoHS
+P017,AeroSense Drones SARL,FR,EU,alerts@aerosense.example.com,+33 4 00001717,whatsapp,P017-A,SkyScout Camera Drone,drone,consumer,PFAS_PFHxA,True,portable,38,True,usb_c,cardboard,EU,RED|Battery|REACH|Machinery|GPSR
+P017,AeroSense Drones SARL,FR,EU,alerts@aerosense.example.com,+33 4 00001717,whatsapp,P017-B,MicroDrone Mini,drone,consumer,,True,portable,5,True,usb_c,cardboard,EU,RED|Battery|GPSR|RoHS
+P018,PureAir Devices BV,NL,EU,alerts@pureair.example.com,+31 70 001818,email,P018-A,FreshFlow Air Purifier,appliance,consumer,,False,none,0,False,none,cardboard|plastic_film,EU,LVD|EMC|WEEE|PPWR
+P018,PureAir Devices BV,NL,EU,alerts@pureair.example.com,+31 70 001818,email,P018-B,DryAir Dehumidifier,appliance,consumer,,False,none,0,False,none,plastic_film|cardboard,EU,LVD|EMC|WEEE|PPWR
+P019,GlowToys Junior Sp. z o.o.,PL,EU,alerts@glowtoys.example.com,+48 61 001919,email,P019-A,StarLite Night Toy,toy_electronic,toy,DEHP|lead,True,button_cell,0.2,False,none,cardboard,EU,ToySafety|GPSR|REACH|RoHS
+P019,GlowToys Junior Sp. z o.o.,PL,EU,alerts@glowtoys.example.com,+48 61 001919,email,P019-B,MelodyPlush Toy,toy_electronic,toy,DEHP,True,button_cell,0.2,False,none,cardboard,EU,ToySafety|GPSR|RoHS
+P020,ThermoControl Industrie GmbH,DE,EU,alerts@thermocontrol.example.com,+49 621 002020,email,P020-A,IndusTherm Controller,appliance,industrial,decaBDE,False,none,0,False,none,cardboard,EU,LVD|EMC|RoHS|POPs
+P020,ThermoControl Industrie GmbH,DE,EU,alerts@thermocontrol.example.com,+49 621 002020,email,P020-B,FlowMeter Industrial,iot_module,industrial,decaBDE,False,none,0,True,none,cardboard,EU,RED|RoHS|POPs|EMC
+P021,NomadPower Outdoor AB,SE,EU,alerts@nomadpower.example.com,+46 31 002121,sms,P021-A,TrailCell 512 Power Station,battery_pack,consumer,,True,portable,512,False,usb_c,cardboard,EU,Battery|RoHS|WEEE
+P021,NomadPower Outdoor AB,SE,EU,alerts@nomadpower.example.com,+46 31 002121,sms,P021-B,BaseCell 2.0kWh Industrial,battery_pack,industrial,,True,industrial,2048,False,none,cardboard,EU,Battery|RoHS|WEEE
+P021,NomadPower Outdoor AB,SE,EU,alerts@nomadpower.example.com,+46 31 002121,sms,P021-C,PocketCell 99Wh,battery_pack,consumer,,True,portable,99,False,usb_c,cardboard,EU,Battery|RoHS|WEEE
+P022,KidVision Cams SARL,FR,EU,alerts@kidvision.example.com,+33 5 00002222,email,P022-A,LittleView Baby Monitor,smart_home,consumer,BPA,True,portable,8,True,micro_usb,cardboard,EU,RED|Battery|GPSR|RoHS
+P022,KidVision Cams SARL,FR,EU,alerts@kidvision.example.com,+33 5 00002222,email,P022-B,KidCam Watch,wearable,consumer,BPA,True,portable,1.6,True,usb_c,cardboard,EU,RED|Battery|GPSR|RoHS

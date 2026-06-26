@@ -1,0 +1,9 @@
+# Maintainer-only generator (keeps the student repo clean). Not needed by students.
+build_dataset.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
