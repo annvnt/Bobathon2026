@@ -10,7 +10,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from radar import findings
+from radar.compliance import findings
 from radar.config import GAPS_FILE, OPTOUTS_FILE, OUTPUT, ensure_dirs, env, load_dotenv
 
 MAX_CONCURRENT = 5

@@ -43,6 +43,38 @@ cp .env.example .env
 | `TWILIO_*` | SMS/WhatsApp alerts |
 | `ALERT_TO_OVERRIDE` | **Recommended** — routes all alerts to your test number |
 
+## Team MCP API (tech lead contract)
+
+**Transplant guide:** [`radar/mcp/README.md`](radar/mcp/README.md) · file list: [`radar/mcp/TRANSPLANT.txt`](radar/mcp/TRANSPLANT.txt)
+
+Two functions the AI / EcoComply layer calls:
+
+| Function | HTTP | Purpose |
+|---|---|---|
+| `fetchregulation()` | `POST /api/mcp/fetch-regulation` | Fetch EU (EUR-Lex) + DE (GADI) laws for labels × countries; save to `feed/label_regulations/` |
+| `check(label)` | `GET /api/mcp/check/{label}?since=YYYY-MM-DD` | Recent EU Official Journal hits for that label (CELEX anchor + taxonomy) |
+
+```bash
+# Fetch Battery + REACH for Germany and save
+curl -X POST http://localhost:8000/api/mcp/fetch-regulation \
+  -H "Content-Type: application/json" \
+  -d '{"labels":["Battery","REACH"],"countries":["DE"],"product_id":"P013-A"}'
+
+# Check recent OJ activity for Battery (last 90 days if since omitted)
+curl "http://localhost:8000/api/mcp/check/Battery?since=2026-01-01"
+```
+
+Python:
+
+```python
+from radar.mcp.contract import fetch_regulation, check_label
+
+fetch_regulation(["Battery"], ["DE", "EU"], product_id="P013-A")
+check_label("Battery", since="2026-01-01")
+```
+
+Presentation UI: `POST /api/mcp/present` (product picker → regulation cards).
+
 ## Pipeline architecture (tech lead whiteboard)
 
 MCP is **API-key-driven**: it calls your live credentials, extracts knowledge at the API boundary, then embeds and routes.

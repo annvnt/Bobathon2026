@@ -21,13 +21,17 @@ FAMILY_SOURCES: dict[str, list[str]] = {
     "MDR": ["EUR-Lex"],
 }
 
-# Active connectors for Core tier (live APIs + local ECHA lists).
-ACTIVE_CONNECTORS = ("EUR-Lex", "Bundestag", "OpenLegalData", "ECHA")
+# Active connectors for Core tier (live APIs + local ECHA lists + OJ RSS).
+ACTIVE_CONNECTORS = ("EUR-Lex", "EU Official Journal", "Bundestag", "OpenLegalData", "ECHA")
 
 SOURCE_META: dict[str, dict[str, str]] = {
     "EUR-Lex": {
         "url": "https://eur-lex.europa.eu",
         "description": "EU legal texts — RoHS, REACH, Battery Reg, PPWR, GPSR, RED",
+    },
+    "EU Official Journal": {
+        "url": "https://eur-lex.europa.eu/oj",
+        "description": "Daily OJ L/C RSS — new acts, corrigenda and amendments",
     },
     "ECHA": {
         "url": "https://echa.europa.eu",

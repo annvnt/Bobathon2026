@@ -17,6 +17,8 @@ OPTOUTS_FILE = FEED / "optouts.json"
 VECTORDB_FILE = FEED / "vectordb.json"
 HIL_QUEUE_FILE = FEED / "hil_queue.json"
 ROUTER_INDEX_FILE = FEED / "router_index.json"
+REGULATION_LIBRARY_FILE = FEED / "label_regulations.json"
+LABEL_REGULATION_ITEMS_DIR = FEED / "label_regulations"
 GAPS_FILE = OUTPUT / "gaps.json"
 PARTNERS_FILE = DATASET / "partners.json"
 TAXONOMY_FILE = DATASET / "taxonomy.json"
@@ -26,6 +28,7 @@ SOURCES_DOC = DATASET / "SOURCES.md"
 EURLEX_WS_URL = "https://eur-lex.europa.eu/EurLexWebService"
 DIP_BASE = "https://search.dip.bundestag.de/api/v1"
 OPENLEGALDATA_BASE = "https://de.openlegaldata.io/api"
+GADI_BASE = "https://gadi.netlify.app"
 
 
 def load_dotenv() -> None:

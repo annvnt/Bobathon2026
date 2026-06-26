@@ -192,19 +192,41 @@
           <div class="panel chat-panel">
             <div class="panel-header">
               <h2 class="panel-title">Regulation lookup</h2>
-              <p class="panel-desc">Paste a product name or label with ingredients — we search EUR-Lex and Open Legal Data and surface the passages that mention your terms. Click a highlighted term to jump there.</p>
+              <p class="panel-desc">Use <strong>AI lookup</strong> for the presentation (structured product → applicable EU + national laws). <strong>Free-text check</strong> is for manual testing via EUR-Lex search.</p>
             </div>
+
+            <div class="chat-mode-tabs" role="tablist">
+              <button type="button" class="chat-mode-tab active" data-chat-mode="present" role="tab" aria-selected="true">AI lookup</button>
+              <button type="button" class="chat-mode-tab" data-chat-mode="free" role="tab" aria-selected="false">Free-text check</button>
+            </div>
+
+            <div id="present-panel" class="present-panel">
+              <form id="present-form" class="present-form">
+                <label class="field-label" for="present-product">Product (from portfolio)</label>
+                <select id="present-product" class="present-select" required>
+                  <option value="">Select a product…</option>
+                </select>
+                <p id="present-meta" class="present-meta" hidden></p>
+                <label class="field-label" for="present-countries">Delivery countries</label>
+                <input id="present-countries" class="present-input" type="text" placeholder="e.g. DE, EU" value="DE, EU" />
+                <button type="submit" id="present-submit" class="btn btn-primary">Show applicable laws</button>
+              </form>
+            </div>
+
+            <div id="free-chat-panel" class="free-chat-panel" hidden>
+              <form id="chat-form" class="chat-form">
+                <label class="sr-only" for="chat-input">Product or ingredients</label>
+                <textarea id="chat-input" class="chat-input" rows="3" placeholder="Product name or ingredient list…" required></textarea>
+                <button type="submit" id="chat-submit" class="btn btn-primary">Find regulations</button>
+              </form>
+            </div>
+
             <div id="chat-messages" class="chat-messages" aria-live="polite">
-              <div class="chat-bubble chat-assistant">
-                <p>Describe your product or paste ingredients, for example:</p>
-                <p class="chat-example">"Portable lithium battery pack containing lead solder and DEHP plasticizer"</p>
+              <div class="chat-bubble chat-assistant" id="chat-welcome">
+                <p>Select a portfolio product and click <strong>Show applicable laws</strong>. The AI sends labels + markets; we fetch EU (EUR-Lex) and German (GADI) texts and display them here.</p>
+                <p class="chat-example">Demo: RideVolt e-Scooter Battery Pack → Battery, RoHS, WEEE · DE + EU</p>
               </div>
             </div>
-            <form id="chat-form" class="chat-form">
-              <label class="sr-only" for="chat-input">Product or ingredients</label>
-              <textarea id="chat-input" class="chat-input" rows="3" placeholder="Product name or ingredient list…" required></textarea>
-              <button type="submit" id="chat-submit" class="btn btn-primary">Find regulations</button>
-            </form>
           </div>
         </section>
       </main>

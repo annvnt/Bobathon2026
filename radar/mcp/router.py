@@ -5,7 +5,8 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from radar import embed, taxonomy, vectordb
+from radar.mcp import embed, vectordb
+from radar.compliance import taxonomy
 from radar.config import PARTNERS_FILE, ROUTER_INDEX_FILE, TAXONOMY_FILE, ensure_dirs
 
 

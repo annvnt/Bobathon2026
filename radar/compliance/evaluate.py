@@ -8,7 +8,8 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
-from radar import action_lists, alerts, findings, scoring
+from radar.compliance import action_lists, findings, scoring
+from radar.alerts import messages as alerts
 from radar.config import CACHE_FILE, FIXTURE_FILE, GAPS_FILE, PARTNERS_FILE, ensure_dirs, load_dotenv
 
 EU_MARKETS = {"EU", "DE", "FR", "NL", "ES", "PL", "IT", "AT", "BE", "SE", "FI", "DK", "IE", "PT", "CZ", "RO", "HU", "SK", "BG", "HR", "LT", "LV", "EE", "SI", "LU", "MT", "CY", "GR"}

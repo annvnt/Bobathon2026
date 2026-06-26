@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from radar.config import ECHA_DIR, PARTNERS_FILE
-from radar import taxonomy
+from radar.compliance import taxonomy
 
 LIST_URLS: dict[str, str] = {
     "candidate_list": "https://echa.europa.eu/candidate-list-table",

@@ -6,7 +6,10 @@ import threading
 import uuid
 from datetime import datetime
 
-from radar import evaluate, ingest, mcp, notify
+from radar.compliance.evaluate import evaluate
+from radar.ingest import ingest
+from radar import mcp
+from radar.alerts import notify
 from radar.config import STATE_FILE, env, load_dotenv
 import json
 
@@ -47,7 +50,7 @@ def run_pipeline(send_alerts: bool = True) -> dict:
 
     try:
         mcp_stats = mcp.run()
-        gaps = evaluate.evaluate()
+        gaps = evaluate()
         do_alert = alerts_enabled(send_alerts)
         if not do_alert:
             print("Alerts skipped (SKIP_TWILIO or Twilio credentials not set)")
@@ -80,7 +83,7 @@ def run_pipeline_async(send_alerts: bool = True) -> str:
             _jobs[job_id]["status"] = "running"
         try:
             mcp_stats = mcp.run()
-            gaps = evaluate.evaluate()
+            gaps = evaluate()
             do_alert = alerts_enabled(send_alerts)
             alert_results = notify.alert_all() if do_alert else []
             finished = datetime.utcnow().isoformat() + "Z"

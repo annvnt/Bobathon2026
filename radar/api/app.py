@@ -10,13 +10,20 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from radar import chat, findings, hil, mcp, pipeline, regcache
+from radar.api import chat
+from radar.compliance import findings
+from radar.review import hil
+from radar import mcp
+from radar.mcp.routes import router as mcp_router
+from radar.orchestration import pipeline
+from radar.ingest import regcache
 from radar.config import CACHE_FILE, GAPS_FILE, HIL_QUEUE_FILE, STATE_FILE, VECTORDB_FILE, load_dotenv
 
 STATIC = Path(__file__).parent / "static"
 
 app = FastAPI(title="Regulatory Radar", version="1.0.0")
 load_dotenv()
+app.include_router(mcp_router)
 
 
 def _read_json(path: Path, default):
@@ -155,8 +162,24 @@ def api_regulation_library():
 
 @app.get("/api/alert-log")
 def api_alert_log():
-    from radar.findings import ALERT_LOG_FILE
+    from radar.compliance.findings import ALERT_LOG_FILE
     return _read_json(ALERT_LOG_FILE, [])
+
+
+@app.get("/api/oj/recent")
+def api_oj_recent(since: str = Query("2026-01-01"), limit: int = Query(30, ge=1, le=100)):
+    """Recent Official Journal acts from EUR-Lex RSS (L + C series)."""
+    from radar.ingest import oj_rss as oj_mod
+    from radar.ingest import translate as tr
+
+    raw = oj_mod.fetch_oj_rss_raw(since)
+    records = [tr.from_oj_rss(h) for h in raw[:limit]]
+    return {
+        "since": since,
+        "count": len(records),
+        "feeds": oj_mod.OJ_RSS_FEEDS,
+        "updates": records,
+    }
 
 
 @app.get("/api/updates")

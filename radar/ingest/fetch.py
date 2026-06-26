@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, datetime
 from typing import Any, Callable
 
-from radar import sources, translate
+from radar.ingest import sources, translate
 from radar.config import (
     CACHE_FILE,
     DIP_BASE,
@@ -34,7 +34,7 @@ NS = {
 FALLBACK_CELEX = [
     ("32023R1542", "EU Battery Regulation (EU) 2023/1542"),
     ("32011L0065", "RoHS Directive 2011/65/EU"),
-    ("32007R1907", "REACH Regulation (EC) 1907/2006"),
+    ("32006R1907", "REACH Regulation (EC) 1907/2006"),
 ]
 
 TIMEOUT = 30
@@ -346,7 +346,7 @@ def fetch_openlegaldata(last_fetched: str) -> list[dict]:
 
 def fetch_echa(last_fetched: str) -> list[dict]:
     """Read ECHA chemical list XLSX files from ECHA/ (candidate, restriction, authorisation)."""
-    from radar import echa as echa_mod
+    from radar.ingest import echa as echa_mod
 
     entries = echa_mod.load_entries()
     if not entries:
@@ -362,8 +362,22 @@ def fetch_echa(last_fetched: str) -> list[dict]:
     return records
 
 
+def fetch_oj_rss(last_fetched: str) -> list[dict]:
+    """EU Official Journal — EUR-Lex predefined RSS (L + C series, no API key)."""
+    from radar.ingest import oj_rss as oj_mod
+
+    raw = oj_mod.fetch_oj_rss_raw(last_fetched)
+    records = [translate.from_oj_rss(h) for h in raw]
+    if records:
+        print(f"EU-OJ: {len(records)} acts from Official Journal RSS (since {last_fetched})")
+    else:
+        print(f"EU-OJ: no new OJ items since {last_fetched}")
+    return records
+
+
 CONNECTORS: dict[str, Callable[[str], list[dict]]] = {
     "EUR-Lex": fetch_eurlex,
+    "EU Official Journal": fetch_oj_rss,
     "Bundestag": fetch_bundestag,
     "OpenLegalData": fetch_openlegaldata,
     "ECHA": fetch_echa,

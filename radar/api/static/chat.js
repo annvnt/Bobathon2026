@@ -77,7 +77,8 @@ function renderRegulationCards(regulations) {
           ${r.excerpt && !r.sections?.length ? `<p class="chat-reg-excerpt">${highlightTermsInText(r.excerpt, r.matched_terms)}</p>` : ""}
           ${renderRegulationSections(r)}
           <div class="chat-reg-actions">
-            ${r.url ? `<a href="${escChat(r.url)}" class="btn btn-soft btn-sm" target="_blank" rel="noopener">Open source</a>` : ""}
+            ${r.url ? `<a href="${escChat(r.url)}" class="btn btn-soft btn-sm" target="_blank" rel="noopener">Official law</a>` : ""}
+            ${r.gadi_url ? `<a href="${escChat(r.gadi_url)}" class="btn btn-soft btn-sm" target="_blank" rel="noopener">GADI JSON</a>` : ""}
             <button type="button" class="btn btn-soft btn-sm chat-read-text" data-reg-id="${escChat(r.id)}">Read full text</button>
           </div>
         </article>
@@ -235,3 +236,123 @@ document.getElementById("chat-form")?.addEventListener("submit", (e) => {
   input.value = "";
   submitChat(query);
 });
+
+let presentProducts = [];
+
+function parseCountries(raw) {
+  return raw
+    .split(/[,;]+/)
+    .map((c) => c.trim().toUpperCase())
+    .filter(Boolean);
+}
+
+function updatePresentMeta(productId) {
+  const meta = document.getElementById("present-meta");
+  const product = presentProducts.find((p) => p.product_id === productId);
+  if (!product || !meta) {
+    if (meta) meta.hidden = true;
+    return;
+  }
+  const streams = (product.compliance_streams || []).join(", ") || "—";
+  const markets = (product.markets || []).join(", ") || "EU";
+  meta.textContent = `${product.company} · labels: ${streams} · markets: ${markets}`;
+  meta.hidden = false;
+  const countriesInput = document.getElementById("present-countries");
+  if (countriesInput && !countriesInput.dataset.touched) {
+    countriesInput.value = markets.includes("EU") ? "DE, EU" : markets;
+  }
+}
+
+async function loadPresentProducts() {
+  const select = document.getElementById("present-product");
+  if (!select) return;
+  try {
+    const data = await fetch("/api/mcp/products").then((r) => r.json());
+    presentProducts = data.products || [];
+    presentProducts.forEach((p) => {
+      const opt = document.createElement("option");
+      opt.value = p.product_id;
+      opt.textContent = `${p.product_id} — ${p.name}`;
+      select.appendChild(opt);
+    });
+    select.addEventListener("change", () => updatePresentMeta(select.value));
+  } catch (e) {
+    console.warn("Could not load products", e);
+  }
+}
+
+function setChatMode(mode) {
+  const presentPanel = document.getElementById("present-panel");
+  const freePanel = document.getElementById("free-chat-panel");
+  document.querySelectorAll(".chat-mode-tab").forEach((tab) => {
+    const active = tab.dataset.chatMode === mode;
+    tab.classList.toggle("active", active);
+    tab.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  if (presentPanel) presentPanel.hidden = mode !== "present";
+  if (freePanel) freePanel.hidden = mode !== "free";
+}
+
+document.querySelectorAll(".chat-mode-tab").forEach((tab) => {
+  tab.addEventListener("click", () => setChatMode(tab.dataset.chatMode || "present"));
+});
+
+async function submitPresent(productId, countries) {
+  const submitBtn = document.getElementById("present-submit");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Fetching laws…";
+
+  const loading = document.createElement("div");
+  loading.className = "chat-bubble chat-assistant chat-loading";
+  loading.textContent = "AI request: resolving labels and markets, fetching EU + German regulation texts…";
+  document.getElementById("chat-messages").appendChild(loading);
+
+  try {
+    const res = await fetch("/api/mcp/present", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product_id: productId, countries }),
+    });
+    const data = await res.json();
+    loading.remove();
+
+    if (!res.ok) {
+      appendAssistantMessage(`<p class="chat-error">${escChat(data.message || data.error || "Lookup failed.")}</p>`);
+      return;
+    }
+
+    const product = presentProducts.find((p) => p.product_id === productId);
+    const userLine = `${product?.name || productId} · ${(data.labels || []).join(", ")} · ${(data.countries || []).join(", ")}`;
+    appendUserMessage(`[AI] ${userLine}`);
+
+    chatRegulationsById = {};
+    chatTermSections = {};
+    (data.regulations || []).forEach((r) => {
+      chatRegulationsById[r.id] = r;
+    });
+
+    const body = `<div class="chat-message-body">${renderMessageParts(data.message_parts)}</div>${renderRegulationCards(data.regulations)}`;
+    appendAssistantMessage(body);
+  } catch (e) {
+    loading.remove();
+    appendAssistantMessage(`<p class="chat-error">Could not reach the server: ${escChat(e.message)}</p>`);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Show applicable laws";
+  }
+}
+
+document.getElementById("present-form")?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const productId = document.getElementById("present-product")?.value;
+  const countries = parseCountries(document.getElementById("present-countries")?.value || "");
+  if (!productId) return;
+  submitPresent(productId, countries);
+});
+
+document.getElementById("present-countries")?.addEventListener("input", (e) => {
+  e.target.dataset.touched = "1";
+});
+
+loadPresentProducts();
+setChatMode("present");

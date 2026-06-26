@@ -1,0 +1,14 @@
+{
+  "label": "Germany-Federal",
+  "country": "DE",
+  "countries_affected": [
+    "DE"
+  ],
+  "text": "ChemG — Chemikaliengesetz (Germany)\n\nGerman chemicals act implementing REACH at national level — enforcement, penalties, and national competent authority rules.\n\nOfficial source: https://www.gesetze-im-internet.de/chemg_2017/\n(Full HTML available at gesetze-im-internet.de — fetch via national portal or DIP.)",
+  "title": "ChemG — Chemikaliengesetz (Germany)",
+  "reference": "DE-ChemG",
+  "source_url": "https://www.gesetze-im-internet.de/chemg_2017/",
+  "regulation_text_key": null,
+  "stored_at": "2026-06-26T13:37:27.836321Z",
+  "category": "REACH"
+}

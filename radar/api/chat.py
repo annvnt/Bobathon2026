@@ -8,9 +8,11 @@ import urllib.parse
 import urllib.request
 from typing import Any
 
-from radar import embed, regcache, taxonomy, translate
+from radar.mcp import embed
+from radar.ingest import regcache, translate
+from radar.compliance import taxonomy
 from radar.config import OPENLEGALDATA_BASE, env, load_dotenv
-from radar.ingest import FALLBACK_CELEX, load_cache
+from radar.ingest.fetch import FALLBACK_CELEX, load_cache
 
 ALLOWED_SOURCES = {"EUR-Lex", "OpenLegalData"}
 MAX_RESULTS = 10
@@ -316,7 +318,7 @@ def _search_eurlex_anchors(query: str, parsed: dict) -> tuple[list[dict], dict[s
                 if fam.lower() in blob or fam.lower() in q:
                     matched.append(fam)
         for sub in parsed.get("substances") or []:
-            if sub.lower() in q and celex in ("32011L0065", "32007R1907"):
+            if sub.lower() in q and celex in ("32011L0065", "32006R1907", "32007R1907"):
                 score += 20
                 matched.append(sub)
         if "battery" in q and "1542" in celex:

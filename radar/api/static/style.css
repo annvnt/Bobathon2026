@@ -1004,6 +1004,58 @@ code {
 
 .term-link:hover { background: rgba(15, 98, 254, 0.22); }
 
+.chat-mode-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chat-mode-tab {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-muted);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.chat-mode-tab.active {
+  border-color: var(--ibm-blue);
+  color: var(--ibm-blue);
+  background: #edf5ff;
+}
+
+.present-panel,
+.free-chat-panel {
+  margin-bottom: 1rem;
+}
+
+.present-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.present-select,
+.present-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  font: inherit;
+  background: #fff;
+}
+
+.present-meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+}
+
+.field-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
 .chat-form {
   display: flex;
   flex-wrap: wrap;

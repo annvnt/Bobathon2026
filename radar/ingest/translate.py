@@ -7,7 +7,7 @@ import re
 from datetime import date, datetime
 from typing import Any
 
-from radar import taxonomy
+from radar.compliance import taxonomy
 
 ISO_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
 
@@ -44,6 +44,31 @@ def from_eurlex(hit: dict[str, Any]) -> dict[str, Any]:
         reference=hit.get("reference") or f"CELEX {celex}",
         title=title,
         summary=hit.get("summary") or title,
+        effective=eff,
+        url=doc_url,
+        text=text,
+        change_type=hit.get("change_type", "new"),
+    )
+
+
+def from_oj_rss(hit: dict[str, Any]) -> dict[str, Any]:
+    """Official Journal RSS item — acts, corrigenda, amendments."""
+    celex = hit.get("celex", "")
+    title = hit.get("title") or f"OJ act {celex}"
+    series = hit.get("oj_series", "L")
+    text = f"{title} {celex} OJ-{series}"
+    family = taxonomy.detect_family(text)
+    eff = _pick_date(hit.get("published_date"), hit.get("pub_datetime"))
+    doc_url = hit.get("url") or f"https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:{celex}"
+    summary = hit.get("summary") or title
+    if hit.get("oj_series"):
+        summary = f"[OJ {hit['oj_series']}] {summary}"
+    return _base_record(
+        source="EU Official Journal",
+        family=family,
+        reference=celex,
+        title=title,
+        summary=summary,
         effective=eff,
         url=doc_url,
         text=text,

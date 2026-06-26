@@ -12,9 +12,11 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Any, Callable
 
-from radar import embed, hil, ingest, regcache, router, translate, vectordb
+from radar.mcp import embed, router, vectordb
+from radar.ingest import fetch as ingest
+from radar.ingest import regcache, sources, translate
+from radar.review import hil
 from radar.config import ensure_dirs, env, load_dotenv
-from radar import sources
 
 # ponytail: registry maps each live API to required .env keys
 API_SOURCES: dict[str, dict[str, Any]] = {
@@ -40,6 +42,12 @@ API_SOURCES: dict[str, dict[str, Any]] = {
         "local": True,
         "fetch": ingest.fetch_echa,
     },
+    "EU Official Journal": {
+        "env_keys": [],
+        "public": True,
+        "fetch": ingest.fetch_oj_rss,
+        "to_update": translate.from_oj_rss,
+    },
 }
 
 
@@ -50,6 +58,9 @@ def credentials_status() -> dict[str, dict[str, Any]]:
         keys = cfg.get("env_keys", [])
         if cfg.get("local"):
             out[name] = {"configured": True, "mode": "local_files", "keys": []}
+            continue
+        if cfg.get("public"):
+            out[name] = {"configured": True, "mode": "public_rss", "keys": [], "optional": True}
             continue
         present = {k: bool(env(k)) for k in keys}
         if cfg.get("optional_keys"):
@@ -122,6 +133,20 @@ def fetch_from_apis(sources_filter: tuple[str, ...] | None = None) -> dict[str, 
                 rec["mcp_source_authenticated"] = True
                 regcache.attach_to_update(rec, {"title": rec.get("title"), "reference": rec.get("reference"), "summary": rec.get("summary")})
             source_stats[name] = {"status": "ok", "mode": "local", "fetched": len(records)}
+        elif cfg.get("public"):
+            print(f"MCP: fetching {name} (public feed, no API key)...")
+            records = cfg["fetch"](last)
+            for rec in records:
+                rec["mcp_knowledge"] = extract_knowledge(
+                    {"title": rec.get("title"), "reference": rec.get("reference"), "summary": rec.get("summary")},
+                    name,
+                )
+                rec["mcp_source_authenticated"] = False
+                regcache.attach_to_update(
+                    rec,
+                    {"celex": rec.get("reference"), "title": rec.get("title"), "summary": rec.get("summary")},
+                )
+            source_stats[name] = {"status": "ok", "mode": "public_rss", "fetched": len(records)}
         else:
             status = creds.get(name, {})
             has_keys = status.get("configured", False)
