@@ -1,0 +1,45 @@
+# MCP transplant file manifest (copy list)
+# See radar/mcp/README.md for full guide.
+
+## Required — regulation contract
+radar/mcp/__init__.py
+radar/mcp/contract.py
+radar/mcp/routes.py
+radar/mcp/regulation_ops.py
+radar/mcp/label_regs.py
+radar/mcp/catalog.py
+
+radar/config.py
+radar/compliance/__init__.py
+radar/compliance/jurisdictions.py
+radar/compliance/taxonomy.py
+radar/ingest/__init__.py
+radar/ingest/gadi.py
+radar/ingest/regcache.py
+radar/ingest/translate.py
+radar/ingest/oj_rss.py
+radar/ingest/fetch.py
+
+feed/label_regulations.json
+feed/label_regulations/
+
+## Optional — presentation (portfolio-driven UI)
+radar/mcp/present.py
+Dataset/partners.json
+Dataset/partners.csv
+
+## Optional — ingest pipeline (embed / route / HIL)
+radar/mcp/run.py
+radar/mcp/embed.py
+radar/mcp/router.py
+radar/mcp/vectordb.py
+radar/ingest/sources.py
+radar/ingest/echa.py
+radar/review/hil.py
+
+## Do NOT copy (outside MCP scope)
+radar/api/chat.py
+radar/compliance/evaluate.py
+radar/compliance/findings.py
+radar/alerts/
+radar/orchestration/

@@ -1,0 +1,14 @@
+{
+  "label": "Germany-Federal",
+  "country": "DE",
+  "countries_affected": [
+    "DE"
+  ],
+  "text": "BattDG — Batterierecht-Durchführungsgesetz (Germany)\n\nGerman federal act implementing EU battery rules (BattDG). Covers national registration, due diligence, and collection obligations alongside Regulation (EU) 2023/1542.\n\nOfficial source: https://www.gesetze-im-internet.de/battdg/\n(Full HTML available at gesetze-im-internet.de — fetch via national portal or DIP.)",
+  "title": "BattDG — Batterierecht-Durchführungsgesetz (Germany)",
+  "reference": "DE-BattDG",
+  "source_url": "https://www.gesetze-im-internet.de/battdg/",
+  "regulation_text_key": null,
+  "stored_at": "2026-06-26T13:37:26.857221Z",
+  "category": "Battery"
+}

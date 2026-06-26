@@ -1,8 +1,8 @@
-<svg width="840" height="930" viewBox="0 0 840 930" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,sans-serif">
-<rect width="840" height="930" fill="#F0EFEB"/>
-<rect x="20" y="14" width="120" height="18" rx="3" fill="#3A3835" stroke="none" stroke-width="0.75"/><text x="26" y="23" font-size="9" fill="#FFFFFF" text-anchor="start" font-weight="500" dominant-baseline="central" >Screen 1/3</text><text x="148" y="23" font-size="11" fill="#3A3835" text-anchor="start" font-weight="500" dominant-baseline="central" >Customer view — My compliance dashboard</text><text x="148" y="38" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Target: SME compliance manager. Goal: immediate clarity on what needs action today vs what can wait.</text>
-<rect x="20" y="46" width="800" height="870" rx="6" fill="#FFFFFF" stroke="#C8C6C2" stroke-width="1"/>
-<rect x="20" y="46" width="800" height="46" rx="0" fill="#FAFAF8" stroke="#DDDCD8" stroke-width="0.5"/><rect x="34" y="57" width="26" height="24" rx="4" fill="#3A3835" stroke="none" stroke-width="0.75"/><text x="47" y="69" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="500" dominant-baseline="central" >R</text><text x="66" y="69" font-size="12" fill="#3A3835" text-anchor="start" font-weight="500" dominant-baseline="central" >Regulatory Radar</text><text x="194" y="69" font-size="11" fill="#3A3835" text-anchor="start" font-weight="400" dominant-baseline="central" >My dashboard</text><line x1="194" y1="88" x2="268.4" y2="88" stroke="#3A3835" stroke-width="1.5" /><text x="294.0" y="69" font-size="11" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Deadline timeline</text><text x="426.5" y="69" font-size="11" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Alerts</text><text x="487.5" y="69" font-size="11" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Help</text><circle cx="798" cy="69" r="14" fill="#DDDCD8"/><text x="798" y="69" font-size="10" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >EC</text>
+<svg width="840" height="900" viewBox="0 0 840 900" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,-apple-system,sans-serif">
+<rect width="840" height="900" fill="#F0EFEB"/>
+<rect x="20" y="14" width="120" height="18" rx="3" fill="#3A3835" stroke="none" stroke-width="0.75"/><text x="26" y="23" font-size="9" fill="#FFFFFF" text-anchor="start" font-weight="500" dominant-baseline="central" >Screen 1/3</text><text x="148" y="23" font-size="11" fill="#3A3835" text-anchor="start" font-weight="500" dominant-baseline="central" >Customer view — My compliance dashboard</text><text x="148" y="38" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >SME compliance manager. Goal: immediate clarity on what needs action today.</text>
+<rect x="20" y="46" width="800" height="840" rx="6" fill="#FFFFFF" stroke="#C8C6C2" stroke-width="1"/>
+<rect x="20" y="46" width="800" height="46" rx="0" fill="#FAFAF8" stroke="#DDDCD8" stroke-width="0.5"/><rect x="34" y="57" width="26" height="24" rx="4" fill="#3A3835" stroke="none" stroke-width="0.75"/><text x="47" y="69" font-size="13" fill="#FFFFFF" text-anchor="middle" font-weight="500" dominant-baseline="central" >R</text><text x="66" y="69" font-size="12" fill="#3A3835" text-anchor="start" font-weight="500" dominant-baseline="central" >Regulatory Radar</text><text x="198" y="69" font-size="11" fill="#3A3835" text-anchor="start" font-weight="400" dominant-baseline="central" >My dashboard</text><line x1="198" y1="88" x2="272.4" y2="88" stroke="#3A3835" stroke-width="1.5" /><text x="298.0" y="69" font-size="11" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Alerts</text><circle cx="798" cy="69" r="14" fill="#DDDCD8"/><text x="798" y="69" font-size="10" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >EC</text>
 <rect x="36" y="108" width="768" height="50" rx="4" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/>
 <rect x="36" y="108" width="4" height="50" rx="0" fill="#888684" stroke="none" stroke-width="0.75"/>
 <text x="50" y="126" font-size="12" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >2 critical compliance gaps require immediate attention</text>
@@ -13,95 +13,70 @@
 <text x="48" y="212" font-size="21" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >2</text>
 <text x="48" y="228" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >Act immediately</text>
 <rect x="294" y="172" width="246" height="62" rx="4" fill="#F5F4F1" stroke="#DDDCD8" stroke-width="0.75"/>
-<text x="306" y="187" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Next deadline</text>
-<text x="306" y="212" font-size="21" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >67 days</text>
-<text x="306" y="228" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >1 Sep 2026 — REACH</text>
+<text x="306" y="187" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Soonest deadline</text>
+<text x="306" y="212" font-size="21" fill="#A32D2D" text-anchor="start" font-weight="500" dominant-baseline="central" >Passed</text>
+<text x="306" y="228" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >RoHS — in force, violated now</text>
 <rect x="552" y="172" width="246" height="62" rx="4" fill="#F5F4F1" stroke="#DDDCD8" stroke-width="0.75"/>
-<text x="564" y="187" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Scan frequency</text>
-<text x="564" y="212" font-size="21" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >Weekly</text>
-<text x="564" y="228" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >Last run: today</text>
+<text x="564" y="187" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Next dated deadline</text>
+<text x="564" y="212" font-size="21" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >237 days</text>
+<text x="564" y="228" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >18 Feb 2027 — Batteries</text>
 <text x="36" y="250" font-size="10" fill="#888684" text-anchor="start" font-weight="500" dominant-baseline="central" >Category:</text>
-<rect x="100" y="240" width="107.60000000000001" height="22" rx="11" fill="#3A3835" stroke="#3A3835" stroke-width="0.75"/><text x="153.8" y="251" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="400" dominant-baseline="central" >All categories</text>
-<rect x="209.60000000000002" y="240" width="120.4" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="269.8" y="251" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >Portable scanner</text>
-<rect x="332.0" y="240" width="120.4" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="392.2" y="251" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >Consumer display</text>
+<rect x="100" y="240" width="37.2" height="22" rx="11" fill="#3A3835" stroke="#3A3835" stroke-width="0.75"/><text x="118.6" y="251" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="400" dominant-baseline="central" >All</text>
+<rect x="139.2" y="240" width="120.4" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="199.39999999999998" y="251" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >Portable scanner</text>
+<rect x="261.6" y="240" width="120.4" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="321.8" y="251" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >Consumer display</text>
 <text x="36" y="280" font-size="10" fill="#888684" text-anchor="start" font-weight="500" dominant-baseline="central" >Regulation:</text>
 <rect x="106" y="270" width="37.2" height="22" rx="11" fill="#3A3835" stroke="#3A3835" stroke-width="0.75"/><text x="124.6" y="281" font-size="10" fill="#FFFFFF" text-anchor="middle" font-weight="400" dominant-baseline="central" >All</text>
 <rect x="137.2" y="270" width="75.6" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="175.0" y="281" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >Batteries</text>
 <rect x="206.79999999999998" y="270" width="43.6" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="228.6" y="281" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >RoHS</text>
-<rect x="244.39999999999998" y="270" width="50.0" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="269.4" y="281" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >REACH</text>
-<rect x="288.4" y="270" width="43.6" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="310.2" y="281" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >GPSR</text>
-<rect x="326.0" y="270" width="43.6" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/><text x="347.8" y="281" font-size="10" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >WEEE</text>
-<rect x="612" y="270" width="174" height="22" rx="11" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.5"/>
-<text x="699" y="281" font-size="10" fill="#888684" text-anchor="middle" font-weight="400" dominant-baseline="central" >Sorted: Critical + Immediate first</text>
-<line x1="36" y1="302" x2="804" y2="302" stroke="#E0DEDА" stroke-width="0.75" />
-<text x="36" y="314" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >2 gaps requiring action  —  sorted automatically</text>
+<text x="248.39999999999998" y="281" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" font-style="italic">only regulations affecting your products are shown</text>
+<line x1="36" y1="302" x2="804" y2="302" stroke="#E4E2DE" stroke-width="0.75" />
+<text x="36" y="314" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="400" dominant-baseline="central" >2 gaps requiring action — sorted by criticality then urgency</text>
 <rect x="36" y="326" width="768" height="116" rx="5" fill="#FFFFFF" stroke="#DDDCD8" stroke-width="0.75"/>
-<line x1="36" y1="326" x2="36" y2="442" stroke="#888684" stroke-width="3" />
+<line x1="36" y1="326" x2="36" y2="442" stroke="#E24B4A" stroke-width="3" />
 <rect x="52" y="338" width="67.6" height="22" rx="11" fill="#3A3835" stroke="#3A3835" stroke-width="0.75"/><text x="85.8" y="349" font-size="10.5" fill="#FFFFFF" text-anchor="middle" font-weight="500" dominant-baseline="central" >CRITICAL</text>
-<rect x="150" y="338" width="185.4" height="22" rx="11" fill="#EDECEA" stroke="#BEBCB8" stroke-width="0.75"/><text x="242.7" y="349" font-size="10.5" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >Act now — already violating</text>
-<text x="52" y="374" font-size="13" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >ProScan 3000</text>
-<text x="52" y="392" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Portable scanner</text>
-<text x="52" y="412" font-size="11" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >EU Batteries Regulation 2023/1542 — battery passport not implemented</text>
-<rect x="52" y="424" width="200" height="18" rx="3" fill="#F0EFEB" stroke="#DDDCD8" stroke-width="0.5"/>
-<text x="58" y="433" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >In force now — no deadline, violation is current</text>
+<rect x="127.6" y="338" width="185.4" height="22" rx="11" fill="#EDECEA" stroke="#BEBCB8" stroke-width="0.75"/><text x="220.3" y="349" font-size="10.5" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >Act now — already violating</text>
+<text x="52" y="374" font-size="13" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >EcoDisplay X1</text>
+<text x="52" y="392" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Consumer display</text>
+<text x="52" y="412" font-size="11" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >RoHS Directive 2011/65/EU — Lead above threshold, no exemption found</text>
+<rect x="52" y="424" width="293.59999999999997" height="20" rx="4" fill="#FCEBEB" stroke="#E24B4A" stroke-width="0.5"/><text x="61" y="434" font-size="10" fill="#A32D2D" text-anchor="start" font-weight="400" dominant-baseline="central" >In force now — deadline passed, violation is current</text>
 <rect x="660" y="414" width="130" height="26" rx="4" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/>
 <text x="725" y="427" font-size="11" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >View full details →</text>
 <rect x="36" y="456" width="768" height="116" rx="5" fill="#FFFFFF" stroke="#DDDCD8" stroke-width="0.75"/>
-<line x1="36" y1="456" x2="36" y2="572" stroke="#888684" stroke-width="3" />
+<line x1="36" y1="456" x2="36" y2="572" stroke="#E24B4A" stroke-width="3" />
 <rect x="52" y="468" width="67.6" height="22" rx="11" fill="#3A3835" stroke="#3A3835" stroke-width="0.75"/><text x="85.8" y="479" font-size="10.5" fill="#FFFFFF" text-anchor="middle" font-weight="500" dominant-baseline="central" >CRITICAL</text>
-<rect x="150" y="468" width="135.8" height="22" rx="11" fill="#EDECEA" stroke="#BEBCB8" stroke-width="0.75"/><text x="217.9" y="479" font-size="10.5" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >Plan now — 237 days</text>
-<text x="52" y="504" font-size="13" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >EcoDisplay X1</text>
-<text x="52" y="522" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Consumer display</text>
-<text x="52" y="542" font-size="11" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >RoHS Directive 2011/65/EU — Lead above threshold, no exemption found</text>
-<rect x="52" y="554" width="165" height="18" rx="3" fill="#F0EFEB" stroke="#DDDCD8" stroke-width="0.5"/>
-<text x="58" y="563" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >18 Feb 2027  ·  237 days remaining</text>
+<rect x="127.6" y="468" width="135.8" height="22" rx="11" fill="#EDECEA" stroke="#BEBCB8" stroke-width="0.75"/><text x="195.5" y="479" font-size="10.5" fill="#555453" text-anchor="middle" font-weight="500" dominant-baseline="central" >Plan now — 237 days</text>
+<text x="52" y="504" font-size="13" fill="#1A1917" text-anchor="start" font-weight="500" dominant-baseline="central" >ProScan 3000</text>
+<text x="52" y="522" font-size="10" fill="#888684" text-anchor="start" font-weight="400" dominant-baseline="central" >Portable scanner</text>
+<text x="52" y="542" font-size="11" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >EU Batteries Regulation 2023/1542 — battery passport not implemented</text>
+<rect x="52" y="554" width="187.6" height="20" rx="4" fill="#F0EFEB" stroke="#DDDCD8" stroke-width="0.5"/><text x="61" y="564" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >18 Feb 2027 · 237 days remaining</text>
 <rect x="660" y="544" width="130" height="26" rx="4" fill="#F5F4F1" stroke="#BEBCB8" stroke-width="0.75"/>
 <text x="725" y="557" font-size="11" fill="#3A3835" text-anchor="middle" font-weight="400" dominant-baseline="central" >View full details →</text>
 <rect x="36" y="586" width="768" height="52" rx="5" fill="#FAFAF8" stroke="#E4E2DE" stroke-width="0.75"/>
 <text x="52" y="601" font-size="10" fill="#AAAAAA" text-anchor="start" font-weight="500" dominant-baseline="central" letter-spacing="0.04em">Excluded — not in EU scope</text>
-<text x="52" y="621" font-size="11" fill="#BEBCB8" text-anchor="start" font-weight="400" dominant-baseline="central" >SmartSensor T2  ·  IoT sensor  ·  EU Batteries Reg — market check failed: product sells in US only</text>
-<circle cx="436" cy="250" r="9" fill="#3A6FBF"/><text x="436" y="250" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">1</text>
-<rect x="446" y="232" width="200" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="451" y="241" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Category filter only shown when</text>
-<text x="451" y="255" font-size="9.5" fill="#1A3F80" dominant-baseline="central">company has >1 category. Hidden</text>
-<text x="451" y="269" font-size="9.5" fill="#1A3F80" dominant-baseline="central">otherwise — no clutter.</text>
-<circle cx="780" cy="281" r="9" fill="#3A6FBF"/><text x="780" y="281" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">2</text>
-<rect x="580" y="263" width="196" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="585" y="272" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Auto-sort: Critical first, then by</text>
-<text x="585" y="286" font-size="9.5" fill="#1A3F80" dominant-baseline="central">deadline. User never hunts for the</text>
-<text x="585" y="300" font-size="9.5" fill="#1A3F80" dominant-baseline="central">worst issue.</text>
-<circle cx="240" cy="338" r="9" fill="#3A6FBF"/><text x="240" y="338" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">3</text>
-<rect x="248" y="318" width="210" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="253" y="327" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Two separate badges — Criticality</text>
-<text x="253" y="341" font-size="9.5" fill="#1A3F80" dominant-baseline="central">(what's at stake) and Urgency (when to</text>
-<text x="253" y="355" font-size="9.5" fill="#1A3F80" dominant-baseline="central">act). Different questions.</text>
-<circle cx="262" cy="430" r="9" fill="#3A6FBF"/><text x="262" y="430" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">4</text>
-<rect x="270" y="412" width="198" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="275" y="421" font-size="9.5" fill="#1A3F80" dominant-baseline="central">'Already violating' text hits harder</text>
-<text x="275" y="435" font-size="9.5" fill="#1A3F80" dominant-baseline="central">than a date. No ambiguity about</text>
-<text x="275" y="449" font-size="9.5" fill="#1A3F80" dominant-baseline="central">urgency.</text>
-<circle cx="200" cy="477" r="9" fill="#3A6FBF"/><text x="200" y="477" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">5</text>
-<rect x="208" y="458" width="210" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="213" y="467" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Same criticality level but different</text>
-<text x="213" y="481" font-size="9.5" fill="#1A3F80" dominant-baseline="central">urgency badge. User sees they have</text>
-<text x="213" y="495" font-size="9.5" fill="#1A3F80" dominant-baseline="central">time but must start now.</text>
-<circle cx="450" cy="612" r="9" fill="#3A6FBF"/><text x="450" y="612" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">6</text>
-<rect x="458" y="592" width="212" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
-<text x="463" y="601" font-size="9.5" fill="#1A3F80" dominant-baseline="central">False positives shown openly. Builds</text>
-<text x="463" y="615" font-size="9.5" fill="#1A3F80" dominant-baseline="central">trust — user sees system reasoned</text>
-<text x="463" y="629" font-size="9.5" fill="#1A3F80" dominant-baseline="central">correctly, didn't just hide it.</text>
-<line x1="36" y1="660" x2="804" y2="660" stroke="#E4E2DE" stroke-width="0.75" />
-<text x="36" y="676" font-size="10" fill="#888684" text-anchor="start" font-weight="500" dominant-baseline="central" >UX decisions annotated:</text>
-<circle cx="52" cy="698" r="9" fill="#3A6FBF"/><text x="52" y="698" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">1</text>
-<text x="66" y="698" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >1 — Contextual category filter</text>
-<circle cx="302" cy="698" r="9" fill="#3A6FBF"/><text x="302" y="698" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">2</text>
-<text x="316" y="698" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >2 — Auto-sort removes cognitive load</text>
-<circle cx="552" cy="698" r="9" fill="#3A6FBF"/><text x="552" y="698" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">3</text>
-<text x="566" y="698" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >3 — Dual badge = severity + timing in one row</text>
-<circle cx="52" cy="722" r="9" fill="#3A6FBF"/><text x="52" y="722" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">4</text>
-<text x="66" y="722" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >4 — 'Already violating' &gt; abstract date</text>
-<circle cx="302" cy="722" r="9" fill="#3A6FBF"/><text x="302" y="722" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">5</text>
-<text x="316" y="722" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >5 — Urgency distinct from criticality</text>
-<circle cx="552" cy="722" r="9" fill="#3A6FBF"/><text x="552" y="722" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">6</text>
-<text x="566" y="722" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >6 — Transparent exclusions build trust</text>
+<text x="52" y="621" font-size="11" fill="#BEBCB8" text-anchor="start" font-weight="400" dominant-baseline="central" >SmartSensor T2 · IoT sensor · EU Batteries Reg — market check failed: sells in US only</text>
+<circle cx="420" cy="234" r="9" fill="#3A6FBF"/><text x="420" y="234" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">1</text>
+<rect x="430" y="220" width="205" height="64" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
+<text x="435" y="229" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Deadlines reflect the critical gaps</text>
+<text x="435" y="243" font-size="9.5" fill="#1A3F80" dominant-baseline="central">shown: soonest = RoHS (violated now),</text>
+<text x="435" y="257" font-size="9.5" fill="#1A3F80" dominant-baseline="central">next dated = Batteries 237 days.</text>
+<text x="435" y="271" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Never an unrelated regulation.</text>
+<circle cx="486" cy="281" r="9" fill="#3A6FBF"/><text x="486" y="281" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">2</text>
+<rect x="496" y="267" width="200" height="50" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
+<text x="501" y="276" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Only Batteries and RoHS shown — the</text>
+<text x="501" y="290" font-size="9.5" fill="#1A3F80" dominant-baseline="central">regulations that actually affect</text>
+<text x="501" y="304" font-size="9.5" fill="#1A3F80" dominant-baseline="central">these products. No empty filters.</text>
+<circle cx="360" cy="564" r="9" fill="#3A6FBF"/><text x="360" y="564" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">3</text>
+<rect x="370" y="548" width="200" height="36" rx="3" fill="#EEF3FB" stroke="#3A6FBF" stroke-width="0.5"/>
+<text x="375" y="557" font-size="9.5" fill="#1A3F80" dominant-baseline="central">Gray box fully contains the date and</text>
+<text x="375" y="571" font-size="9.5" fill="#1A3F80" dominant-baseline="central">days-remaining text. No clipping.</text>
+<line x1="36" y1="662" x2="804" y2="662" stroke="#E4E2DE" stroke-width="0.75" />
+<text x="36" y="678" font-size="10" fill="#888684" text-anchor="start" font-weight="500" dominant-baseline="central" >Changes from feedback:</text>
+<circle cx="52" cy="700" r="9" fill="#3A6FBF"/><text x="52" y="700" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">1</text>
+<text x="66" y="700" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >1 — Deadline KPI tied to the gaps shown</text>
+<circle cx="432" cy="700" r="9" fill="#3A6FBF"/><text x="432" y="700" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">2</text>
+<text x="446" y="700" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >2 — Only relevant regulation filters</text>
+<circle cx="52" cy="724" r="9" fill="#3A6FBF"/><text x="52" y="724" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">3</text>
+<text x="66" y="724" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >3 — Status box fully contains its text</text>
+<circle cx="432" cy="724" r="9" fill="#3A6FBF"/><text x="432" y="724" font-size="9" fill="white" text-anchor="middle" dominant-baseline="central" font-weight="500">4</text>
+<text x="446" y="724" font-size="10" fill="#555453" text-anchor="start" font-weight="400" dominant-baseline="central" >4 — Simplified top bar (dashboard + alerts)</text>
 </svg>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regulatory Radar | EcoComply</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="sidebar-brand">
+        <span class="brand-icon" aria-hidden="true">◎</span>
+        <div>
+          <span class="brand-name">Regulatory Radar</span>
+          <span class="brand-tag">EcoComply · Bobathon</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-link active" data-nav="overview">Overview</a>
+        <a href="#gaps-section" class="nav-link" data-nav="gaps">Compliance gaps</a>
+        <a href="#review-section" class="nav-link" data-nav="review">Review queue</a>
+        <a href="#updates-section" class="nav-link" data-nav="updates">Regulations</a>
+        <a href="#chat-section" class="nav-link" data-nav="chat">Chat</a>
+      </nav>
+      <div class="sidebar-footer">
+        <p id="last-run" class="sidebar-meta">Last scan: not yet run</p>
+        <button id="run-btn" type="button" class="btn btn-primary btn-block">Run scan</button>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="top-bar">
+        <div class="top-bar-text">
+          <p class="top-greeting">Your compliance cockpit</p>
+          <p id="utility-status" class="top-sub">22 companies · 53 products monitored</p>
+        </div>
+        <button id="run-btn-mobile" type="button" class="btn btn-primary btn-sm">Run scan</button>
+      </header>
+
+      <main class="main-content">
+        <section id="overview" class="page-section">
+          <div class="welcome-card">
+            <div class="welcome-copy">
+              <h1>Stay ahead of EU rules — without the manual grind</h1>
+              <p>We watch EUR-Lex, ECHA, Bundestag, and Open Legal Data for you, map changes to your portfolio, and surface what needs action — with sources you can cite.</p>
+              <div class="welcome-actions">
+                <button id="run-btn-hero" type="button" class="btn btn-primary">Run a new scan</button>
+                <a href="#gaps-section" class="btn btn-soft">See what needs attention</a>
+              </div>
+            </div>
+            <div class="welcome-visual" aria-hidden="true">
+              <div class="orbit"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <article class="stat-card stat-card-warn">
+              <span class="stat-icon" aria-hidden="true">!</span>
+              <div>
+                <span class="stat-num" id="gap-critical">0</span>
+                <span class="stat-lbl">Need attention soon</span>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon-neutral" aria-hidden="true">◆</span>
+              <div>
+                <span class="stat-num" id="gap-total">0</span>
+                <span class="stat-lbl">Open gaps</span>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon-neutral" aria-hidden="true">↻</span>
+              <div>
+                <span class="stat-num" id="update-count">0</span>
+                <span class="stat-lbl">Rules tracked</span>
+              </div>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon stat-icon-neutral" aria-hidden="true">✓</span>
+              <div>
+                <span class="stat-num" id="hil-count">0</span>
+                <span class="stat-lbl">Awaiting review</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Live data sources</h2>
+              <p class="panel-desc">Green means connected. Run a scan to pull the latest rules.</p>
+            </div>
+            <div class="api-status" id="api-status"></div>
+            <div class="pipeline-steps" aria-label="How scans work">
+              <div class="step"><span class="step-num">1</span> Fetch regulations</div>
+              <div class="step"><span class="step-num">2</span> Understand &amp; match</div>
+              <div class="step"><span class="step-num">3</span> Flag gaps</div>
+              <div class="step step-accent"><span class="step-num">4</span> Alert &amp; review</div>
+            </div>
+            <div id="routing-list" class="routing-grid"></div>
+          </div>
+        </section>
+
+        <section id="gaps-section" class="page-section">
+          <div class="panel">
+            <div class="panel-header panel-header-row">
+              <div>
+                <h2 class="panel-title">Compliance gaps</h2>
+                <p class="panel-desc">Sorted by what matters most — critical issues and nearest deadlines first.</p>
+              </div>
+              <div class="sort-wrap">
+                <label class="sr-only" for="gap-sort">Sort by</label>
+                <select id="gap-sort" class="select-input">
+                  <option value="criticality">Priority (recommended)</option>
+                  <option value="deadline">Deadline</option>
+                  <option value="company">Company</option>
+                  <option value="product">Product</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-panel">
+              <div class="search-wrap">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input id="gap-search" class="search-input" type="search" placeholder="Search company, product, or regulation…">
+              </div>
+              <div class="filter-chips">
+                <select id="criticality-filter" class="select-input select-compact" title="Criticality">
+                  <option value="">All priorities</option>
+                  <option value="critical">Critical</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="administrative">Low</option>
+                </select>
+                <select id="urgency-filter" class="select-input select-compact" title="Urgency">
+                  <option value="">All timelines</option>
+                  <option value="immediate">Act now</option>
+                  <option value="short_term">Within weeks</option>
+                  <option value="medium_term">Plan ahead</option>
+                  <option value="long_term">Long-term</option>
+                </select>
+                <select id="family-filter" class="select-input select-compact" title="Regulation family">
+                  <option value="">All rule types</option>
+                  <option value="Battery">Battery</option>
+                  <option value="RoHS">RoHS</option>
+                  <option value="REACH">REACH</option>
+                  <option value="GPSR">GPSR</option>
+                  <option value="RED">RED</option>
+                  <option value="WEEE">WEEE</option>
+                  <option value="PPWR">PPWR</option>
+                </select>
+                <select id="status-filter" class="select-input select-compact" title="Status">
+                  <option value="">All statuses</option>
+                  <option value="auto_alerted">Alerted</option>
+                  <option value="in_review">In review</option>
+                  <option value="acknowledged">Acknowledged</option>
+                  <option value="in_progress">In progress</option>
+                  <option value="resolved">Resolved</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="gaps-grid" class="gaps-grid">
+              <div class="empty-state">Loading your compliance picture…</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="review-section" class="page-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Review queue</h2>
+              <p class="panel-desc">Lower-confidence matches stay here until an analyst approves them — so clients only get alerts you trust.</p>
+            </div>
+            <ul id="hil-list" class="hil-list"></ul>
+          </div>
+        </section>
+
+        <section id="updates-section" class="page-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Recent regulations</h2>
+              <p class="panel-desc">Freshly ingested rules from live APIs. Cached text loads instantly on repeat views.</p>
+            </div>
+            <ul id="updates-list" class="updates-grid"></ul>
+          </div>
+        </section>
+
+        <section id="chat-section" class="page-section">
+          <div class="panel chat-panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Regulation lookup</h2>
+              <p class="panel-desc">Use <strong>AI lookup</strong> for the presentation (structured product → applicable EU + national laws). <strong>Free-text check</strong> is for manual testing via EUR-Lex search.</p>
+            </div>
+
+            <div class="chat-mode-tabs" role="tablist">
+              <button type="button" class="chat-mode-tab active" data-chat-mode="present" role="tab" aria-selected="true">AI lookup</button>
+              <button type="button" class="chat-mode-tab" data-chat-mode="free" role="tab" aria-selected="false">Free-text check</button>
+            </div>
+
+            <div id="present-panel" class="present-panel">
+              <form id="present-form" class="present-form">
+                <label class="field-label" for="present-product">Product (from portfolio)</label>
+                <select id="present-product" class="present-select" required>
+                  <option value="">Select a product…</option>
+                </select>
+                <p id="present-meta" class="present-meta" hidden></p>
+                <label class="field-label" for="present-countries">Delivery countries</label>
+                <input id="present-countries" class="present-input" type="text" placeholder="e.g. DE, EU" value="DE, EU" />
+                <button type="submit" id="present-submit" class="btn btn-primary">Show applicable laws</button>
+              </form>
+            </div>
+
+            <div id="free-chat-panel" class="free-chat-panel" hidden>
+              <form id="chat-form" class="chat-form">
+                <label class="sr-only" for="chat-input">Product or ingredients</label>
+                <textarea id="chat-input" class="chat-input" rows="3" placeholder="Product name or ingredient list…" required></textarea>
+                <button type="submit" id="chat-submit" class="btn btn-primary">Find regulations</button>
+              </form>
+            </div>
+
+            <div id="chat-messages" class="chat-messages" aria-live="polite">
+              <div class="chat-bubble chat-assistant" id="chat-welcome">
+                <p>Select a portfolio product and click <strong>Show applicable laws</strong>. The AI sends labels + markets; we fetch EU (EUR-Lex) and German (GADI) texts and display them here.</p>
+                <p class="chat-example">Demo: RideVolt e-Scooter Battery Pack → Battery, RoHS, WEEE · DE + EU</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Built for IBM Bobathon · Data from organizer <code>Dataset/</code> · Sources: EUR-Lex, ECHA, DIP, Open Legal Data</p>
+        <span class="footer-stat" id="vector-count">0</span> embeddings indexed
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <dialog id="gap-detail-modal" class="modal">
+    <div class="modal-card">
+      <header class="modal-header">
+        <div>
+          <div id="gap-modal-badges" class="gap-badges"></div>
+          <h2 id="gap-modal-title" class="modal-title">Gap detail</h2>
+        </div>
+        <button type="button" id="gap-modal-close" class="btn-icon" aria-label="Close">×</button>
+      </header>
+      <p id="gap-modal-meta" class="modal-meta"></p>
+      <div id="gap-modal-sections" class="gap-detail-sections"></div>
+      <div class="gap-actions-bar">
+        <button type="button" class="btn btn-soft gap-status-btn" data-status="acknowledged">Got it</button>
+        <button type="button" class="btn btn-soft gap-status-btn" data-status="in_progress">Working on it</button>
+        <button type="button" class="btn btn-primary gap-status-btn" data-status="resolved">Mark resolved</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="reg-text-modal" class="modal">
+    <div class="modal-card">
+      <header class="modal-header">
+        <h2 id="reg-modal-title" class="modal-title">Regulation text</h2>
+        <button type="button" id="reg-modal-close" class="btn-icon" aria-label="Close">×</button>
+      </header>
+      <p id="reg-modal-meta" class="modal-meta"></p>
+      <pre id="reg-modal-body" class="modal-body"></pre>
+    </div>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+  <script src="/static/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Runtime feed cache (rebuilt by ingest)
+feed/cache.json
+feed/vectordb.json
+feed/hil_queue.json
+
+# Local secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Alert stubs
+output/alerts/

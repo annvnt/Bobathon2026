@@ -1,0 +1,937 @@
+{
+  "entries": [
+    {
+      "id": "family:RoHS",
+      "label": "RoHS",
+      "book": "Regulation",
+      "category": "RoHS",
+      "text": "RoHS Directive 2011/65/EU - restriction of hazardous substances in EEE"
+    },
+    {
+      "id": "family:REACH",
+      "label": "REACH",
+      "book": "Regulation",
+      "category": "REACH",
+      "text": "REACH Regulation (EC) 1907/2006 - SVHC list & Annex XVII restrictions"
+    },
+    {
+      "id": "family:WEEE",
+      "label": "WEEE",
+      "book": "Regulation",
+      "category": "WEEE",
+      "text": "WEEE Directive 2012/19/EU - waste electrical & electronic equipment"
+    },
+    {
+      "id": "family:Battery",
+      "label": "Battery",
+      "book": "Regulation",
+      "category": "Battery",
+      "text": "Battery Regulation (EU) 2023/1542 - batteries & the battery passport"
+    },
+    {
+      "id": "family:PPWR",
+      "label": "PPWR",
+      "book": "Regulation",
+      "category": "PPWR",
+      "text": "PPWR Regulation (EU) 2025/40 - packaging & packaging waste"
+    },
+    {
+      "id": "family:GPSR",
+      "label": "GPSR",
+      "book": "Regulation",
+      "category": "GPSR",
+      "text": "GPSR Regulation (EU) 2023/988 - general product safety"
+    },
+    {
+      "id": "family:RED",
+      "label": "RED",
+      "book": "Regulation",
+      "category": "RED",
+      "text": "RED Directive 2014/53/EU - radio equipment (common charger, cybersecurity)"
+    },
+    {
+      "id": "family:EMC",
+      "label": "EMC",
+      "book": "Regulation",
+      "category": "EMC",
+      "text": "EMC Directive 2014/30/EU - electromagnetic compatibility"
+    },
+    {
+      "id": "family:LVD",
+      "label": "LVD",
+      "book": "Regulation",
+      "category": "LVD",
+      "text": "LVD Directive 2014/35/EU - low voltage"
+    },
+    {
+      "id": "family:ESPR",
+      "label": "ESPR",
+      "book": "Regulation",
+      "category": "ESPR",
+      "text": "ESPR Regulation (EU) 2024/1781 - ecodesign & Digital Product Passport"
+    },
+    {
+      "id": "family:EnergyLabel",
+      "label": "EnergyLabel",
+      "book": "Regulation",
+      "category": "EnergyLabel",
+      "text": "EnergyLabel Regulation (EU) 2017/1369 - energy labelling"
+    },
+    {
+      "id": "family:ToySafety",
+      "label": "ToySafety",
+      "book": "Regulation",
+      "category": "ToySafety",
+      "text": "ToySafety Toy Safety (Directive 2009/48/EC / revision)"
+    },
+    {
+      "id": "family:MDR",
+      "label": "MDR",
+      "book": "Regulation",
+      "category": "MDR",
+      "text": "MDR Regulation (EU) 2017/745 - medical devices"
+    },
+    {
+      "id": "family:POPs",
+      "label": "POPs",
+      "book": "Regulation",
+      "category": "POPs",
+      "text": "POPs Regulation (EU) 2019/1021 - persistent organic pollutants"
+    },
+    {
+      "id": "family:CBAM",
+      "label": "CBAM",
+      "book": "Regulation",
+      "category": "CBAM",
+      "text": "CBAM Regulation (EU) 2023/956 - carbon border adjustment mechanism"
+    },
+    {
+      "id": "family:FGas",
+      "label": "FGas",
+      "book": "Regulation",
+      "category": "FGas",
+      "text": "FGas Regulation (EU) 2024/573 - fluorinated greenhouse gases"
+    },
+    {
+      "id": "family:CLP",
+      "label": "CLP",
+      "book": "Regulation",
+      "category": "CLP",
+      "text": "CLP Regulation (EC) 1272/2008 - classification, labelling & packaging"
+    },
+    {
+      "id": "family:Machinery",
+      "label": "Machinery",
+      "book": "Regulation",
+      "category": "Machinery",
+      "text": "Machinery Regulation (EU) 2023/1230 - machinery"
+    },
+    {
+      "id": "family:EUDR",
+      "label": "EUDR",
+      "book": "Regulation",
+      "category": "EUDR",
+      "text": "EUDR Regulation (EU) 2023/1115 - deforestation-free products"
+    },
+    {
+      "id": "family:FoodContact",
+      "label": "FoodContact",
+      "book": "Regulation",
+      "category": "FoodContact",
+      "text": "FoodContact Regulation (EC) 1935/2004 - food contact materials"
+    },
+    {
+      "id": "category:led_lighting",
+      "label": "led_lighting",
+      "book": "Product",
+      "category": "led_lighting",
+      "text": "led_lighting LED luminaires, lamps and strips"
+    },
+    {
+      "id": "category:power_supply",
+      "label": "power_supply",
+      "book": "Product",
+      "category": "power_supply",
+      "text": "power_supply External power supplies / chargers / adapters"
+    },
+    {
+      "id": "category:battery_pack",
+      "label": "battery_pack",
+      "book": "Product",
+      "category": "battery_pack",
+      "text": "battery_pack Rechargeable battery packs, power banks, power stations"
+    },
+    {
+      "id": "category:audio",
+      "label": "audio",
+      "book": "Product",
+      "category": "audio",
+      "text": "audio Bluetooth/Wi-Fi speakers and headphones"
+    },
+    {
+      "id": "category:smart_home",
+      "label": "smart_home",
+      "book": "Product",
+      "category": "smart_home",
+      "text": "smart_home Smart-home sensors, hubs, cameras and controllers"
+    },
+    {
+      "id": "category:wearable",
+      "label": "wearable",
+      "book": "Product",
+      "category": "wearable",
+      "text": "wearable Consumer wearables (fitness/activity)"
+    },
+    {
+      "id": "category:medical_wearable",
+      "label": "medical_wearable",
+      "book": "Product",
+      "category": "medical_wearable",
+      "text": "medical_wearable Body-worn devices with a medical purpose"
+    },
+    {
+      "id": "category:toy_electronic",
+      "label": "toy_electronic",
+      "book": "Product",
+      "category": "toy_electronic",
+      "text": "toy_electronic Toys containing electronics"
+    },
+    {
+      "id": "category:cable",
+      "label": "cable",
+      "book": "Product",
+      "category": "cable",
+      "text": "cable Cables and connectors"
+    },
+    {
+      "id": "category:display",
+      "label": "display",
+      "book": "Product",
+      "category": "display",
+      "text": "display Monitors and display panels"
+    },
+    {
+      "id": "category:iot_module",
+      "label": "iot_module",
+      "book": "Product",
+      "category": "iot_module",
+      "text": "iot_module Industrial IoT / embedded radio modules"
+    },
+    {
+      "id": "category:pv_inverter",
+      "label": "pv_inverter",
+      "book": "Product",
+      "category": "pv_inverter",
+      "text": "pv_inverter Photovoltaic micro-inverters"
+    },
+    {
+      "id": "category:emobility_battery",
+      "label": "emobility_battery",
+      "book": "Product",
+      "category": "emobility_battery",
+      "text": "emobility_battery Light-means-of-transport (LMT) batteries"
+    },
+    {
+      "id": "category:networking",
+      "label": "networking",
+      "book": "Product",
+      "category": "networking",
+      "text": "networking Routers and networking equipment"
+    },
+    {
+      "id": "category:appliance",
+      "label": "appliance",
+      "book": "Product",
+      "category": "appliance",
+      "text": "appliance Small electrical household / industrial appliances"
+    },
+    {
+      "id": "category:printer_3d",
+      "label": "printer_3d",
+      "book": "Product",
+      "category": "printer_3d",
+      "text": "printer_3d 3D printers"
+    },
+    {
+      "id": "category:drone",
+      "label": "drone",
+      "book": "Product",
+      "category": "drone",
+      "text": "drone Consumer drones / UAVs"
+    },
+    {
+      "id": "substance:lead",
+      "label": "lead",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "lead Lead (Pb) - RoHS restricted heavy metal"
+    },
+    {
+      "id": "substance:cadmium",
+      "label": "cadmium",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "cadmium Cadmium (Cd) - RoHS restricted heavy metal"
+    },
+    {
+      "id": "substance:mercury",
+      "label": "mercury",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "mercury Mercury (Hg) - RoHS restricted heavy metal"
+    },
+    {
+      "id": "substance:hexavalent_chromium",
+      "label": "hexavalent_chromium",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "hexavalent_chromium Hexavalent chromium (Cr VI) - RoHS restricted"
+    },
+    {
+      "id": "substance:DEHP",
+      "label": "DEHP",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "DEHP Bis(2-ethylhexyl) phthalate - RoHS Pack 4 / REACH SVHC"
+    },
+    {
+      "id": "substance:DBP",
+      "label": "DBP",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "DBP Dibutyl phthalate - RoHS Pack 4 / REACH"
+    },
+    {
+      "id": "substance:BBP",
+      "label": "BBP",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "BBP Benzyl butyl phthalate - RoHS Pack 4 / REACH"
+    },
+    {
+      "id": "substance:BPA",
+      "label": "BPA",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "BPA Bisphenol A - REACH SVHC"
+    },
+    {
+      "id": "substance:decaBDE",
+      "label": "decaBDE",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "decaBDE Decabromodiphenyl ether - POPs restricted"
+    },
+    {
+      "id": "substance:TBBPA",
+      "label": "TBBPA",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "TBBPA Tetrabromobisphenol A - brominated flame retardant"
+    },
+    {
+      "id": "substance:MCCP",
+      "label": "MCCP",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "MCCP Medium-chain chlorinated paraffins - candidate restriction"
+    },
+    {
+      "id": "substance:PFAS_PFHxA",
+      "label": "PFAS_PFHxA",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "PFAS_PFHxA Perfluorohexanoic acid (PFHxA) group - REACH restriction"
+    },
+    {
+      "id": "substance:dioxane",
+      "label": "dioxane",
+      "book": "Substance",
+      "category": "chemicals",
+      "text": "dioxane 1,4-Dioxane - REACH SVHC (not present in this portfolio)"
+    },
+    {
+      "id": "product:P001-A",
+      "label": "NordBeam LED Panel 600",
+      "book": "Partner",
+      "category": "led_lighting",
+      "text": "NordBeam LED Panel 600 led_lighting lead none consumer",
+      "meta": {
+        "partner_id": "P001",
+        "product_id": "P001-A"
+      }
+    },
+    {
+      "id": "product:P001-B",
+      "label": "FlexGlow RGB Strip 5m",
+      "book": "Partner",
+      "category": "led_lighting",
+      "text": "FlexGlow RGB Strip 5m led_lighting lead DEHP none consumer",
+      "meta": {
+        "partner_id": "P001",
+        "product_id": "P001-B"
+      }
+    },
+    {
+      "id": "product:P001-C",
+      "label": "SmartGlow Wi-Fi Bulb",
+      "book": "Partner",
+      "category": "led_lighting",
+      "text": "SmartGlow Wi-Fi Bulb led_lighting  none consumer",
+      "meta": {
+        "partner_id": "P001",
+        "product_id": "P001-C"
+      }
+    },
+    {
+      "id": "product:P002-A",
+      "label": "GaN USB-C Charger 65W",
+      "book": "Partner",
+      "category": "power_supply",
+      "text": "GaN USB-C Charger 65W power_supply  none consumer",
+      "meta": {
+        "partner_id": "P002",
+        "product_id": "P002-A"
+      }
+    },
+    {
+      "id": "product:P002-B",
+      "label": "DeskDock USB-C Multiport",
+      "book": "Partner",
+      "category": "power_supply",
+      "text": "DeskDock USB-C Multiport power_supply  none consumer",
+      "meta": {
+        "partner_id": "P002",
+        "product_id": "P002-B"
+      }
+    },
+    {
+      "id": "product:P003-A",
+      "label": "PowerBank 20k Portable",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "PowerBank 20k Portable battery_pack  portable consumer",
+      "meta": {
+        "partner_id": "P003",
+        "product_id": "P003-A"
+      }
+    },
+    {
+      "id": "product:P003-B",
+      "label": "IndusCell 2.5kWh Module",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "IndusCell 2.5kWh Module battery_pack  industrial industrial",
+      "meta": {
+        "partner_id": "P003",
+        "product_id": "P003-B"
+      }
+    },
+    {
+      "id": "product:P003-C",
+      "label": "CoinCell CR2032 10-pack",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "CoinCell CR2032 10-pack battery_pack  button_cell consumer",
+      "meta": {
+        "partner_id": "P003",
+        "product_id": "P003-C"
+      }
+    },
+    {
+      "id": "product:P004-A",
+      "label": "WaveGo Bluetooth Speaker",
+      "book": "Partner",
+      "category": "audio",
+      "text": "WaveGo Bluetooth Speaker audio BPA portable consumer",
+      "meta": {
+        "partner_id": "P004",
+        "product_id": "P004-A"
+      }
+    },
+    {
+      "id": "product:P004-B",
+      "label": "StudioPods Headphones",
+      "book": "Partner",
+      "category": "audio",
+      "text": "StudioPods Headphones audio  portable consumer",
+      "meta": {
+        "partner_id": "P004",
+        "product_id": "P004-B"
+      }
+    },
+    {
+      "id": "product:P004-C",
+      "label": "WaveHome Soundbar",
+      "book": "Partner",
+      "category": "audio",
+      "text": "WaveHome Soundbar audio  none consumer",
+      "meta": {
+        "partner_id": "P004",
+        "product_id": "P004-C"
+      }
+    },
+    {
+      "id": "product:P005-A",
+      "label": "MotionSense Sensor",
+      "book": "Partner",
+      "category": "smart_home",
+      "text": "MotionSense Sensor smart_home  button_cell consumer",
+      "meta": {
+        "partner_id": "P005",
+        "product_id": "P005-A"
+      }
+    },
+    {
+      "id": "product:P005-B",
+      "label": "HomeHub Controller",
+      "book": "Partner",
+      "category": "smart_home",
+      "text": "HomeHub Controller smart_home  none consumer",
+      "meta": {
+        "partner_id": "P005",
+        "product_id": "P005-B"
+      }
+    },
+    {
+      "id": "product:P005-C",
+      "label": "PlugSense Smart Plug",
+      "book": "Partner",
+      "category": "smart_home",
+      "text": "PlugSense Smart Plug smart_home  none consumer",
+      "meta": {
+        "partner_id": "P005",
+        "product_id": "P005-C"
+      }
+    },
+    {
+      "id": "product:P006-A",
+      "label": "PulseBand Activity Tracker",
+      "book": "Partner",
+      "category": "wearable",
+      "text": "PulseBand Activity Tracker wearable PFAS_PFHxA portable consumer",
+      "meta": {
+        "partner_id": "P006",
+        "product_id": "P006-A"
+      }
+    },
+    {
+      "id": "product:P006-B",
+      "label": "SportWatch GPS",
+      "book": "Partner",
+      "category": "wearable",
+      "text": "SportWatch GPS wearable  portable consumer",
+      "meta": {
+        "partner_id": "P006",
+        "product_id": "P006-B"
+      }
+    },
+    {
+      "id": "product:P007-A",
+      "label": "CardioPatch Monitor",
+      "book": "Partner",
+      "category": "medical_wearable",
+      "text": "CardioPatch Monitor medical_wearable lead portable medical",
+      "meta": {
+        "partner_id": "P007",
+        "product_id": "P007-A"
+      }
+    },
+    {
+      "id": "product:P007-B",
+      "label": "GlucoSense CGM Patch",
+      "book": "Partner",
+      "category": "medical_wearable",
+      "text": "GlucoSense CGM Patch medical_wearable  button_cell medical",
+      "meta": {
+        "partner_id": "P007",
+        "product_id": "P007-B"
+      }
+    },
+    {
+      "id": "product:P008-A",
+      "label": "RoboPup Interactive Toy",
+      "book": "Partner",
+      "category": "toy_electronic",
+      "text": "RoboPup Interactive Toy toy_electronic DEHP none toy",
+      "meta": {
+        "partner_id": "P008",
+        "product_id": "P008-A"
+      }
+    },
+    {
+      "id": "product:P008-B",
+      "label": "SingAlong Karaoke Mic",
+      "book": "Partner",
+      "category": "toy_electronic",
+      "text": "SingAlong Karaoke Mic toy_electronic DEHP button_cell toy",
+      "meta": {
+        "partner_id": "P008",
+        "product_id": "P008-B"
+      }
+    },
+    {
+      "id": "product:P008-C",
+      "label": "JuniorSTEM Robotics Kit",
+      "book": "Partner",
+      "category": "toy_electronic",
+      "text": "JuniorSTEM Robotics Kit toy_electronic  portable consumer",
+      "meta": {
+        "partner_id": "P008",
+        "product_id": "P008-C"
+      }
+    },
+    {
+      "id": "product:P009-A",
+      "label": "UltraLink USB-C Cable 2m",
+      "book": "Partner",
+      "category": "cable",
+      "text": "UltraLink USB-C Cable 2m cable DEHP MCCP lead none consumer",
+      "meta": {
+        "partner_id": "P009",
+        "product_id": "P009-A"
+      }
+    },
+    {
+      "id": "product:P009-B",
+      "label": "HDMI 2.1 Cable 3m",
+      "book": "Partner",
+      "category": "cable",
+      "text": "HDMI 2.1 Cable 3m cable  none consumer",
+      "meta": {
+        "partner_id": "P009",
+        "product_id": "P009-B"
+      }
+    },
+    {
+      "id": "product:P010-A",
+      "label": "UltraView 27 Monitor",
+      "book": "Partner",
+      "category": "display",
+      "text": "UltraView 27 Monitor display  none consumer",
+      "meta": {
+        "partner_id": "P010",
+        "product_id": "P010-A"
+      }
+    },
+    {
+      "id": "product:P010-B",
+      "label": "Legacy CCFL Panel (spare)",
+      "book": "Partner",
+      "category": "display",
+      "text": "Legacy CCFL Panel (spare) display mercury none industrial",
+      "meta": {
+        "partner_id": "P010",
+        "product_id": "P010-B"
+      }
+    },
+    {
+      "id": "product:P010-C",
+      "label": "TouchPanel 15 Industrial",
+      "book": "Partner",
+      "category": "display",
+      "text": "TouchPanel 15 Industrial display  none industrial",
+      "meta": {
+        "partner_id": "P010",
+        "product_id": "P010-C"
+      }
+    },
+    {
+      "id": "product:P011-A",
+      "label": "EdgeNode Industrial Module",
+      "book": "Partner",
+      "category": "iot_module",
+      "text": "EdgeNode Industrial Module iot_module TBBPA decaBDE none industrial",
+      "meta": {
+        "partner_id": "P011",
+        "product_id": "P011-A"
+      }
+    },
+    {
+      "id": "product:P011-B",
+      "label": "EdgeGateway 5G",
+      "book": "Partner",
+      "category": "iot_module",
+      "text": "EdgeGateway 5G iot_module TBBPA none industrial",
+      "meta": {
+        "partner_id": "P011",
+        "product_id": "P011-B"
+      }
+    },
+    {
+      "id": "product:P012-A",
+      "label": "SunLink Micro-Inverter",
+      "book": "Partner",
+      "category": "pv_inverter",
+      "text": "SunLink Micro-Inverter pv_inverter cadmium none consumer",
+      "meta": {
+        "partner_id": "P012",
+        "product_id": "P012-A"
+      }
+    },
+    {
+      "id": "product:P012-B",
+      "label": "HybridInverter Pro (Cd-free)",
+      "book": "Partner",
+      "category": "pv_inverter",
+      "text": "HybridInverter Pro (Cd-free) pv_inverter  none consumer",
+      "meta": {
+        "partner_id": "P012",
+        "product_id": "P012-B"
+      }
+    },
+    {
+      "id": "product:P013-A",
+      "label": "e-Scooter Battery Pack 280Wh",
+      "book": "Partner",
+      "category": "emobility_battery",
+      "text": "e-Scooter Battery Pack 280Wh emobility_battery  lmt consumer",
+      "meta": {
+        "partner_id": "P013",
+        "product_id": "P013-A"
+      }
+    },
+    {
+      "id": "product:P013-B",
+      "label": "eBike Battery 504Wh",
+      "book": "Partner",
+      "category": "emobility_battery",
+      "text": "eBike Battery 504Wh emobility_battery  lmt consumer",
+      "meta": {
+        "partner_id": "P013",
+        "product_id": "P013-B"
+      }
+    },
+    {
+      "id": "product:P014-A",
+      "label": "AirLink Wi-Fi 6 Router",
+      "book": "Partner",
+      "category": "networking",
+      "text": "AirLink Wi-Fi 6 Router networking TBBPA none consumer",
+      "meta": {
+        "partner_id": "P014",
+        "product_id": "P014-A"
+      }
+    },
+    {
+      "id": "product:P014-B",
+      "label": "MeshPoint Mini",
+      "book": "Partner",
+      "category": "networking",
+      "text": "MeshPoint Mini networking TBBPA none consumer",
+      "meta": {
+        "partner_id": "P014",
+        "product_id": "P014-B"
+      }
+    },
+    {
+      "id": "product:P014-C",
+      "label": "AirLink Router UK Edition",
+      "book": "Partner",
+      "category": "networking",
+      "text": "AirLink Router UK Edition networking TBBPA none consumer",
+      "meta": {
+        "partner_id": "P014",
+        "product_id": "P014-C"
+      }
+    },
+    {
+      "id": "product:P015-A",
+      "label": "QuickBoil Kettle 1.7L",
+      "book": "Partner",
+      "category": "appliance",
+      "text": "QuickBoil Kettle 1.7L appliance  none consumer",
+      "meta": {
+        "partner_id": "P015",
+        "product_id": "P015-A"
+      }
+    },
+    {
+      "id": "product:P015-B",
+      "label": "ToastMaster 2-Slice",
+      "book": "Partner",
+      "category": "appliance",
+      "text": "ToastMaster 2-Slice appliance  none consumer",
+      "meta": {
+        "partner_id": "P015",
+        "product_id": "P015-B"
+      }
+    },
+    {
+      "id": "product:P016-A",
+      "label": "ChromaPrint X1 (EU)",
+      "book": "Partner",
+      "category": "printer_3d",
+      "text": "ChromaPrint X1 (EU) printer_3d  none consumer",
+      "meta": {
+        "partner_id": "P016",
+        "product_id": "P016-A"
+      }
+    },
+    {
+      "id": "product:P016-B",
+      "label": "ChromaPrint X1 US Edition",
+      "book": "Partner",
+      "category": "printer_3d",
+      "text": "ChromaPrint X1 US Edition printer_3d lead none consumer",
+      "meta": {
+        "partner_id": "P016",
+        "product_id": "P016-B"
+      }
+    },
+    {
+      "id": "product:P016-C",
+      "label": "ResinPrint Mini (EU)",
+      "book": "Partner",
+      "category": "printer_3d",
+      "text": "ResinPrint Mini (EU) printer_3d  none consumer",
+      "meta": {
+        "partner_id": "P016",
+        "product_id": "P016-C"
+      }
+    },
+    {
+      "id": "product:P017-A",
+      "label": "SkyScout Camera Drone",
+      "book": "Partner",
+      "category": "drone",
+      "text": "SkyScout Camera Drone drone PFAS_PFHxA portable consumer",
+      "meta": {
+        "partner_id": "P017",
+        "product_id": "P017-A"
+      }
+    },
+    {
+      "id": "product:P017-B",
+      "label": "MicroDrone Mini",
+      "book": "Partner",
+      "category": "drone",
+      "text": "MicroDrone Mini drone  portable consumer",
+      "meta": {
+        "partner_id": "P017",
+        "product_id": "P017-B"
+      }
+    },
+    {
+      "id": "product:P018-A",
+      "label": "FreshFlow Air Purifier",
+      "book": "Partner",
+      "category": "appliance",
+      "text": "FreshFlow Air Purifier appliance  none consumer",
+      "meta": {
+        "partner_id": "P018",
+        "product_id": "P018-A"
+      }
+    },
+    {
+      "id": "product:P018-B",
+      "label": "DryAir Dehumidifier",
+      "book": "Partner",
+      "category": "appliance",
+      "text": "DryAir Dehumidifier appliance  none consumer",
+      "meta": {
+        "partner_id": "P018",
+        "product_id": "P018-B"
+      }
+    },
+    {
+      "id": "product:P019-A",
+      "label": "StarLite Night Toy",
+      "book": "Partner",
+      "category": "toy_electronic",
+      "text": "StarLite Night Toy toy_electronic DEHP lead button_cell toy",
+      "meta": {
+        "partner_id": "P019",
+        "product_id": "P019-A"
+      }
+    },
+    {
+      "id": "product:P019-B",
+      "label": "MelodyPlush Toy",
+      "book": "Partner",
+      "category": "toy_electronic",
+      "text": "MelodyPlush Toy toy_electronic DEHP button_cell toy",
+      "meta": {
+        "partner_id": "P019",
+        "product_id": "P019-B"
+      }
+    },
+    {
+      "id": "product:P020-A",
+      "label": "IndusTherm Controller",
+      "book": "Partner",
+      "category": "appliance",
+      "text": "IndusTherm Controller appliance decaBDE none industrial",
+      "meta": {
+        "partner_id": "P020",
+        "product_id": "P020-A"
+      }
+    },
+    {
+      "id": "product:P020-B",
+      "label": "FlowMeter Industrial",
+      "book": "Partner",
+      "category": "iot_module",
+      "text": "FlowMeter Industrial iot_module decaBDE none industrial",
+      "meta": {
+        "partner_id": "P020",
+        "product_id": "P020-B"
+      }
+    },
+    {
+      "id": "product:P021-A",
+      "label": "TrailCell 512 Power Station",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "TrailCell 512 Power Station battery_pack  portable consumer",
+      "meta": {
+        "partner_id": "P021",
+        "product_id": "P021-A"
+      }
+    },
+    {
+      "id": "product:P021-B",
+      "label": "BaseCell 2.0kWh Industrial",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "BaseCell 2.0kWh Industrial battery_pack  industrial industrial",
+      "meta": {
+        "partner_id": "P021",
+        "product_id": "P021-B"
+      }
+    },
+    {
+      "id": "product:P021-C",
+      "label": "PocketCell 99Wh",
+      "book": "Partner",
+      "category": "battery_pack",
+      "text": "PocketCell 99Wh battery_pack  portable consumer",
+      "meta": {
+        "partner_id": "P021",
+        "product_id": "P021-C"
+      }
+    },
+    {
+      "id": "product:P022-A",
+      "label": "LittleView Baby Monitor",
+      "book": "Partner",
+      "category": "smart_home",
+      "text": "LittleView Baby Monitor smart_home BPA portable consumer",
+      "meta": {
+        "partner_id": "P022",
+        "product_id": "P022-A"
+      }
+    },
+    {
+      "id": "product:P022-B",
+      "label": "KidCam Watch",
+      "book": "Partner",
+      "category": "wearable",
+      "text": "KidCam Watch wearable BPA portable consumer",
+      "meta": {
+        "partner_id": "P022",
+        "product_id": "P022-B"
+      }
+    }
+  ]
+}
