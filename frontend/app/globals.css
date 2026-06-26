@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme — pure, minimal, off-white surfaces */
+  --bg: 255 255 255;
+  --surface: 250 250 249;
+  --elevated: 255 255 255;
+  --border: 231 229 228;
+  --fg: 23 23 23;
+  --muted: 120 120 118;
+  --accent: 23 23 23;
+  --accent-fg: 255 255 255;
+}
+
+.dark {
+  /* Dark theme — matches the minimal black reference aesthetic */
+  --bg: 9 9 11;
+  --surface: 17 17 19;
+  --elevated: 24 24 27;
+  --border: 39 39 42;
+  --fg: 245 245 244;
+  --muted: 142 142 145;
+  --accent: 250 250 249;
+  --accent-fg: 17 17 19;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-feature-settings: "ss01", "cv01";
+}
+
+::selection {
+  background: rgb(var(--fg));
+  color: rgb(var(--bg));
+}
+
+/* thin, unobtrusive scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 999px;
+  border: 3px solid rgb(var(--bg));
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-border bg-elevated;
+  }
+  .card-hover {
+    @apply transition-colors hover:border-fg/20 hover:bg-surface;
+  }
+  .label-mono {
+    @apply font-mono text-[11px] uppercase tracking-[0.14em] text-muted;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+           transition-colors disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-accent-fg hover:opacity-90;
+  }
+  .btn-ghost {
+    @apply btn border border-border bg-transparent text-fg hover:bg-surface;
+  }
+  .input {
+    @apply w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-fg
+           placeholder:text-muted outline-none focus:border-fg/40 transition-colors;
+  }
+}
