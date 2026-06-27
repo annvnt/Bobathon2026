@@ -1,6 +1,1 @@
-$env:SENDGRID_API_KEY = "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"                                       
-$env:SENDGRID_FROM_EMAIL = "berksterk101254@hotmail.com"
-$env:TWILIO_ACCOUNT_SID = "ACf7f5e42b09f271c41497490ae08432e9"                   
-$env:TWILIO_AUTH_TOKEN = "2dcb5348fbff6c5a35b3c7afa4f77432"     
-$env:TWILIO_FROM_NUMBER = "+12513517408"              
-$env:TWILIO_WHATSAPP_FROM = "whatsapp:+14155238886" 
+
